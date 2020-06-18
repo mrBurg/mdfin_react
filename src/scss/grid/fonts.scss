@@ -1,0 +1,89 @@
+$path: '/fonts/montserrat/';
+$font-family: 'Montserrat';
+$fonts: (
+  Montserrat-SemiBold: (
+    weight: 600,
+    style: normal,
+    display: swap,
+  ),
+  Montserrat-Bold: (
+    weight: bold,
+    style: normal,
+    display: swap,
+  ),
+  Montserrat-Regular: (
+    weight: normal,
+    style: normal,
+    display: swap,
+  ),
+  Montserrat-Medium: (
+    weight: 500,
+    style: normal,
+    display: swap,
+  ),
+  Montserrat-ExtraBold: (
+    weight: 800,
+    style: normal,
+    display: swap,
+  ),
+  MMontserrat-Black: (
+    weight: 900,
+    style: normal,
+    display: swap,
+  ),
+);
+$formats: (
+  eot: embedded-opentype,
+  woff: woff,
+  woff2: woff2,
+  ttf: truetype,
+  svg: svg,
+);
+
+@function ie-font-url($name) {
+  @return url('#{$path + $name}.eot');
+}
+
+@function check-type($name, $format) {
+  $type: '';
+
+  @if ($format== 'eot') {
+    $type: $type + '?#iefix';
+  } @else if($format== 'svg') {
+    $type: '#{$type}##{$name}';
+  }
+
+  @return $type;
+}
+
+@function font-url($name) {
+  $count: 0;
+  $urls: '';
+
+  @each $format, $type in $formats {
+    $str: if($count==0, '', ',');
+    $str: $str +
+      url('#{$path + $name}.#{$format + check-type($name, $format)}');
+    $str: $str + if($type, ' ' + format('#{$type}'), '');
+
+    $urls: $urls + $str;
+    $count: $count + 1;
+  }
+
+  @return #{$urls};
+}
+
+@each $name, $styles in $fonts {
+  @font-face {
+    font-family: $font-family;
+
+    @each $style, $val in $styles {
+      font: {
+        #{$style}: $val;
+      }
+    }
+
+    src: ie-font-url($name);
+    src: font-url($name);
+  }
+}

@@ -1,0 +1,33 @@
+$font-family: Montserrat, sans-serif;
+
+$prefixes: -webkit-, -moz-, -ms-, -o-;
+
+$xxs: 320px;
+$xs: 480px;
+$sm: 640px;
+$md: 768px;
+$lg: 960px;
+$xl: 1200px;
+$xxl: 1440px;
+
+$white: #ffffff;
+$black: #000000;
+$yellow: #ffff00;
+$orange: #fac601;
+$brown: #604a00;
+$brown-dark: #1e1e1e;
+$blue: #2b3ea3;
+$blue-light: #7aafff;
+$blue-dark: #2d3a7d;
+$gray: #bebec8;
+$gray-misty: #dfe2eb;
+$gray-misty-light: #f5f6f9;
+$gray-dark: #373742;
+$gray-light: #eaeaea;
+$red: #e83841;
+$hr: #4e4e5e;
+
+:export {
+  white: $white;
+  black: $black;
+}

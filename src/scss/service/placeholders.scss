@@ -1,0 +1,85 @@
+%flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+%button {
+  border: none;
+  padding: 0;
+  margin: 0;
+  transition: all 0.6s ease;
+  cursor: pointer;
+  zoom: 1;
+  overflow: visible;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+
+  .ui-button-text {
+    padding: 0;
+    display: block;
+  }
+}
+
+%button-dark {
+  @extend %button;
+  color: $white;
+  background: $blue;
+  text-align: center;
+  border: none;
+
+  &:hover {
+    background: $blue-dark;
+  }
+
+  .ui-button-text {
+    line-height: 20px;
+    font-weight: 800;
+    font-size: 16px;
+  }
+}
+
+%button-light {
+  @extend %button;
+
+  color: $blue;
+  background: transparent;
+
+  &:hover {
+    color: $white;
+    background: $blue;
+  }
+
+  .ui-button-text {
+    border: 2px solid $blue;
+  }
+}
+
+%input {
+  vertical-align: middle;
+  font-size: 16px;
+  line-height: 58px;
+  color: $gray;
+  border: 1px solid $gray-misty;
+  box-sizing: border-box;
+  padding: 0 20px;
+
+  @include state {
+    &-error {
+      border: 1px solid $red;
+
+      &::placeholder {
+        color: $red;
+      }
+    }
+  }
+}
+
+%or-other {
+  margin-top: 30px;
+  text-align: center;
+
+  .ui-commandlink {
+    margin-left: 5px;
+  }
+}

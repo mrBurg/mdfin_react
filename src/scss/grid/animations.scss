@@ -1,0 +1,43 @@
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes show-cookies {
+  from {
+    max-height: 0;
+  }
+
+  to {
+    max-height: 250px;
+  }
+}
+
+@keyframes hide-cookies {
+  from {
+    max-height: 250px;
+  }
+
+  to {
+    max-height: 0;
+  }
+}
