@@ -1,42 +1,26 @@
 import { ReactElement } from 'react';
-import Link from 'next/link';
 
-// import style from './Header.module.scss';
+import style from './HeaderMenu.module.scss';
 
-import LogoDark from './Logo/logo-dark.svg';
-import LogoWhite from './Logo/logo-white.svg';
-
-import { URLS } from './../../routes';
+import Logo from './Logo';
 import ClientMenu from './ClientMenu';
 import PhoneList from './PhoneList';
 import MainMenu from './MainMenu';
 import CustomerMenu from './CustomerMenu';
 import LanguagesSwitcher from './LanguagesSwitcher';
 
-type THeaderMenu = {
-  mainPage: boolean;
-};
-
-export function HeaderMenu({ mainPage }: THeaderMenu): ReactElement {
-  const Logo: string = mainPage ? LogoWhite : LogoDark;
-
+export function HeaderMenu(): ReactElement {
   return (
     <>
-      <div className='menu-header'>
+      <div className={style.header_menu}>
         {false && <div className='mobile-menu' />}
-        <div className='logo'>
-          <Link href={URLS.HOME} as={URLS.HOME}>
-            <a>
-              <Logo />
-            </a>
-          </Link>
-        </div>
+        <Logo />
         {false && <ClientMenu />}
       </div>
-      <div className='menu-box'>
+      <div className={style.menu_box}>
         <PhoneList />
         <MainMenu />
-        <hr className='divider' />
+        <hr className={style.divider} />
         <CustomerMenu />
         <LanguagesSwitcher />
       </div>

@@ -1,29 +1,30 @@
-import { observable, action, runInAction, computed } from 'mobx';
+import Router from 'next/router';
+import { computed, action, runInAction, observable } from 'mobx';
+
+import { URLS } from '../routes';
+import { isBrowser } from '../utils';
 
 export default class MainStore {
-  timer: NodeJS.Timeout | undefined;
+  @observable isMainPage: boolean = true;
 
   constructor() {
     this.start();
   }
 
-  @observable counter = 0;
+  /* @computed get isMainPage() {
+    if (isBrowser) {
+      return Router.route == URLS.HOME;
+    }
+  } */
 
   @action start = () => {
     setInterval(() => {
       runInAction(() => {
-        this.counter += 1;
+        if (isBrowser) {
+          // this.isMainPage = Router.route == URLS.HOME;
+          this.isMainPage = !this.isMainPage;
+        }
       });
-    }, 1000);
+    }, 200);
   };
-
-  @computed get timeString() {
-    const pad = (n: number) => (n < 10 ? `0${n}` : n);
-    const format = (t: Date) =>
-      `${pad(t.getUTCHours())}
-			:${pad(t.getUTCMinutes())}
-      :${pad(t.getUTCSeconds())}`;
-
-    return format(new Date(this.counter));
-  }
 }

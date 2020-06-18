@@ -40,13 +40,10 @@ export class Layout extends Component<IPageProps> {
 
   public render(): ReactElement {
     const { Component, ...pageProps } = this.props;
-    const {
-      router: { route },
-    } = pageProps;
 
     return (
       <>
-        <Header currentRoute={route} />
+        <Header />
         <main>
           <Component {...pageProps} />
         </main>

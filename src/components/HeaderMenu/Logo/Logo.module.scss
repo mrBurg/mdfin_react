@@ -1,0 +1,30 @@
+@import './../../../scss/service/';
+
+.logo {
+  min-width: 160px;
+
+  @include respond(md) {
+    margin: 0 50px;
+  }
+
+  &-white,
+  &-dark {
+    display: none;
+  }
+
+  &-white {
+    @include page-state('.home-page') {
+      display: block;
+    }
+
+    @include page-state('.menu-open') {
+      display: none;
+    }
+  }
+
+  &-dark {
+    @include page-state(('.content-page', '.menu-open')) {
+      display: block;
+    }
+  }
+}

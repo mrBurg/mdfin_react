@@ -1,11 +1,13 @@
 import { ReactElement } from 'react';
 import Link from 'next/link';
 
+import style from './MainMenu.module.scss';
+
 import { mainMenu, testPages, TRouter } from './../../../routes';
 
 export function MainMenu(): ReactElement {
   return (
-    <div className='menu'>
+    <div className={style.menu}>
       <ul>
         {mainMenu.map((item: TRouter, i: number) => {
           const { href, alias, title } = item;

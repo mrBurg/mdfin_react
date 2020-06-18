@@ -1,4 +1,5 @@
 import { useStaticRendering } from 'mobx-react';
+
 import { isServer } from '../utils';
 import MainStore from './mainStore';
 
@@ -10,16 +11,16 @@ export type TStores = {
   [STORE_IDS.MAIN_STORE]: MainStore;
 };
 
-useStaticRendering(isServer);
+const mainStore: MainStore = new MainStore();
 
 let stores: TStores | undefined;
 
-//@ts-ignore
-export default function initializeStores(initialData: any = null) {
-  // console.info(initialData);
+useStaticRendering(isServer);
 
+//@ts-ignore
+export default function initializeStores(initialData?: TStores) {
   const _stores: TStores = stores ?? {
-    [STORE_IDS.MAIN_STORE]: new MainStore(),
+    [STORE_IDS.MAIN_STORE]: mainStore,
   };
 
   if (isServer) return _stores;

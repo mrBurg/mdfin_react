@@ -10,13 +10,15 @@ import { IPageProps } from '../src/interfaces';
 type TAppProps = IPageProps & { mobxStores: TStores };
 
 export default class App extends NextApp {
-  private mobxStores: TStores;
+  public readonly mobxStores: any;
 
   constructor(props: TAppProps) {
     super(props);
 
     this.mobxStores =
-      isServer && props.mobxStores ? props.mobxStores : initializeStores();
+      isServer && props.mobxStores
+        ? props.mobxStores
+        : initializeStores(props.mobxStores);
   }
 
   public render(): ReactElement {
