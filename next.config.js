@@ -13,6 +13,7 @@ module.exports = withSass({
     LOCAL_HOST: process.env.LOCAL_HOST,
     LOCAL_PORT: process.env.LOCAL_PORT,
   },
+  distDir: 'build',
   webpack(config, options) {
     const {
       resolve: { alias },

@@ -1,5 +1,5 @@
+import { GetStaticProps, GetStaticPropsContext } from 'next';
 import Head from 'next/head';
-
 import Gettext from 'node-gettext';
 import GetText from 'node-gettext';
 // import { po as gtParser } from 'gettext-parser';
@@ -8,8 +8,11 @@ import uaLocale from './../src/locales/ua-UA/common.json';
 import ruLocale from './../src/locales/ru-RU/common.json';
 
 import Counter from './../src/components/Counter';
-import { GetStaticProps } from 'next';
 import { TJSON } from '../src/interfaces';
+
+type TPageProps = {
+  pageProps: TJSON;
+};
 
 const gt: GetText = new Gettext();
 
@@ -20,7 +23,8 @@ gt.addTranslations('ua-UA', domain, uaLocale);
 gt.addTranslations('ru-RU', domain, ruLocale);
 gt.setLocale('ua-UA');
 
-export default function (props: any) {
+export default function (props: TPageProps) {
+  console.info(props);
   const {
     pageProps: { title },
   } = props;
@@ -36,7 +40,10 @@ export default function (props: any) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async (
+  context: GetStaticPropsContext
+) => {
+  // console.info(context);
   const pageProps: TJSON = {
     title: gt.gettext('siteTitle'),
   };
@@ -48,10 +55,17 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-/* export async function getStaticProps() {
-  return { props: { date: Date.now() } };
-} */
+/* export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  console.info(context);
+  const pageProps: TJSON = {
+    title: gt.gettext('siteTitle'),
+  };
 
-/* export async function getServerSideProps() {
-  return { props: { date: Date.now() } };
-} */
+  return {
+    props: {
+      ...pageProps,
+    },
+  };
+}; */

@@ -1,4 +1,3 @@
-import Router from 'next/router';
 import { computed, action, runInAction, observable } from 'mobx';
 
 import { URLS } from '../routes';
@@ -8,7 +7,7 @@ export default class MainStore {
   @observable isMainPage: boolean = true;
 
   constructor() {
-    this.start();
+    // this.start();
   }
 
   /* @computed get isMainPage() {
@@ -25,6 +24,6 @@ export default class MainStore {
           this.isMainPage = !this.isMainPage;
         }
       });
-    }, 200);
+    }, 1000);
   };
 }

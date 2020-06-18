@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { Component, ReactElement } from 'react';
 import Link from 'next/link';
 import { inject, observer } from 'mobx-react';
 
@@ -11,23 +11,17 @@ import MainStore from '../../../stores/mainStore';
 import { STORE_IDS } from '../../../stores';
 import { URLS } from './../../../routes';
 
-/* export function Logo(): ReactElement {
-  return (
-    <div className={style.logo}>
-      <Link href={URLS.HOME} as={URLS.HOME}>
-        <a>{'<LogoImage />'}</a>
-      </Link>
-    </div>
-  );
-} */
-
 type TLogo = {
-  mainStore: MainStore;
+  mainStore?: MainStore;
 };
 
-export const Logo = inject(STORE_IDS.MAIN_STORE)(
-  observer(
-    ({ mainStore }: TLogo): ReactElement => {
+@inject(STORE_IDS.MAIN_STORE)
+@observer
+export class Logo extends Component<TLogo> {
+  render(): ReactElement | null {
+    const { mainStore } = this.props;
+
+    if (mainStore) {
       const { isMainPage } = mainStore;
       const LogoImage: string = isMainPage ? LogoWhite : LogoDark;
 
@@ -41,5 +35,7 @@ export const Logo = inject(STORE_IDS.MAIN_STORE)(
         </div>
       );
     }
-  )
-);
+
+    return null;
+  }
+}
