@@ -1,5 +1,5 @@
 export default function SSR(props: any) {
-  let {
+  const {
     pageProps: { dateTime },
   } = props;
 

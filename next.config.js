@@ -10,17 +10,21 @@ module.exports = withSass({
     localIdentName: '[local]___[hash:base64:5]',
   },
   env: {
-    HOST: process.env.HOST,
-    PORT: process.env.PORT,
+    LOCAL_HOST: process.env.LOCAL_HOST,
+    LOCAL_PORT: process.env.LOCAL_PORT,
   },
   webpack(config, options) {
-    let {
+    const {
       resolve: { alias },
     } = config;
 
     config.resolve.alias = {
       ...alias,
       normalize: 'normalize.css/normalize.css',
+    };
+
+    config.node = {
+      // fs: 'empty',
     };
 
     return config;

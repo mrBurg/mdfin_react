@@ -4,7 +4,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 export default class CustomDocument extends Document {
   render() {
     return (
-      <html lang='en'>
+      <html lang='ua-UA'>
         <Head>
           <link rel='icon' href='/favicon.ico' />
         </Head>

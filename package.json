@@ -7,14 +7,15 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "dotenv": "^8.2.0",
+    "gettext-parser": "^4.0.3",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "next": "^9.4.4",
+    "node-gettext": "^3.0.0",
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "sass": "^1.26.8"
+    "react-scripts": "3.4.1"
   },
   "scripts": {
     "react:start": "react-scripts start",
@@ -43,7 +44,9 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/plugin-proposal-decorators": "^7.10.1",
+    "@types/gettext-parser": "^4.0.0",
     "@types/node": "^14.0.13",
+    "@types/node-gettext": "^3.0.1",
     "@types/react": "^16.9.36",
     "@types/react-dom": "^16.9.8",
     "@zeit/next-sass": "^1.0.1",

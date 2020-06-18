@@ -1,4 +1,4 @@
-type TRouter = {
+export type TRouter = {
   href: URLS;
   alias: string;
   title: string;

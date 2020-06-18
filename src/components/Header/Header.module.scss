@@ -1,31 +1,18 @@
 @import './../../scss/service/';
 
-.main-menu {
-  display: flex;
-  list-style: none;
-
-  li {
-    margin: 0 1.5em;
-  }
-}
-
 .header {
-  display: flex;
-  justify-content: space-around;
-  // background: $blue-light;
-  // position: relative;
-  // z-index: 99;
+  background: $blue-light;
+  position: relative;
+  transition: all 0.2s;
 
-  /* @include respond(md) {
+  @include respond(md) {
     height: 96px;
-  } */
+  }
 
-  /* @include page-state('.content-page') {
+  @include page-state('.content-page') {
     margin-bottom: 40px;
     background: $white;
-  } */
-
-  transition: all 0.2s;
+  }
 
   &_blue {
     background: $blue-light;
@@ -34,85 +21,33 @@
   &_white {
     background: $white;
   }
+}
 
-  .container {
-    padding-top: 25px;
-    justify-content: space-between;
-    display: flex;
+.container {
+  padding-top: 25px;
+  justify-content: space-between;
+  display: flex;
 
-    /* @include respond(md) {
-      padding-bottom: 25px;
-      flex-direction: column;
-    } */
-
-    /* @include respond((lg, xl)) {
-      flex-direction: column;
-      align-items: center;
-    } */
-
-    /* @include page-state('.content-page') {
-      border-bottom: 1px solid $gray-misty;
-      padding-bottom: 25px;
-    } */
-
-    /* @include page-state('.menu-open') {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: $white;
-    } */
+  @include respond(md) {
+    padding-bottom: 25px;
+    flex-direction: column;
   }
 
-  .menu-header {
-    display: flex;
-    justify-content: space-between;
-    flex-grow: 1;
+  @include respond((lg, xl)) {
+    flex-direction: column;
     align-items: center;
   }
 
-  .phone-list,
-  .language {
-    &-button {
-      white-space: nowrap;
+  @include page-state('.content-page') {
+    border-bottom: 1px solid $gray-misty;
+    padding-bottom: 25px;
+  }
 
-      &:after {
-        content: '';
-        background: url('/resources/theme/icons/icons_8x8.svg') 0 0;
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-
-        /* @include page-state(('.content-page', '.menu-open')) {
-          background-position: 0 -8px;
-        } */
-      }
-    }
-
-    ul {
-      display: none;
-      list-style: none;
-    }
-
-    &.show {
-      ul {
-        display: block;
-        position: absolute;
-        top: 22px;
-        z-index: 10;
-        // background: $white;
-        text-align: left;
-
-        /* @include page-state('.home-page') {
-          background: $blue-light;
-        } */
-
-        /* @include page-state('.menu-open') {
-          background: $white;
-          position: relative;
-          top: 0;
-        } */
-      }
-    }
+  @include page-state('.menu-open') {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: $white;
   }
 }

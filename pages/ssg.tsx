@@ -1,5 +1,5 @@
 export default function SSG(props: any) {
-  let {
+  const {
     pageProps: { dateTime },
   } = props;
 

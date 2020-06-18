@@ -9,7 +9,7 @@ export default class Counter extends Component<{
   [STORE_IDS.MAIN_STORE]?: MainStore;
 }> {
   public render(): ReactElement {
-    let { mainStore } = this.props;
+    const { mainStore } = this.props;
 
     return <h1>{mainStore?.counter}</h1>;
   }

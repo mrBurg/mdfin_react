@@ -31,7 +31,7 @@ export class Layout extends Component<IPageProps> {
 
   /* public componentDidUpdate(): void {
     console.info('componentDidUpdate');
-    let { authStore } = this.props;
+    const { authStore } = this.props;
 
     if (!authStore.hasToken) {
       this.redirectToSignin();
@@ -39,11 +39,14 @@ export class Layout extends Component<IPageProps> {
   } */
 
   public render(): ReactElement {
-    let { Component, ...pageProps } = this.props;
+    const { Component, ...pageProps } = this.props;
+    const {
+      router: { route },
+    } = pageProps;
 
     return (
       <>
-        <Header {...pageProps} />
+        <Header currentRoute={route} />
         <main>
           <Component {...pageProps} />
         </main>

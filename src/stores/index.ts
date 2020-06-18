@@ -18,7 +18,7 @@ let stores: TStores | undefined;
 export default function initializeStores(initialData: any = null) {
   // console.info(initialData);
 
-  const _stores = stores ?? {
+  const _stores: TStores = stores ?? {
     [STORE_IDS.MAIN_STORE]: new MainStore(),
   };
 
