@@ -1,6 +1,12 @@
 /// <reference types="next" />
 /// <reference types="next/types/global" />
 
+declare module '*.po' {
+  const poModule: { [key: string]: string };
+
+  export default poModule;
+}
+
 /* declare module '*.scss' {
   const classes: { [key: string]: string };
   export default classes;

@@ -12,22 +12,18 @@ module.exports = withSass({
   env: {
     LOCAL_HOST: process.env.LOCAL_HOST,
     LOCAL_PORT: process.env.LOCAL_PORT,
+    LANG_COOKIE_NAME: process.env.LANG_COOKIE_NAME,
   },
   distDir: 'build',
   webpack(config, options) {
-    const {
-      resolve: { alias },
-    } = config;
+    config.resolve.alias.normalize = 'normalize.css/normalize.css';
 
-    config.resolve.alias = {
-      ...alias,
-      normalize: 'normalize.css/normalize.css',
-    };
+    config.module.rules.push({
+      test: /\.pot?$/,
+      loaders: ['json-loader', 'po-gettext-loader'],
+    });
 
-    config.node = {
-      // fs: 'empty',
-    };
-
+    // console.info(config, options);
     return config;
   },
 });

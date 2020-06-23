@@ -1,6 +1,6 @@
-import { computed, action, runInAction, observable } from 'mobx';
+import { action, runInAction, observable } from 'mobx';
 
-import { URLS } from '../routes';
+// import { URLS } from '../routes';
 import { isBrowser } from '../utils';
 
 export default class MainStore {

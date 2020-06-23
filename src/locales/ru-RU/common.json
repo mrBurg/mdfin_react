@@ -1,23 +1,4 @@
 {
-  "charset": "utf-8",
-  "headers": {
-    "MIME-Version": "1.0",
-    "Content-Type": "text/plain; charset=UTF-8",
-    "Content-Transfer-Encoding": "8bit",
-    "Language": "ua-UA"
-  },
-  "translations": {
-    "": {
-      "": {
-        "msgid": "",
-        "msgstr": [
-          "MIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nLanguage: ru-RU\n"
-        ]
-      },
-      "siteTitle": {
-        "msgid": "siteTitle",
-        "msgstr": ["Займы онлайн"]
-      }
-    }
-  }
+    "hello": "Здравствуйте!",
+    "bye": "До свиданья!"
 }

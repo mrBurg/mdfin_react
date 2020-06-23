@@ -1,0 +1,6 @@
+{
+  "defaultLocale": "ua-UA",
+  "locales": ["ua-UA", "ru-RU"],
+  "localeDomain": "common",
+  "localesPath": "locales"
+}

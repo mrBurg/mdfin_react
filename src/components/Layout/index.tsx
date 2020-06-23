@@ -1,53 +1,41 @@
 import React, { Component, ReactElement } from 'react';
-import { IPageProps } from '../../interfaces';
 
 import './../../scss/index.scss';
 import './Layout.scss';
+
+import { defaultLocale } from './../../config.json';
+import { IPageProps } from '../../interfaces';
+import WithLocale from './WithLocale';
 import Header from '../Header';
+import { observer, inject } from 'mobx-react';
+import { STORE_IDS } from '../../stores';
+import LocaleStore from '../../stores/localeStore';
 
-export class Layout extends Component<IPageProps> {
-  // public state: any = {};
+type TLayout = {
+  localeStore: LocaleStore;
+} & IPageProps;
 
-  /* public static getDerivedStateFromProps(props: any, state: any) {
-    // props.authStore.readToken();
-    console.info(props, '###');
+@inject(STORE_IDS.LOCALE_STORE)
+@observer
+export class Layout extends Component<TLayout> {
+  constructor(props: TLayout) {
+    super(props);
 
-    return {
-      ...state,
-    };
+    const { localeStore } = props;
+
+    localeStore.setCurrentLanguage(defaultLocale);
   }
- */
-
-  /* public componentDidMount(): void {
-    console.info('componentDidMount');
-
-    this.setState((state: IPageState) => {
-      return {
-        ...state,
-        isCSR: isBrowser
-      };
-    });
-  } */
-
-  /* public componentDidUpdate(): void {
-    console.info('componentDidUpdate');
-    const { authStore } = this.props;
-
-    if (!authStore.hasToken) {
-      this.redirectToSignin();
-    }
-  } */
 
   public render(): ReactElement {
-    const { Component, ...pageProps } = this.props;
+    const { Component, localeStore, ...pageProps } = this.props;
 
     return (
-      <>
+      <WithLocale {...localeStore}>
         <Header />
         <main>
           <Component {...pageProps} />
         </main>
-      </>
+      </WithLocale>
     );
   }
 }

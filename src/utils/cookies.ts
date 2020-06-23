@@ -1,6 +1,6 @@
 import { TJSON } from '../interfaces';
 
-export function setCookie(name: string, value: any, exdays: number): void {
+export function setCookie(name: string, value: any, exdays?: number): void {
   const data: string = `${name}=${value}`;
   const path: string = 'path=/';
   let expires: string = '';
