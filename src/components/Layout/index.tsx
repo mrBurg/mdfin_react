@@ -1,7 +1,6 @@
 import React, { Component, ReactElement, createContext } from 'react';
 
-import './../../scss/index.scss';
-import './Layout.scss';
+import style from './Layout.module.scss';
 
 import { IPageProps, IPageState } from '../../interfaces';
 import WithLocale from './WithLocale';
@@ -41,7 +40,7 @@ export class Layout extends Component<IPageProps & any, IPageState> {
         <LocaleContextProvider value={localeStore}>
           <WithLocale locale={locale}>
             <Header />
-            <main>
+            <main className={style.main}>
               <Component {...pageProps} />
             </main>
           </WithLocale>

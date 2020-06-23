@@ -2,6 +2,8 @@ import NextApp from 'next/app';
 import { ReactElement } from 'react';
 import { Provider } from 'mobx-react';
 
+import './../src/scss/index.scss';
+
 import { Layout } from '../src/components/Layout';
 import { isServer } from '../src/utils';
 import initializeStores, { TStores } from '../src/stores';

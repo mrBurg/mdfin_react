@@ -26,18 +26,6 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/plugin-proposal-decorators": "^7.10.3",
@@ -46,11 +34,11 @@
     "@types/node-gettext": "^3.0.1",
     "@types/react": "^16.9.38",
     "@types/react-dom": "^16.9.8",
-    "@zeit/next-sass": "^1.0.1",
     "babel-plugin-inline-react-svg": "^1.1.1",
     "json-loader": "^0.5.7",
     "node-sass": "^4.14.1",
     "po-gettext-loader": "^1.0.0",
+    "sass": "^1.26.9",
     "typescript": "^3.9.5"
   }
 }
