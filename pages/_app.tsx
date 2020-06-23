@@ -10,7 +10,7 @@ import { IPageProps } from '../src/interfaces';
 type TAppProps = IPageProps & { mobxStores: TStores };
 
 export default class App extends NextApp {
-  public readonly mobxStores: any;
+  public readonly mobxStores: TStores;
 
   constructor(props: TAppProps) {
     super(props);

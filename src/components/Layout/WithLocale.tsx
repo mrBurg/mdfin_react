@@ -1,18 +1,19 @@
-import React, { ReactElement, FC, ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, ReactElement, FC } from 'react';
 
-type TWithGettext = {
-  children?: ReactNode;
-  locale?: string;
+type TWithLocale = {
+  children: ReactNode;
+  locale: string;
 };
 
-const WithGettext: FC = ({ children, locale }: TWithGettext): ReactElement => {
-  if (locale) {
-    useEffect(() => {
-      document.documentElement.lang = locale;
-    });
-  }
+const WithLocale: FC<TWithLocale> = ({
+  children,
+  locale,
+}: TWithLocale): ReactElement => {
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  });
 
   return <>{children}</>;
 };
 
-export default WithGettext;
+export default WithLocale;

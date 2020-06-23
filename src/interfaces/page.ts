@@ -7,3 +7,7 @@ export type IPageProps = {
   pageProps: AppInitialProps;
   router: Router;
 };
+
+export type IPageState = {
+  isCSR?: Boolean;
+};

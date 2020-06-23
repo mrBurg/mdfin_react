@@ -1,32 +1,9 @@
-import Document, {
-  Head,
-  Main,
-  NextScript,
-  DocumentContext,
-  DocumentInitialProps,
-} from 'next/document';
+import Document, { Head, Main, NextScript } from 'next/document';
 
 import { defaultLocale } from './../src/config.json';
 
-type TCustomDocumentProps = {
-  defaultLocale: string;
-};
-
-export default class CustomDocument extends Document<TCustomDocumentProps> {
-  static async getInitialProps(context: DocumentContext) {
-    const initialProps: DocumentInitialProps = await Document.getInitialProps(
-      context
-    );
-
-    return {
-      ...initialProps,
-      defaultLocale,
-    };
-  }
-
+export default class CustomDocument extends Document {
   render() {
-    const { defaultLocale } = this.props;
-
     return (
       <html lang={defaultLocale}>
         <Head>
