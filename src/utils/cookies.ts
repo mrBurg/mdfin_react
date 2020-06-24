@@ -1,16 +1,31 @@
 import { TJSON } from '../interfaces';
 
-export function setCookie(name: string, value: any, exdays?: number): void {
+type TCookieData = string | number | object;
+
+export function setCookie(
+  name: string,
+  value: any,
+  cookieData?: TCookieData
+): void {
+  const date: Date = new Date();
   const data: string = `${name}=${value}`;
-  const path: string = 'path=/';
+  let path: string = 'path=/';
   let expires: string = '';
 
-  if (exdays) {
-    const date: Date = new Date();
+  if (cookieData) {
+    switch (cookieData.constructor) {
+      case String:
+        path = `path=${cookieData}`;
+        break;
+      case Number:
+        date.setTime(date.getTime() + +cookieData * 24 * 60 * 60 * 1000);
 
-    date.setTime(date.getTime() + exdays * 24 * 60 * 60 * 1000);
-
-    expires = 'expires=#{date.toUTCString()}';
+        expires = `expires=${date.toUTCString()}`;
+        break;
+      case Object:
+        // console.info('Object');
+        break;
+    }
   }
 
   document.cookie = `${data};${path};${expires}`;

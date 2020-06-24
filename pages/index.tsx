@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 /* import {
   GetStaticProps,
   GetStaticPropsContext,
@@ -8,13 +8,24 @@ import { ReactElement } from 'react';
 } from 'next'; */
 
 import { gt } from '../src/utils';
+import { useRouter, NextRouter } from 'next/router';
 
 export default (): ReactElement => {
+  const router: NextRouter = useRouter();
+
+  useEffect(() => {
+    console.info(router.route);
+    // router.replace('/[lang]', `/`)
+  });
+
   return (
     <>
       <Head>
         <title>{gt.gettext('hello')}</title>
       </Head>
+      {/* <Head>
+        <meta name='robots' content='noindex, nofollow' />
+      </Head> */}
     </>
   );
 };
