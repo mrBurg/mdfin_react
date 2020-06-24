@@ -1,4 +1,12 @@
-export default function SSR(props: any) {
+import { ReactElement } from 'react';
+
+import { TJSON } from '../src/interfaces';
+
+type TSSRProps = {
+  pageProps: TJSON;
+};
+
+export default function SSR(props: TSSRProps): ReactElement {
   const {
     pageProps: { dateTime },
   } = props;

@@ -4,12 +4,15 @@ import { Provider } from 'mobx-react';
 
 import './../src/scss/index.scss';
 
-import { Layout } from '../src/components/Layout';
+import { IPageProps } from '../src/interfaces';
+import LocaleStore from '../src/stores/localeStore';
 import { isServer } from '../src/utils';
 import initializeStores, { TStores } from '../src/stores';
-import { IPageProps } from '../src/interfaces';
+import { Layout } from '../src/components/Layout';
+import Test from '../src/components/Test';
 
 type TAppProps = IPageProps & { mobxStores: TStores };
+type TLayoutProps = IPageProps & { localeStore: LocaleStore };
 
 export default class App extends NextApp {
   public readonly mobxStores: TStores;
@@ -24,9 +27,17 @@ export default class App extends NextApp {
   }
 
   public render(): ReactElement {
+    const { localeStore } = this.mobxStores;
+
+    const layoutProps: TLayoutProps = {
+      localeStore,
+      ...this.props,
+    };
+
     return (
       <Provider {...this.mobxStores}>
-        <Layout {...this.props} />
+        <Layout {...layoutProps} />
+        <Test />
       </Provider>
     );
   }

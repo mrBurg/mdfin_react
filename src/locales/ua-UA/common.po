@@ -9,9 +9,8 @@ msgstr ""
 
 #: 
 msgid "hello"
-msgstr "Вітаю"
+msgstr "Вітаю!"
 
 #: 
 msgid "bye"
 msgstr "Допобачення!"
-

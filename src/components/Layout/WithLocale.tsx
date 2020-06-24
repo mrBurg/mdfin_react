@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, ReactElement, FC } from 'react';
+import { useEffect, ReactElement, FC, ReactNode } from 'react';
 
 type TWithLocale = {
   children: ReactNode;
@@ -9,7 +9,7 @@ const WithLocale: FC<TWithLocale> = ({
   children,
   locale,
 }: TWithLocale): ReactElement => {
-  useEffect(() => {
+  useEffect((): void => {
     document.documentElement.lang = locale;
   });
 

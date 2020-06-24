@@ -1,4 +1,12 @@
-export default function SSG(props: any) {
+import { ReactElement } from 'react';
+
+import { TJSON } from '../src/interfaces';
+
+type TSSRProps = {
+  pageProps: TJSON;
+};
+
+export default function SSG(props: TSSRProps): ReactElement {
   const {
     pageProps: { dateTime },
   } = props;

@@ -1,60 +1,21 @@
 import Head from 'next/head';
-import GetText from 'node-gettext';
-
-import { TJSON } from '../src/interfaces';
-
-import { defaultLocale, locales } from './../src/config.json';
+import { ReactElement } from 'react';
 /* import {
   GetStaticProps,
   GetStaticPropsContext,
   GetServerSideProps,
   GetServerSidePropsContext,
 } from 'next'; */
-import LocaleStore from '../src/stores/localeStore';
-import { useContext } from 'react';
-import { LocaleContext } from '../src/components/Layout';
 
-type TPageProps = {
-  pageProps: TJSON;
-  localeStore: LocaleStore;
-};
+import { gt } from '../src/utils';
 
-const gt: GetText = new GetText();
-
-const domain: string = 'common';
-const locelesPath: string = 'locales';
-
-locales.forEach((locale: string) => {
-  const localePath: string = `${locelesPath}/${locale}/${domain}`;
-
-  import(`./../src/${localePath}.po`).then((localeData: TJSON) => {
-    gt.addTranslations(locale, domain, localeData);
-  });
-});
-
-gt.setTextDomain(domain);
-gt.setLocale(defaultLocale);
-
-export default (props: TPageProps) => {
-  const localeContext = useContext(LocaleContext);
-
-  if (localeContext) {
-    const { locale } = localeContext;
-
-    gt.setLocale(locale);
-  }
-
-  let {
-    pageProps: { title },
-  } = props;
+export default (): ReactElement => {
+  console.info(gt);
 
   return (
     <>
       <Head>
-        <title>
-          {gt.gettext('hello')}
-          {title}
-        </title>
+        <title>{gt.gettext('hello')}</title>
       </Head>
     </>
   );
@@ -67,6 +28,7 @@ export default (props: TPageProps) => {
     props: {
       ...context,
       title: gt.gettext('hello'),
+      mr: Math.random(),
     },
   };
 }; */
