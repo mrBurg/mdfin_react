@@ -1,4 +1,35 @@
 {
-    "hello": "Здравствуйте!",
-    "bye": "До свиданья!"
+  "charset": "utf-8",
+  "headers": {
+    "MIME-Version": "1.0",
+    "Content-Type": "text/plain; charset=UTF-8",
+    "Content-Transfer-Encoding": "8bit",
+    "X-Generator": "POEditor.com",
+    "Project-Id-Version": "MDFin",
+    "Language": "ru"
+  },
+  "translations": {
+    "": {
+      "": {
+        "msgid": "",
+        "msgstr": [
+          "MIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nX-Generator: POEditor.com\nProject-Id-Version: MDFin\nLanguage: ru\n"
+        ]
+      },
+      "hello": {
+        "msgid": "hello",
+        "comments": {
+          "reference": ""
+        },
+        "msgstr": ["Здравствуйте!"]
+      },
+      "bye": {
+        "msgid": "bye",
+        "comments": {
+          "reference": ""
+        },
+        "msgstr": ["До свиданья!"]
+      }
+    }
+  }
 }

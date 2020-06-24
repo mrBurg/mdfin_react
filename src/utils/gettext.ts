@@ -1,20 +1,21 @@
 import GetText from 'node-gettext';
 
-import { defaultLocale, locales } from './../config.json';
+import { defaultLocale, locales, defaultLocaleDomain } from './../config.json';
 import { TJSON } from '../interfaces';
+
+import uaLocale from './../locales/ua-UA/common.po';
+import ruLocale from './../locales/ru-RU/common.po';
 
 export const gt: GetText = new GetText();
 
-const domain: string = 'common';
-const locelesPath: string = 'locales';
+const localesData: TJSON = {
+  [locales[0]]: uaLocale,
+  [locales[1]]: ruLocale,
+};
 
 locales.forEach((locale: string) => {
-  const localePath: string = `${locelesPath}/${locale}/${domain}`;
-
-  import(`./../${localePath}.po`).then((localeData: TJSON) => {
-    gt.addTranslations(locale, domain, localeData);
-  });
+  gt.addTranslations(locale, defaultLocaleDomain, localesData[locale]);
 });
 
-gt.setTextDomain(domain);
+gt.setTextDomain(defaultLocaleDomain);
 gt.setLocale(defaultLocale);

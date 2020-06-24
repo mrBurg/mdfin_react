@@ -10,8 +10,6 @@ import { ReactElement } from 'react';
 import { gt } from '../src/utils';
 
 export default (): ReactElement => {
-  console.info(gt);
-
   return (
     <>
       <Head>

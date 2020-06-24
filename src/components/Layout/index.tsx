@@ -13,16 +13,12 @@ type TLayoutProps = {
   localeStore: LocaleStore;
 } & IPageProps;
 
-type TLayoutState = {
-  isCSR?: boolean;
-};
-
 // export const LocaleContext = createContext<LocaleStore | null>(null);
 // const LocaleContextProvider = LocaleContext.Provider;
 
 @inject(STORE_IDS.LOCALE_STORE)
 @observer
-export class Layout extends Component<TLayoutProps, TLayoutState> {
+export class Layout extends Component<TLayoutProps> {
   public render(): ReactElement {
     const { Component, localeStore, ...pageProps } = this.props;
     const { locale } = localeStore;

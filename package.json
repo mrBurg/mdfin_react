@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "dotenv": "^8.2.0",
-    "gettext-parser": "^4.0.3",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "next": "^9.4.4",

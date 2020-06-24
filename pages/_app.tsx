@@ -9,12 +9,11 @@ import LocaleStore from '../src/stores/localeStore';
 import { isServer } from '../src/utils';
 import initializeStores, { TStores } from '../src/stores';
 import { Layout } from '../src/components/Layout';
-import Test from '../src/components/Test';
 
 type TAppProps = IPageProps & { mobxStores: TStores };
 type TLayoutProps = IPageProps & { localeStore: LocaleStore };
 
-export default class App extends NextApp {
+export default class App extends NextApp<TAppProps> {
   public readonly mobxStores: TStores;
 
   constructor(props: TAppProps) {
@@ -37,7 +36,6 @@ export default class App extends NextApp {
     return (
       <Provider {...this.mobxStores}>
         <Layout {...layoutProps} />
-        <Test />
       </Provider>
     );
   }
