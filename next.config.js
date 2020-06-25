@@ -1,6 +1,13 @@
 const dotenv = require('dotenv');
+const sitemap = require('nextjs-sitemap-generator');
 
 dotenv.config({ path: './.env' });
+
+sitemap({
+  baseUrl: `${process.env.LOCAL_HOST}:${process.env.LOCAL_PORT}`,
+  pagesDirectory: __dirname + '/pages',
+  targetDirectory: './',
+});
 
 module.exports = {
   env: {

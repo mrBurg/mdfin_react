@@ -21,8 +21,7 @@ let stores: TStores | undefined;
 
 useStaticRendering(isServer);
 
-//@ts-ignore
-export default function initializeStores(initialData?: TStores) {
+export default function initializeStores() {
   const _stores: TStores = stores ?? {
     [STORE_IDS.LOCALE_STORE]: localeStore,
     [STORE_IDS.MAIN_STORE]: mainStore,

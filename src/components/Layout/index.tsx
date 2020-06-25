@@ -9,7 +9,7 @@ import { observer, inject } from 'mobx-react';
 import { STORE_IDS } from '../../stores';
 import LocaleStore from '../../stores/localeStore';
 
-type TLayoutProps = {
+export type TLayoutProps = {
   localeStore: LocaleStore;
 } & IPageProps;
 

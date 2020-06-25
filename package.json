@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "next": "^9.4.4",
+    "nextjs-sitemap-generator": "^1.0.0",
     "node-gettext": "^3.0.0",
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",
@@ -14,6 +16,7 @@
     "react-scripts": "^3.4.1"
   },
   "scripts": {
+    "init": "npm i & npm audit fix",
     "react:start": "react-scripts start",
     "react:build": "react-scripts build",
     "react:test": "react-scripts test",

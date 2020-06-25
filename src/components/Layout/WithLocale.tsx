@@ -13,11 +13,6 @@ const WithLocale: FC<TWithLocale> = ({
   locale,
 }: TWithLocale): ReactElement => {
   useEffect((): void => {
-    setCookie('string', locale, '/asd');
-    setCookie('number', locale, 1);
-    setCookie('object', locale, { path: '/', exdays: 5 });
-    setCookie('array', locale, []);
-
     setCookie(LANG_COOKIE_NAME, locale);
     document.documentElement.lang = locale;
   });

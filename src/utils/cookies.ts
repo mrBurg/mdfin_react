@@ -1,34 +1,41 @@
 import { TJSON } from '../interfaces';
 
-type TCookieData = string | number | object;
+type TCookieData = { path: string; expires: number };
 
 export function setCookie(
   name: string,
   value: any,
-  cookieData?: TCookieData
+  cookieData?: TCookieData | string | number
 ): void {
   const date: Date = new Date();
   const data: string = `${name}=${value}`;
-  let path: string = 'path=/';
-  let expires: string = '';
+  let cookiePath: string = 'path=/';
+  let dateExpires: string = '';
 
   if (cookieData) {
     switch (cookieData.constructor) {
       case String:
-        path = `path=${cookieData}`;
+        cookiePath = `path=${cookieData}`;
         break;
       case Number:
         date.setTime(date.getTime() + +cookieData * 24 * 60 * 60 * 1000);
 
-        expires = `expires=${date.toUTCString()}`;
+        dateExpires = `expires=${date.toUTCString()}`;
         break;
       case Object:
-        // console.info('Object');
+        const { path, expires } = <TCookieData>cookieData;
+
+        if (path) cookiePath = path;
+        if (expires) {
+          date.setTime(date.getTime() + expires * 24 * 60 * 60 * 1000);
+
+          dateExpires = `expires=${date.toUTCString()}`;
+        }
         break;
     }
   }
 
-  document.cookie = `${data};${path};${expires}`;
+  document.cookie = `${data};${cookiePath};${dateExpires}`;
 }
 
 export function getCookie(name: string): string | void {
@@ -37,7 +44,7 @@ export function getCookie(name: string): string | void {
     '; '
   );
 
-  cookiesData.map((part: string) => {
+  cookiesData.map((part: string): void => {
     const cookiePart: Array<string> = part.split('=');
 
     cookies[cookiePart[0]] = cookiePart[1];
