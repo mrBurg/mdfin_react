@@ -14,7 +14,7 @@ export default (): ReactElement => {
   const router: NextRouter = useRouter();
 
   useEffect(() => {
-    console.info(router.route);
+    console.info(`Current route ${router.route}`);
     // router.replace('/[lang]', `/`)
   });
 

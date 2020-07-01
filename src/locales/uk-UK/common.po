@@ -5,30 +5,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: MDFin\n"
-"Language: ru\n"
+"Language: uk\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: 
 msgid "hello"
-msgstr "Здравствуйте!"
+msgstr "Вітаю!"
 
 #: 
 msgid "bye"
-msgstr "До свиданья!"
+msgstr "Допобачення!"
 
 #: 
 msgid "plural-days"
 msgid_plural "plural-days"
 msgstr[0] "День"
 msgstr[1] "Дня"
-msgstr[2] "Дней"
-msgstr[3] "Деньков"
+msgstr[2] "Днів"
+msgstr[3] "Деньків"
 
 #: 
 msgid "plural-seconds"
 msgid_plural "plural-seconds"
 msgstr[0] "Секунда"
-msgstr[1] "Секунды"
+msgstr[1] "Секунди"
 msgstr[2] "Секунд"
-msgstr[3] "Секундочек"
+msgstr[3] "Секундочок"
 

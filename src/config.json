@@ -1,5 +1,5 @@
 {
-  "defaultLocale": "ua-UA",
+  "defaultLocale": "uk-UK",
   "defaultLocaleDomain": "common",
-  "locales": ["ua-UA", "ru-RU"]
+  "locales": ["uk-UK", "ru-RU"]
 }

@@ -3,7 +3,7 @@ import GetText from 'node-gettext';
 import { defaultLocale, locales, defaultLocaleDomain } from './../config.json';
 import { TJSON } from '../interfaces';
 
-import uaLocale from './../locales/ua-UA/common.po';
+import uaLocale from './../locales/uk-UK/common.po';
 import ruLocale from './../locales/ru-RU/common.po';
 
 export const gt: GetText = new GetText();

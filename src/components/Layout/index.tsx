@@ -8,6 +8,7 @@ import Header from '../Header';
 import { observer, inject } from 'mobx-react';
 import { STORE_IDS } from '../../stores';
 import LocaleStore from '../../stores/localeStore';
+import Footer from '../Footer';
 
 export type TLayoutProps = {
   localeStore: LocaleStore;
@@ -29,6 +30,7 @@ export class Layout extends Component<TLayoutProps> {
         <main className={style.main}>
           <Component {...pageProps} />
         </main>
+        <Footer />
       </WithLocale>
     );
   }
