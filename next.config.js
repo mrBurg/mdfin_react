@@ -1,13 +1,7 @@
 const dotenv = require('dotenv');
-const sitemap = require('nextjs-sitemap-generator');
+const { SitemapPlugin } = require('./plugins');
 
 dotenv.config({ path: './.env' });
-
-sitemap({
-  baseUrl: `${process.env.LOCAL_HOST}:${process.env.LOCAL_PORT}`,
-  pagesDirectory: __dirname + '/pages',
-  targetDirectory: './',
-});
 
 module.exports = {
   env: {
@@ -23,6 +17,8 @@ module.exports = {
       test: /\.pot?$/,
       loaders: ['json-loader', 'po-gettext-loader'],
     });
+
+    config.plugins.push(new SitemapPlugin());
 
     // console.info(config, options);
     return config;

@@ -16,10 +16,7 @@
     "react-scripts": "^3.4.1"
   },
   "scripts": {
-    "init": "npm i & npm audit fix",
-    "react:start": "react-scripts start",
-    "react:build": "react-scripts build",
-    "react:test": "react-scripts test",
+    "npm-init": "npm i & npm audit fix",
     "react:eject": "react-scripts eject",
     "next:dev": "next",
     "next:build": "next build",
