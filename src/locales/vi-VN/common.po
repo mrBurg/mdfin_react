@@ -5,38 +5,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: MDFin\n"
-"Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: 
 msgid "hello"
-msgstr "Вітаю!"
+msgstr "vi hello"
 
 #: 
 msgid "bye"
-msgstr "Допобачення!"
+msgstr "vi bye"
+
+#: 
+msgid "uk-UK"
+msgstr "vi uk-UK"
+
+#: 
+msgid "ru-RU"
+msgstr "vi ru-RU"
+
+#: 
+msgid "vi-VN"
+msgstr "vi vi-VN"
 
 #: 
 msgid "plural-days"
 msgid_plural "plural-days"
-msgstr[0] "День"
-msgstr[1] "Дня"
-msgstr[2] "Днів"
-msgstr[3] "Деньків"
+msgstr[0] "vi plural-days"
 
 #: 
 msgid "plural-seconds"
 msgid_plural "plural-seconds"
-msgstr[0] "Секунда"
-msgstr[1] "Секунди"
-msgstr[2] "Секунд"
-msgstr[3] "Секундочок"
-
-#: 
-msgid "uk-UK"
-msgstr "Укр"
-
-#: 
-msgid "ru-RU"
-msgstr "Рос"
+msgstr[0] "vi plural-seconds"
 

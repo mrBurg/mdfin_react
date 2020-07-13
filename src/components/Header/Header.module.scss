@@ -9,11 +9,6 @@
     height: 96px;
   }
 
-  @include page-state('.content-page') {
-    margin-bottom: 40px;
-    background: $white;
-  }
-
   &_blue {
     background: $blue-light;
   }
@@ -36,18 +31,5 @@
   @include respond((lg, xl)) {
     flex-direction: column;
     align-items: center;
-  }
-
-  @include page-state('.content-page') {
-    border-bottom: 1px solid $gray-misty;
-    padding-bottom: 25px;
-  }
-
-  @include page-state('.menu-open') {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: $white;
   }
 }

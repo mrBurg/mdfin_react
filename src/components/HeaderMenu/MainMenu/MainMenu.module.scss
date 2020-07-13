@@ -18,18 +18,8 @@
     display: inline-block;
     vertical-align: middle;
 
-    @include page-state('.menu-open') {
-      width: 100%;
-      margin: 20px 0;
-      display: block;
-    }
-
     a {
       color: $white;
-
-      @include page-state(('.menu-open', '.content-page')) {
-        color: $gray-dark;
-      }
     }
   }
 }

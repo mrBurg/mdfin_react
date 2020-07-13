@@ -1,37 +1,36 @@
-$path: '/fonts/montserrat/';
-$font-family: 'Montserrat';
+$path: '/fonts';
 $fonts: (
-  Montserrat-SemiBold: (
-    weight: 600,
-    style: normal,
-    display: swap,
+  CopperplateGothic: (
+    Light: (
+      weight: normal,
+      style: normal,
+      display: swap,
+    ),
   ),
-  Montserrat-Bold: (
-    weight: bold,
-    style: normal,
-    display: swap,
-  ),
-  Montserrat-Regular: (
-    weight: normal,
-    style: normal,
-    display: swap,
-  ),
-  Montserrat-Medium: (
-    weight: 500,
-    style: normal,
-    display: swap,
-  ),
-  Montserrat-ExtraBold: (
-    weight: 800,
-    style: normal,
-    display: swap,
-  ),
-  MMontserrat-Black: (
-    weight: 900,
-    style: normal,
-    display: swap,
+  Corbel: (
+    Regular: (
+      weight: normal,
+      style: normal,
+      display: swap,
+    ),
+    Bold: (
+      weight: bold,
+      style: normal,
+      display: swap,
+    ),
+    Italic: (
+      weight: normal,
+      style: italic,
+      display: swap,
+    ),
+    BoldItalic: (
+      weight: bold,
+      style: italic,
+      display: swap,
+    ),
   ),
 );
+
 $formats: (
   eot: embedded-opentype,
   woff: woff,
@@ -40,30 +39,30 @@ $formats: (
   svg: svg,
 );
 
-@function ie-font-url($name) {
-  @return url('#{$path + $name}.eot');
-}
-
-@function check-type($name, $format) {
+@function check-type($font-name, $format) {
   $type: '';
 
-  @if ($format== 'eot') {
+  @if ($format == 'eot') {
     $type: $type + '?#iefix';
-  } @else if($format== 'svg') {
-    $type: '#{$type}##{$name}';
+  } @else if($format == 'svg') {
+    $type: '#{$type}##{$font-name}';
   }
 
   @return $type;
 }
 
-@function font-url($name) {
+@function ie-font-url($font-name, $style-name) {
+  @return url('#{$path}/#{$font-name}/#{$font-name}-#{$style-name}.eot');
+}
+
+@function font-url($font-name, $style-name) {
   $count: 0;
   $urls: '';
 
   @each $format, $type in $formats {
     $str: if($count==0, '', ',');
     $str: $str +
-      url('#{$path + $name}.#{$format + check-type($name, $format)}');
+      url('#{$path}/#{$font-name}/#{$font-name}-#{$style-name}.#{$format + check-type($font-name, $format)}');
     $str: $str + if($type, ' ' + format('#{$type}'), '');
 
     $urls: $urls + $str;
@@ -73,17 +72,19 @@ $formats: (
   @return #{$urls};
 }
 
-@each $name, $styles in $fonts {
-  @font-face {
-    font-family: $font-family;
+@each $font-name, $styles in $fonts {
+  @each $style-name, $style in $styles {
+    @font-face {
+      font-family: $font-name;
 
-    @each $style, $val in $styles {
-      font: {
-        #{$style}: $val;
+      @each $type, $data in $style {
+        font: {
+          #{$type}: $data;
+        }
       }
-    }
 
-    src: ie-font-url($name);
-    src: font-url($name);
+      src: ie-font-url($font-name, $style-name);
+      src: font-url($font-name, $style-name);
+    }
   }
 }

@@ -17,12 +17,6 @@
   @include respond(md) {
     display: none;
   }
-
-  @include page-state('.menu-open') {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }
 
 .divider {

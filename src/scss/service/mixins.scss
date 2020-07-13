@@ -1,14 +1,12 @@
-$xxs: 320px !default;
-$xs: 480px !default;
-$sm: 640px !default;
-$md: 768px !default;
-$lg: 960px !default;
-$xl: 1200px !default;
-$xxl: 1440px !default;
+@function getInfinity($start, $infinity) {
+  $media: $start;
 
-@mixin state {
-  &.ui-state {
-    @content;
+  @if type-of($infinity) == bool {
+    @return $media;
+  } @else if type-of($infinity) == number {
+    @return '#{$media} and (max-width: #{$infinity})';
+  } @else if type-of($infinity) == string {
+    @return '#{$media} and (max-width: #{getSize($infinity)})';
   }
 }
 
@@ -18,54 +16,54 @@ $xxl: 1440px !default;
   $media: '(min-width: #{$size})';
 
   @each $param in $data {
-    @if type-of($param) ==number {
-      @media only screen and (if($infinity and type-of($infinity)==bool, "min-width", "max-width"): #{$param}) {
+    @if type-of($param) == number {
+      @media only screen and (if($infinity and type-of($infinity) == bool, "min-width", "max-width"): #{$param}) {
         @content;
       }
-    } @else if type-of($param) ==string {
-      @if $param== 'xxs' {
+    } @else if type-of($param) == string {
+      @if $param == 'xxs' {
         $media: '(max-width: #{$xxs})';
 
         @if $infinity {
           $min: '(min-width: 0px)';
           $media: getInfinity($min, $infinity);
         }
-      } @else if $param== 'xs' {
+      } @else if $param == 'xs' {
         $media: '(max-width: #{$xs})';
 
         @if $infinity {
           $min: '(min-width: #{$xxs})';
           $media: getInfinity($min, $infinity);
         }
-      } @else if $param== 'sm' {
+      } @else if $param == 'sm' {
         $media: '(max-width: #{$sm})';
 
         @if $infinity {
           $min: '(min-width: #{$xs})';
           $media: getInfinity($min, $infinity);
         }
-      } @else if $param== 'md' {
+      } @else if $param == 'md' {
         $media: '(max-width: #{getSize(md)})';
 
         @if $infinity {
           $min: '(min-width: #{$sm})';
           $media: getInfinity($min, $infinity);
         }
-      } @else if $param== 'lg' {
+      } @else if $param == 'lg' {
         $media: '(min-width: #{$md}) and (max-width: #{getSize(lg)})';
 
         @if $infinity {
           $min: '(min-width: #{$md})';
           $media: getInfinity($min, $infinity);
         }
-      } @else if $param== 'xl' {
+      } @else if $param == 'xl' {
         $media: '(min-width: #{$lg}) and (max-width: #{getSize(xl)})';
 
         @if $infinity {
           $min: '(min-width: #{$lg})';
           $media: getInfinity($min, $infinity);
         }
-      } @else if $param== 'xxl' {
+      } @else if $param == 'xxl' {
         $media: '(min-width: #{$xl})';
 
         @if $infinity {
@@ -82,53 +80,5 @@ $xxl: 1440px !default;
         @content;
       }
     }
-  }
-}
-
-@mixin page-state($state, $data: null) {
-  @each $e in $state {
-    $selector: $e;
-
-    @if $data {
-      $selector: selector-append($selector, $data);
-    }
-
-    #{$selector} & {
-      @content;
-    }
-  }
-}
-
-@mixin animate-icon($name, $x: 0, $y: 0) {
-  $xIsNumber: type-of($x) == 'number';
-  $yIsNumber: type-of($y) == 'number';
-
-  @if $name and type-of($name) == 'string' {
-    @keyframes #{$name} {
-      0% {
-        opacity: 1;
-        background-position: if($xIsNumber, $x, nth($x, 1))
-          if($yIsNumber, $y, nth($y, 1));
-      }
-
-      49.99% {
-        opacity: 0;
-        background-position: if($xIsNumber, $x, nth($x, 1))
-          if($yIsNumber, $y, nth($y, 1));
-      }
-
-      50% {
-        background-position: if($xIsNumber, $x, nth($x, 2))
-          if($yIsNumber, $y, nth($y, 2));
-      }
-
-      100% {
-        opacity: 1;
-        background-position: if($xIsNumber, $x, nth($x, 2))
-          if($yIsNumber, $y, nth($y, 2));
-      }
-    }
-  } @else {
-    @warn "Animation '#{$name}' is not a string or undefined";
   }
 }

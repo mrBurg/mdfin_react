@@ -63,16 +63,6 @@
   border: 1px solid $gray-misty;
   box-sizing: border-box;
   padding: 0 20px;
-
-  @include state {
-    &-error {
-      border: 1px solid $red;
-
-      &::placeholder {
-        color: $red;
-      }
-    }
-  }
 }
 
 %or-other {

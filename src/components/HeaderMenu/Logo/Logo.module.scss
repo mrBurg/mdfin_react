@@ -11,20 +11,4 @@
   &-dark {
     display: none;
   }
-
-  &-white {
-    @include page-state('.home-page') {
-      display: block;
-    }
-
-    @include page-state('.menu-open') {
-      display: none;
-    }
-  }
-
-  &-dark {
-    @include page-state(('.content-page', '.menu-open')) {
-      display: block;
-    }
-  }
 }

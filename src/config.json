@@ -1,6 +1,6 @@
 {
-  "locales": ["uk-UK", "ru-RU"],
-  "defaultLocale": "uk-UK",
+  "locales": ["vi-VN"],
+  "defaultLocale": "vi-VN",
   "defaultLocaleDomain": "common",
   "langCookieName": "lang"
 }
