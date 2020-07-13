@@ -32,3 +32,11 @@ msgstr[1] "Секунды"
 msgstr[2] "Секунд"
 msgstr[3] "Секундочек"
 
+#: 
+msgid "uk-UK"
+msgstr "Укр"
+
+#: 
+msgid "ru-RU"
+msgstr "Рус"
+

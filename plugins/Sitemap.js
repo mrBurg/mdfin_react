@@ -1,9 +1,8 @@
-const path = require('path');
 const sitemap = require('nextjs-sitemap-generator');
 
 module.exports = class Sitemap {
-  constructor(fn) {
-    this.fn = fn;
+  constructor(config) {
+    this.config = config;
   }
 
   apply(compiler) {
@@ -22,13 +21,7 @@ module.exports = class Sitemap {
     compiler.hooks.afterEmit.tap('afterEmit', (compilation) => {
       // console.log('The emit is finished...');
 
-      if (this.fn) this.fn();
-
-      sitemap({
-        baseUrl: `${process.env.LOCAL_HOST}:${process.env.LOCAL_PORT}`,
-        pagesDirectory: path.resolve(__dirname + './../pages'),
-        targetDirectory: './',
-      });
+      sitemap(this.config);
     });
   }
 };

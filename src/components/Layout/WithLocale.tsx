@@ -1,6 +1,6 @@
 import { useEffect, ReactElement, FC, ReactNode } from 'react';
 
-import { LANG_COOKIE_NAME } from '../../constants';
+import { langCookieName } from './../../config.json';
 import { setCookie } from '../../utils';
 
 type TWithLocale = {
@@ -13,7 +13,7 @@ const WithLocale: FC<TWithLocale> = ({
   locale,
 }: TWithLocale): ReactElement => {
   useEffect((): void => {
-    setCookie(LANG_COOKIE_NAME, locale);
+    setCookie(langCookieName, locale);
     document.documentElement.lang = locale;
   });
 

@@ -1,5 +1,6 @@
 {
+  "locales": ["uk-UK", "ru-RU"],
   "defaultLocale": "uk-UK",
   "defaultLocaleDomain": "common",
-  "locales": ["uk-UK", "ru-RU"]
+  "langCookieName": "lang"
 }
