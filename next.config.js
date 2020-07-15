@@ -4,15 +4,18 @@ const { SitemapPlugin } = require('./plugins');
 
 dotenv.config({ path: './.env' });
 
-console.info(path.resolve(__dirname, 'pages'));
-
 module.exports = {
   env: {
-    LOCAL_HOST: process.env.LOCAL_HOST,
-    LOCAL_PORT: process.env.LOCAL_PORT,
+    PO_API: process.env.PO_API,
+    HTTP_HOST: process.env.HTTP_HOST,
+    HTTP_PORT: process.env.HTTP_PORT,
+    HTTPS_HOST: process.env.HTTPS_HOST,
+    HTTPS_PORT: process.env.HTTPS_PORT,
   },
   distDir: 'build',
   webpack(config, options) {
+    const { HTTPS_HOST, HTTPS_PORT } = this.env;
+
     config.resolve.alias.normalize = 'normalize.css/normalize.css';
 
     config.module.rules.push({
@@ -22,7 +25,7 @@ module.exports = {
 
     config.plugins.push(
       new SitemapPlugin({
-        baseUrl: `${process.env.LOCAL_HOST}:${process.env.LOCAL_PORT}`,
+        baseUrl: `${HTTPS_HOST}:${HTTPS_PORT}`,
         pagesDirectory: path.resolve(__dirname, 'pages'),
         targetDirectory: './',
       })

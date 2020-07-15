@@ -4,44 +4,29 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
       xmlns:xhtml="http://www.w3.org/1999/xhtml">
-      <url><loc>http://localhost:3000/faq</loc>
+      <url><loc>https://localhost:3030/contacts</loc>
                 
                 
                 
-                <lastmod>2020-07-10</lastmod>
-                </url><url><loc>http://localhost:3000/index</loc>
+                <lastmod>2020-07-15</lastmod>
+                </url><url><loc>https://localhost:3030/faq</loc>
                 
                 
                 
-                <lastmod>2020-07-10</lastmod>
-                </url><url><loc>http://localhost:3000/information-for-consumers</loc>
+                <lastmod>2020-07-15</lastmod>
+                </url><url><loc>https://localhost:3030/index</loc>
                 
                 
                 
-                <lastmod>2020-07-10</lastmod>
-                </url><url><loc>http://localhost:3000/repayment-by-another</loc>
+                <lastmod>2020-07-15</lastmod>
+                </url><url><loc>https://localhost:3030/payment</loc>
                 
                 
                 
-                <lastmod>2020-07-10</lastmod>
-                </url><url><loc>http://localhost:3000/ssg</loc>
+                <lastmod>2020-07-15</lastmod>
+                </url><url><loc>https://localhost:3030/sign-in</loc>
                 
                 
                 
-                <lastmod>2020-07-10</lastmod>
-                </url><url><loc>http://localhost:3000/ssr</loc>
-                
-                
-                
-                <lastmod>2020-07-10</lastmod>
-                </url><url><loc>http://localhost:3000/[locale]/index</loc>
-                
-                
-                
-                <lastmod>2020-07-10</lastmod>
-                </url><url><loc>http://localhost:3000/[locale]/[id]</loc>
-                
-                
-                
-                <lastmod>2020-07-10</lastmod>
+                <lastmod>2020-07-15</lastmod>
                 </url></urlset>
