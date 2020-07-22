@@ -1,24 +1,32 @@
-const http = require('http');
+// const http = require('http');
 const https = require('https');
 const express = require('express');
-// const cors = require('cors');
 const next = require('next');
 const { readFileSync } = require('fs');
 const dotenv = require('dotenv');
 
-const mainPage = require('./requests/mainPage');
-const faqPage = require('./requests/faqPage');
-const signInPage = require('./requests/signInPage');
-const signUpPage = require('./requests/signUpPage');
-const footer = require('./requests/footer');
+const mainPage = require('./pages/main');
+const faqPage = require('./pages/faq');
+const signInPage = require('./pages/signIn');
+const signUpPage = require('./pages/signUp');
+const footer = require('./footer');
 
 dotenv.config({ path: './.env' });
 
-const { HTTP_HOST, HTTP_PORT, HTTPS_HOST, HTTPS_PORT, NODE_ENV } = process.env;
+const {
+  // HTTP_HOST,
+  // HTTP_PORT,
+  HTTPS_HOST,
+  HTTPS_PORT,
+  NODE_ENV,
+  PO_STATIC,
+} = process.env;
+const dev = NODE_ENV !== 'production';
 
-const nextApp = next({ dev: NODE_ENV !== 'production' });
+if (dev) process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+
+const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
-
 const credentials = {
   key: readFileSync('./certificates/localhost.key', { encoding: 'utf8' }),
   cert: readFileSync('./certificates/localhost.cert', { encoding: 'utf8' }),
@@ -44,20 +52,20 @@ const serverCallback = ((err) => {
 
   const server = express();
 
-  mainPage(server);
-  faqPage(server);
-  signInPage(server);
-  signUpPage(server);
-  footer(server);
+  server.use(PO_STATIC, mainPage);
+  server.use(PO_STATIC, faqPage);
+  server.use(PO_STATIC, signInPage);
+  server.use(PO_STATIC, signUpPage);
+  server.use(PO_STATIC, footer);
 
   server.all('*', (req, res) => {
     return handle(req, res);
   });
 
-  const httpServer = http.createServer(server);
+  // const httpServer = http.createServer(server);
   const httpsServer = https.createServer(credentials, server);
 
-  httpServer.listen(HTTP_PORT, serverCallback('HTTP', HTTP_HOST, HTTP_PORT));
+  // httpServer.listen(HTTP_PORT, serverCallback('HTTP', HTTP_HOST, HTTP_PORT));
   httpsServer.listen(
     HTTPS_PORT,
     serverCallback('HTTPS', HTTPS_HOST, HTTPS_PORT)

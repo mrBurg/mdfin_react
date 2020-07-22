@@ -38,6 +38,7 @@ export const ProductSelector: FC<TProductSelectorProps> = ({
           </tr>
         </tbody>
       </table>
+
       <LoanButton className={style.loanButton} />
     </div>
   </div>

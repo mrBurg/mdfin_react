@@ -21,7 +21,7 @@ export enum URIS {
   FAQ_PAGE = '/faq-page',
   SIGN_IN = '/sign-in',
   SIGN_UP = '/sign-up',
-  LOAN = '/loan',
+  REGISTRATION_FORM = '/registration-form',
 }
 
 export const mainMenu: Array<TRouter> = [

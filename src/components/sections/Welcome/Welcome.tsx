@@ -3,7 +3,7 @@ import { ReactElement, FC } from 'react';
 import style from './Welcome.module.scss';
 import ProductSelector from '../../ProductSelector';
 
-type TWelcomeProps = {
+export type TWelcomeProps = {
   title: string;
   description: string;
 };

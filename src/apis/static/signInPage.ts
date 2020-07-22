@@ -1,27 +1,6 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-
-import { HTTPS_HOST, HTTPS_PORT, PO_STATIC, METHOD } from '../../constants';
 import { URIS } from '../../routes';
+import { fetchPageStaticData } from '../commonMethods';
 
-type TFetchCopyrightData = {
-  less: boolean;
-};
-
-export const fetchPageData = async (params?: TFetchCopyrightData) => {
-  let requestConfig: AxiosRequestConfig = {
-    baseURL: `${HTTPS_HOST}:${HTTPS_PORT + PO_STATIC}`,
-    method: METHOD.GET,
-    url: URIS.SIGN_IN,
-    params,
-  };
-
-  try {
-    const { data }: AxiosResponse = await axios(requestConfig);
-
-    return data;
-  } catch (err) {
-    console.info(err);
-
-    return null;
-  }
+export const fetchPageData = async () => {
+  return await fetchPageStaticData({ url: URIS.SIGN_IN });
 };

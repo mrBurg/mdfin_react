@@ -6,8 +6,9 @@ import { URLS } from '../routes';
 export default class LoanStore {
   constructor(private loanApi: LoanApi) {}
 
-  public redirectToSignUp(): void {
-    this.loanApi.fetchLoanData();
+  public async redirectToSignUp(): Promise<void> {
+    await this.loanApi.fetchLoanData();
+
     Router.push(URLS.SIGN_UP);
   }
 }

@@ -4,7 +4,7 @@ import Head from 'next/head';
 
 import { gt } from '../src/utils';
 import PageStore from '../src/stores/pageStore';
-import { fetchCopyright } from '../src/apis/static/footerStatic';
+import { fetchCopyright } from '../src/apis/static/footer';
 
 type TContactsPageProps = {
   pageStore: PageStore;
@@ -18,6 +18,7 @@ export default ({ pageStore }: TContactsPageProps): ReactElement => {
       <Head>
         <title>{gt.gettext(documentTitle)}</title>
       </Head>
+
       <div>Contacts</div>
     </>
   );
@@ -26,12 +27,15 @@ export default ({ pageStore }: TContactsPageProps): ReactElement => {
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
+  const pageData = {
+    documentTitle: 'Contacts',
+  };
   const copyright: string = await fetchCopyright();
 
   return {
     props: {
       ...context,
-      pageData: { copyright, documentTitle: 'Contacts' },
+      pageData: { copyright, ...pageData },
     },
   };
 };

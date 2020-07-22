@@ -6,9 +6,7 @@ import { phoneMask } from '../../config.json';
 import { BUTTON_TYPE } from '../../constants';
 import { gt } from '../../utils';
 
-export const SignIn: FC = (props): ReactElement => {
-  console.info(props);
-
+export const SignIn: FC = (): ReactElement => {
   return (
     <form className={style.signIn}>
       <input type='text' placeholder='Họ Tên Đầy Đủ' />

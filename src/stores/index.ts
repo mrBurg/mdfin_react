@@ -7,24 +7,32 @@ import { LoanApi } from '../apis';
 import LocaleStore from './localeStore';
 import PageStore from './pageStore';
 import LoanStore from './loanStore';
+import RegistrationStore from './registrationStore';
+import { RegistrationApi } from '../apis/RegistrationApi';
 
 export enum STORE_IDS {
   LOCALE_STORE = 'localeStore',
   PAGE_STORE = 'pageStore',
   LOAN_STORE = 'loanStore',
+  REGISTRATION_STORE = 'registrationStore',
 }
 
 export type TStores = {
   [STORE_IDS.LOCALE_STORE]: LocaleStore;
   [STORE_IDS.PAGE_STORE]: PageStore;
   [STORE_IDS.LOAN_STORE]: LoanStore;
+  [STORE_IDS.REGISTRATION_STORE]: RegistrationStore;
 };
 
 const loanApi: LoanApi = new LoanApi();
+const registrationApi: RegistrationApi = new RegistrationApi();
 
 const localeStore: LocaleStore = new LocaleStore();
 const pageStore: PageStore = new PageStore();
 const loanStore: LoanStore = new LoanStore(loanApi);
+const registrationStore: RegistrationStore = new RegistrationStore(
+  registrationApi
+);
 
 let stores: TStores | undefined;
 
@@ -35,6 +43,7 @@ function initializeStores(initialData: TJSON) {
     [STORE_IDS.LOCALE_STORE]: localeStore,
     [STORE_IDS.PAGE_STORE]: pageStore,
     [STORE_IDS.LOAN_STORE]: loanStore,
+    [STORE_IDS.REGISTRATION_STORE]: registrationStore,
   };
 
   if (initialData) {

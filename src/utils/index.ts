@@ -1,5 +1,5 @@
 export * from './localStorage';
 export * from './environment';
-export * from './getters';
+export * from './molders';
 export * from './cookies';
 export * from './gettext';
