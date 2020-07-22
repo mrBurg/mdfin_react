@@ -1,0 +1,34 @@
+@import '../../../scss/service';
+
+$bg-color: #f8f8f7;
+
+.section {
+  background-color: $bg-color;
+  display: flex;
+}
+
+.item {
+  width: 50%;
+}
+
+.image {
+  background: url('/main-page/not-difficult/image.jpg') center top / cover
+    no-repeat;
+  max-width: 470px;
+}
+
+.content {
+  padding: 30px;
+  flex-grow: 1;
+}
+
+.title,
+.description {
+  text-align: justify;
+}
+
+.description {
+  margin-top: 30px;
+  font-size: px2em(15.5px);
+  font-style: italic;
+}

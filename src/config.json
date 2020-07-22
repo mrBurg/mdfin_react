@@ -1,6 +1,7 @@
 {
-  "locales": ["vi-VN"],
+  "locales": ["vi-VN", "en-EN"],
   "defaultLocale": "vi-VN",
   "defaultLocaleDomain": "common",
-  "langCookieName": "lang"
+  "localeStoreKey": "locale",
+  "phoneMask": "+84 - ** - *** - ** - **"
 }

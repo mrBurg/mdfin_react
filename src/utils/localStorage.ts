@@ -5,8 +5,8 @@ export async function setToLocalStorage(
   window.localStorage.setItem(key, values);
 }
 
-export function getFromLocalStorage(key?: string): string | null {
-  return window.localStorage.getItem(key!);
+export function getFromLocalStorage(key: string): string | null {
+  return window.localStorage.getItem(key);
 }
 
 export function removeItemFromLocalStorage(key: string): void {

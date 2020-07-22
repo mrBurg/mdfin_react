@@ -1,3 +1,13 @@
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes fade-out {
   from {
     opacity: 1;
@@ -19,25 +29,5 @@
 
   100% {
     opacity: 1;
-  }
-}
-
-@keyframes show-cookies {
-  from {
-    max-height: 0;
-  }
-
-  to {
-    max-height: 250px;
-  }
-}
-
-@keyframes hide-cookies {
-  from {
-    max-height: 250px;
-  }
-
-  to {
-    max-height: 0;
   }
 }

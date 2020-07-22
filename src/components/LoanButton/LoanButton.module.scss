@@ -1,0 +1,12 @@
+@import '../../scss/service';
+
+$bg-color: #e62e21;
+
+.loanButton {
+  cursor: pointer;
+  background-color: $bg-color;
+  padding: 12px 35px;
+  border: none;
+  border-radius: 8px;
+  color: $white;
+}

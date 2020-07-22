@@ -1,11 +1,13 @@
 import GetText from 'node-gettext';
 
-import { defaultLocale, locales, defaultLocaleDomain } from './../config.json';
+import { defaultLocale, locales, defaultLocaleDomain } from '../config.json';
 import { TJSON } from '../interfaces';
 
-import viVN from './../locales/vi-VN/common.po';
+import enEN from '../locales/en-EN/common.po';
+import viVN from '../locales/vi-VN/common.po';
 
 const localesData: TJSON = {
+  enEN,
   viVN,
 };
 

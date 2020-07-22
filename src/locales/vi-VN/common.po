@@ -4,37 +4,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Project-Id-Version: MDFin\n"
+"Project-Id-Version: MDFin VN\n"
 "Language: vi\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: 
-msgid "hello"
-msgstr "vi hello"
+msgid "Site Title"
+msgstr "Vay tiền thật dễ dàng!"
 
 #: 
-msgid "bye"
-msgstr "vi bye"
+msgid "Contacts"
+msgstr "Liên Hệ"
 
 #: 
-msgid "uk-UK"
-msgstr "vi uk-UK"
+msgid "FAQ"
+msgstr "FAQ CÂU HỎI THƯỜNG GẶP"
 
 #: 
-msgid "ru-RU"
-msgstr "vi ru-RU"
+msgid "Payment"
+msgstr "Thang Toán Khoản Vay"
 
 #: 
-msgid "vi-VN"
-msgstr "vi vi-VN"
+msgid "Sign In"
+msgstr "Đăng Nhập"
 
 #: 
-msgid "plural-days"
-msgid_plural "plural-days"
-msgstr[0] "vi plural-days"
+msgid "Currency"
+msgstr "VND"
 
 #: 
-msgid "plural-seconds"
-msgid_plural "plural-seconds"
-msgstr[0] "vi plural-seconds"
+#, fuzzy
+msgid "More"
+msgstr "Thêm"
+
+#: 
+msgid "Sign Up"
+msgstr "Đăng Nhập"
+
+#: 
+msgid "Register Loan"
+msgstr "Đăng Ký Hồ Sơ Vay"
 

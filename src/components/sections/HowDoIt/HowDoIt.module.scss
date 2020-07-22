@@ -1,0 +1,59 @@
+@import '../../../scss/service';
+
+$bg-color: #fdfac8;
+$item-color: #8f8f8e;
+$icon-bg-color: #ffda59;
+$icon-color: #212121;
+
+.section {
+  padding: 25px;
+  background-color: $bg-color;
+  border: 3px solid $white;
+  border-width: 3px 0;
+}
+
+.title {
+  text-align: center;
+  font-size: px2em(24px);
+}
+
+.items {
+  display: flex;
+  margin-top: 20px;
+  counter-reset: numeration;
+}
+
+.item {
+  flex-grow: 1;
+  text-align: center;
+  color: $item-color;
+
+  &Icon {
+    width: 52px;
+    height: 52px;
+    background-color: $icon-bg-color;
+    margin: auto;
+    border-radius: 50%;
+    counter-increment: numeration;
+    position: relative;
+
+    &:before {
+      content: counter(numeration);
+      color: $icon-color;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      font-size: 4em;
+    }
+  }
+
+  &Text {
+    margin-top: 45px;
+  }
+}
+
+.loanButton {
+  margin: 30px auto 0;
+  display: block;
+}

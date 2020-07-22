@@ -1,19 +1,19 @@
 import { useEffect, ReactElement, FC, ReactNode } from 'react';
 
-import { langCookieName } from './../../config.json';
-import { setCookie } from '../../utils';
+import { localeStoreKey } from '../../config.json';
+import { setToLocalStorage } from '../../utils';
 
-type TWithLocale = {
+type TWithLocaleProps = {
   children: ReactNode;
   locale: string;
 };
 
-const WithLocale: FC<TWithLocale> = ({
+const WithLocale: FC<TWithLocaleProps> = ({
   children,
   locale,
-}: TWithLocale): ReactElement => {
+}: TWithLocaleProps): ReactElement => {
   useEffect((): void => {
-    setCookie(langCookieName, locale);
+    setToLocalStorage(localeStoreKey, locale);
     document.documentElement.lang = locale;
   });
 

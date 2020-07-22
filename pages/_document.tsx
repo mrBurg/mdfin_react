@@ -1,9 +1,10 @@
+import { ReactElement } from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
 
-import { defaultLocale } from './../src/config.json';
+import { defaultLocale } from '../src/config.json';
 
 export default class CustomDocument extends Document {
-  render() {
+  render(): ReactElement {
     return (
       <html lang={defaultLocale}>
         <Head>
@@ -13,6 +14,7 @@ export default class CustomDocument extends Document {
           <Main />
           <NextScript />
         </body>
+        <style jsx>{``}</style>
       </html>
     );
   }

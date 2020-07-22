@@ -1,0 +1,25 @@
+@import '../../../scss/service/';
+
+.section {
+  background: url('/main-page/welcome/background.jpg') center top / cover
+    no-repeat;
+  padding: 210px 25px 25px;
+}
+
+.title,
+.description {
+  text-align: center;
+}
+
+.title {
+  font-size: px2em(24px);
+}
+
+.description {
+  font-size: px2em(23px);
+  padding: 20px 0;
+}
+
+.productSelector {
+  margin: auto;
+}

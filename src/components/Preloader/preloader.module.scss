@@ -1,6 +1,8 @@
+@import '../../scss/services/constants.scss';
+
 .preloader {
   align-items: center;
-  background: transparentize(#fff, 0.2);
+  background: transparentize($white, 0.2);
   display: flex;
   flex-grow: 1;
   justify-content: center;

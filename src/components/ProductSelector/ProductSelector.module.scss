@@ -1,0 +1,42 @@
+@import '../../scss/service';
+
+$bg-color: #ffcb13;
+$loan-data-bg-color: #ffd850;
+
+.productSelector {
+  border-radius: 8px;
+  background-color: $bg-color;
+  width: 100%;
+  height: 100%;
+  max-width: 655px;
+  min-height: 178px;
+  display: flex;
+}
+
+.loanButton {
+  display: block;
+  margin: 7px auto 0;
+}
+
+.item {
+  width: 50%;
+}
+
+.loanData {
+  padding: 7px;
+}
+
+.loanTitle {
+  margin: 10px auto;
+  text-align: center;
+}
+
+.loanInfo {
+  background-color: $loan-data-bg-color;
+  width: 100%;
+}
+
+.calculator {
+  border-right: 2px solid $white;
+  padding: 7px;
+}

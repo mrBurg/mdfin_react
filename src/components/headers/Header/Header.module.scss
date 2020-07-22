@@ -1,0 +1,16 @@
+@import '../../../scss/service/';
+
+$border-color: #bfbfbe;
+
+.header {
+  @extend %box-shadow;
+  border-bottom: 1px solid $border-color;
+}
+
+.container {
+  padding: 25px 0;
+  max-width: 768px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}

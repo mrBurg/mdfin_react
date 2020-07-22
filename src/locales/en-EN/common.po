@@ -1,0 +1,46 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: MDFin VN\n"
+"Language: en\n"
+
+#: 
+msgid "Site Title"
+msgstr "Getting loan is easy!"
+
+#: 
+msgid "Contacts"
+msgstr "Contacts"
+
+#: 
+msgid "FAQ"
+msgstr "FAQ"
+
+#: 
+msgid "Payment"
+msgstr "Payment"
+
+#: 
+msgid "Sign In"
+msgstr "Log In"
+
+#: 
+msgid "Currency"
+msgstr "USD"
+
+#: 
+#, fuzzy
+msgid "More"
+msgstr "More"
+
+#: 
+msgid "Sign Up"
+msgstr "Registration"
+
+#: 
+msgid "Register Loan"
+msgstr "Register Loan"
+

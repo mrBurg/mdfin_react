@@ -19,3 +19,31 @@
     @return $xxl - 1;
   }
 }
+
+@function clear-units($value) {
+  @if type-of($value) == 'number' {
+    @if (unitless($value)) {
+      @return $value;
+    } @else if unit($value) == 'em' {
+      @return $value / 1em;
+    } @else if unit($value) == 'px' {
+      @return $value / 1px;
+    } @else if unit($value) == 'pt' {
+      @return $value / 1pt;
+    }
+  } @else {
+    @warn "Not a number value: #{$value}";
+    @return $value;
+  }
+}
+
+@function px2em($size, $base-size: $font-size) {
+  $size: clear-units($size);
+  $base-size: clear-units($base-size);
+  $result: round($size / $base-size * 100) / 100;
+  @return #{$result}em;
+}
+
+@function resize($size, $percentage) {
+  @return $size * $percentage;
+}

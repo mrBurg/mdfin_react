@@ -75,9 +75,45 @@
       @media #{$type} and #{$media} {
         @content;
       }
-    } @else if type-of($param) ==list {
+    } @else if type-of($param) == list {
       @media #{$type} and (min-width: nth($param, 1)) and (max-width: nth($param, 2)) {
         @content;
+      }
+    }
+  }
+}
+
+@mixin animate-icon($name, $start: 0, $end: 0) {
+  $startXeqY: type-of($start) == 'number';
+  $endXeqY: type-of($end) == 'number';
+
+  @if $name and type-of($name) == 'string' {
+    @keyframes #{$name} {
+      0% {
+        opacity: 1;
+        background-position: if(
+          $startXeqY,
+          $start $start,
+          nth($start, 1) nth($start, 2)
+        );
+      }
+
+      49.99% {
+        opacity: 0;
+        background-position: if(
+          $startXeqY,
+          $start $start,
+          nth($start, 1) nth($start, 2)
+        );
+      }
+
+      50% {
+        background-position: if($endXeqY, $end $end, nth($end, 1) nth($end, 2));
+      }
+
+      100% {
+        opacity: 1;
+        background-position: if($endXeqY, $end $end, nth($end, 1) nth($end, 2));
       }
     }
   }

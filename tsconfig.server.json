@@ -2,12 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "dist",
-    "target": "es2017",
-    "noEmit": false,
-    "sourceMap": true
+    "target": "es2017"
   },
-  "files": ["./node_modules/@types/node/index.d.ts"],
-  "include": ["server.ts"],
-  "exclude": ["node_modules"]
+  "files": ["./node_modules/@types/node/index.d.ts"]
 }

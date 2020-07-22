@@ -1,0 +1,63 @@
+@import '../../scss/service';
+@import '../../scss/grid/animations.scss';
+
+$button-bg-color: #dbd7d7;
+$button-bg-color_hover: #ddd;
+
+.accordion {
+  &__paragraph {
+    font-size: 26pt;
+    font-weight: bold;
+    text-align: center;
+    margin: 25px 0;
+  }
+
+  &__item {
+    margin: 15px 0px;
+  }
+
+  &__button {
+    background-color: $button-bg-color;
+    color: $white;
+    cursor: pointer;
+    padding: 10px;
+    text-align: left;
+    border-radius: 10px;
+    font-size: 18pt;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
+    user-select: none;
+
+    &:hover {
+      background-color: $button-bg-color_hover;
+    }
+
+    &:after {
+      display: block;
+      content: '';
+      height: 16px;
+      width: 16px;
+      margin-right: 12px;
+      background: url('/theme/icons/icons_16x16.svg') -16px -32px no-repeat;
+      flex-shrink: 0;
+      animation: fade-in 0.2s linear;
+    }
+
+    &[aria-expanded='true']:after,
+    &[aria-selected='true']:after {
+      @include animate-icon(accordion-button, (-16px -32px), (-32px -32px));
+      animation: accordion-button 0.2s linear forwards;
+    }
+  }
+
+  &__panel {
+    padding: 30px 30px;
+    animation: fade-in 0.35s ease-in;
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: justify;
+  }
+}
