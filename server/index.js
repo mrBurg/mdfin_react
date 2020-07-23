@@ -6,12 +6,14 @@ const { readFileSync } = require('fs');
 const dotenv = require('dotenv');
 
 const mainPage = require('./pages/main');
+const contactsPage = require('./pages/contacts');
 const faqPage = require('./pages/faq');
+const paymentPage = require('./pages/payment');
 const signInPage = require('./pages/signIn');
 const signUpPage = require('./pages/signUp');
 const footer = require('./footer');
 
-dotenv.config({ path: './.env' });
+dotenv.config({ path: './.env.development' });
 
 const {
   // HTTP_HOST,
@@ -21,10 +23,8 @@ const {
   NODE_ENV,
   PO_STATIC,
 } = process.env;
+
 const dev = NODE_ENV !== 'production';
-
-if (dev) process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
-
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 const credentials = {
@@ -53,7 +53,9 @@ const serverCallback = ((err) => {
   const server = express();
 
   server.use(PO_STATIC, mainPage);
+  server.use(PO_STATIC, contactsPage);
   server.use(PO_STATIC, faqPage);
+  server.use(PO_STATIC, paymentPage);
   server.use(PO_STATIC, signInPage);
   server.use(PO_STATIC, signUpPage);
   server.use(PO_STATIC, footer);

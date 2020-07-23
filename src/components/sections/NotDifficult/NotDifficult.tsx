@@ -3,12 +3,12 @@ import classNames from 'classnames';
 
 import style from './NotDifficult.module.scss';
 
-type TNotDifficult = {
+type TNotDifficultProps = {
   title: string;
   description: string;
 };
 
-export const NotDifficult: FC<TNotDifficult> = ({
+export const NotDifficult: FC<TNotDifficultProps> = ({
   title,
   description,
 }): ReactElement => {

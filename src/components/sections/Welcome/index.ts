@@ -1,1 +1,1 @@
-export { Welcome as default } from './Welcome';
+export { Welcome } from './Welcome';

@@ -1,0 +1,23 @@
+@import '../../../scss/service';
+
+.otp {
+  margin-top: 18px;
+}
+
+.input {
+  @extend %input;
+  width: 100%;
+  text-align: center;
+}
+
+.message {
+  color: lighten($red, 25%);
+  margin-top: 15px;
+}
+
+.button {
+  border: none;
+  background-color: transparent;
+  margin-top: 5px;
+  cursor: pointer;
+}

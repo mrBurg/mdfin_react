@@ -3,5 +3,6 @@
   "defaultLocale": "vi-VN",
   "defaultLocaleDomain": "common",
   "localeStoreKey": "locale",
-  "phoneMask": "+84 - ** - *** - ** - **"
+  "phoneMask": "+84 - ** - *** - ** - **",
+  "otpMask": "_ _ _ _ _"
 }

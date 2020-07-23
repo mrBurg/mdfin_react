@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { gt } from '../src/utils';
 import PageStore from '../src/stores/pageStore';
 import { fetchCopyright } from '../src/apis/static/footer';
-import { AccordionWidget } from '../src/components/AccordionWidget/AccordionWidget';
+import { AccordionWidget } from '../src/components/widgets/AccordionWidget/AccordionWidget';
 import { TJSON } from '../src/interfaces';
 import { fetchPageData } from '../src/apis/static/faqPage';
 

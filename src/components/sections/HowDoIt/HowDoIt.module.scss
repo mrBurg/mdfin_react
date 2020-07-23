@@ -1,13 +1,8 @@
 @import '../../../scss/service';
 
-$bg-color: #fdfac8;
-$item-color: #8f8f8e;
-$icon-bg-color: #ffda59;
-$icon-color: #212121;
-
 .section {
   padding: 25px;
-  background-color: $bg-color;
+  background-color: $yellow;
   border: 3px solid $white;
   border-width: 3px 0;
 }
@@ -26,12 +21,13 @@ $icon-color: #212121;
 .item {
   flex-grow: 1;
   text-align: center;
-  color: $item-color;
+  color: #8f8f8e;
+  color: lighten($black, 50%);
 
   &Icon {
     width: 52px;
     height: 52px;
-    background-color: $icon-bg-color;
+    background-color: $orange;
     margin: auto;
     border-radius: 50%;
     counter-increment: numeration;
@@ -39,7 +35,7 @@ $icon-color: #212121;
 
     &:before {
       content: counter(numeration);
-      color: $icon-color;
+      color: $black;
       font-weight: bold;
       position: absolute;
       left: 0;

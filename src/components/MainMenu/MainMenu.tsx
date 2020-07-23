@@ -11,7 +11,7 @@ import { gt } from '../../utils';
 export const MainMenu: FC = (): ReactElement => (
   <ul className={style.menu}>
     {mainMenu.map((item: TRouter, i: number) => {
-      const { href, alias, title, button, hidden } = item;
+      const { href, title, button, hidden } = item;
 
       if (hidden) return null;
 
@@ -19,7 +19,7 @@ export const MainMenu: FC = (): ReactElement => (
 
       return (
         <li key={i}>
-          <Link href={href} as={alias}>
+          <Link href={href}>
             <a>{linkContent}</a>
           </Link>
         </li>

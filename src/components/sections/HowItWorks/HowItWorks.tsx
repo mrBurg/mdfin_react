@@ -7,13 +7,13 @@ type TItem = {
   data: string;
 };
 
-type THowItWorks = {
+type THowItWorksProps = {
   title: string;
   items: Array<TItem>;
 };
 
-const renderItems = (items: Array<TItem>): Array<ReactElement> => {
-  return items.map(
+const renderItems = (items: Array<TItem>): Array<ReactElement> =>
+  items.map(
     (item: TItem, index: number): ReactElement => {
       const { data } = item;
 
@@ -23,15 +23,19 @@ const renderItems = (items: Array<TItem>): Array<ReactElement> => {
             <div
               className={classNames(style.itemIcon, style[`itemIcon${index}`])}
             />
-            <div dangerouslySetInnerHTML={{ __html: data }} />
+            <div>
+              <span dangerouslySetInnerHTML={{ __html: data }} />
+            </div>
           </div>
         </div>
       );
     }
   );
-};
 
-export const HowItWorks: FC<THowItWorks> = ({ title, items }): ReactElement => {
+export const HowItWorks: FC<THowItWorksProps> = ({
+  title,
+  items,
+}): ReactElement => {
   return (
     <section className={style.section}>
       <h2 className={style.title}>{title}</h2>

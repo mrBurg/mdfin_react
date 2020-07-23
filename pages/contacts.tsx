@@ -5,13 +5,19 @@ import Head from 'next/head';
 import { gt } from '../src/utils';
 import PageStore from '../src/stores/pageStore';
 import { fetchCopyright } from '../src/apis/static/footer';
+import { fetchPageData } from '../src/apis/static/contactsPage';
+import { TJSON } from '../src/interfaces';
+import { Contacts } from '../src/components/sections';
 
 type TContactsPageProps = {
   pageStore: PageStore;
 };
 
 export default ({ pageStore }: TContactsPageProps): ReactElement => {
-  const { documentTitle } = pageStore;
+  const {
+    documentTitle,
+    pageData: { pageTitle, phones, emails },
+  } = pageStore;
 
   return (
     <>
@@ -19,7 +25,9 @@ export default ({ pageStore }: TContactsPageProps): ReactElement => {
         <title>{gt.gettext(documentTitle)}</title>
       </Head>
 
-      <div>Contacts</div>
+      <h2 className='page-title'>{gt.gettext(pageTitle)}</h2>
+
+      <Contacts phones={phones} emails={emails} />
     </>
   );
 };
@@ -27,15 +35,18 @@ export default ({ pageStore }: TContactsPageProps): ReactElement => {
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
-  const pageData = {
-    documentTitle: 'Contacts',
+  const template = {
+    background: true,
   };
+
+  const pageData: TJSON = await fetchPageData();
   const copyright: string = await fetchCopyright();
 
   return {
     props: {
       ...context,
       pageData: { copyright, ...pageData },
+      template,
     },
   };
 };

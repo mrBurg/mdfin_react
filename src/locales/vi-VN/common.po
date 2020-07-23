@@ -38,7 +38,7 @@ msgstr "Thêm"
 
 #: 
 msgid "Sign Up"
-msgstr "Đăng Nhập"
+msgstr "Đăng Ký"
 
 #: 
 msgid "Register Loan"

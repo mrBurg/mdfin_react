@@ -25,30 +25,30 @@ $resizeCoef: 0.5;
     padding: resize(20px, $resizeCoef) resize(45px, $resizeCoef);
   }
 
+  &Data {
+    @extend %box-shadow;
+    padding: 30px 50px;
+    height: 100%;
+    display: flex;
+
+    @include respond(xxs) {
+      width: 100%;
+      padding: resize(30px, $resizeCoef) resize(50px, $resizeCoef);
+    }
+  }
+
   &Icon {
     width: 56px;
     height: 56px;
     background: url('/theme/icons/icons_56x56.svg') no-repeat;
     flex-shrink: 0;
     margin-right: 45px;
+    align-self: center;
 
     @for $i from 1 through 4 {
       &#{$i} {
         background-position-x: $i * -56px;
       }
-    }
-  }
-
-  &Data {
-    @extend %box-shadow;
-    padding: 30px 50px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-
-    @include respond(xxs) {
-      width: 100%;
-      padding: resize(30px, $resizeCoef) resize(50px, $resizeCoef);
     }
   }
 }

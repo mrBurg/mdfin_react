@@ -8,20 +8,20 @@ type TItem = {
   data: string;
 };
 
-type THowDoIt = {
+type THowDoItProps = {
   title: string;
   items: Array<TItem>;
 };
 
-const renderItems = (items: Array<TItem>): Array<ReactElement> => {
-  return items.map(
+const renderItems = (items: Array<TItem>): Array<ReactElement> =>
+  items.map(
     (item: TItem, index: number): ReactElement => {
       const { data } = item;
 
       return (
         <div key={index} className={style.item}>
           <div className={style.itemIcon} />
-          <div
+          <p
             className={style.itemText}
             dangerouslySetInnerHTML={{ __html: data }}
           />
@@ -29,9 +29,8 @@ const renderItems = (items: Array<TItem>): Array<ReactElement> => {
       );
     }
   );
-};
 
-export const HowDoIt: FC<THowDoIt> = ({ title, items }): ReactElement => {
+export const HowDoIt: FC<THowDoItProps> = ({ title, items }): ReactElement => {
   return (
     <section className={style.section}>
       <h2 className={style.title}>{title}</h2>

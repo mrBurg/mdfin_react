@@ -1,1 +1,1 @@
-export { NotDifficult as default } from './NotDifficult';
+export { NotDifficult } from './NotDifficult';

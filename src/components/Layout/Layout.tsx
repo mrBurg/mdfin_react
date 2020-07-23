@@ -1,6 +1,7 @@
 import React, { Component, ReactElement, ReactNode } from 'react';
 import { NextComponentType } from 'next';
 import { observer, inject } from 'mobx-react';
+import classNames from 'classnames';
 
 import style from './Layout.module.scss';
 
@@ -38,12 +39,14 @@ export class Layout extends Component<TLayoutProps> {
       pageStore,
     };
 
+    let backgroundStyle;
     let header: ReactElement = <Header />;
     let footer: ReactElement = <Footer copyright={copyright} />;
 
     if (template) {
-      const { headerLess, footerLess } = template;
+      const { background, headerLess, footerLess } = template;
 
+      backgroundStyle = background;
       if (headerLess) header = <HeaderLess />;
       if (footerLess) footer = <FooterLess copyright={copyright} />;
     }
@@ -51,8 +54,14 @@ export class Layout extends Component<TLayoutProps> {
     return (
       <WithLocale locale={locale}>
         {header}
-        <main className={style.main}>
-          <Component {...ComponentProps} />
+        <main
+          className={classNames(style.main, {
+            [style.background]: backgroundStyle,
+          })}
+        >
+          <div className={style.container}>
+            <Component {...ComponentProps} />
+          </div>
         </main>
         {footer}
       </WithLocale>

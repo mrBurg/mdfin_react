@@ -1,9 +1,7 @@
 @import '../../../scss/service';
 
-$bg-color: #f8f8f7;
-
 .section {
-  background-color: $bg-color;
+  background-color: lighten($gray, 15%);
   display: flex;
 }
 

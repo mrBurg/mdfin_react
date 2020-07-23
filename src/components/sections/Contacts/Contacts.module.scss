@@ -1,0 +1,40 @@
+@import '../../../scss/service';
+
+.contacts {
+  display: flex;
+  justify-content: center;
+
+  @include respond(md) {
+    flex-direction: column;
+  }
+}
+
+.section {
+  padding: 75px 165px;
+
+  a {
+    text-decoration: none;
+  }
+}
+.icon {
+  width: 56px;
+  height: 56px;
+  background: url('/theme/icons/icons_56x56.svg') no-repeat;
+}
+
+.phones {
+  background-position: 0 -56px;
+}
+
+.emails {
+  background-position: -224px 0;
+}
+
+.title {
+  margin-top: 30px;
+}
+
+.list {
+  margin-top: 20px;
+  list-style: none;
+}

@@ -8,30 +8,30 @@ import { STORE_IDS } from '../../stores';
 import { locales } from '../../config.json';
 import LocaleStore from '../../stores/localeStore';
 
-type TLanguagesSwitcher = {
+type TLanguagesSwitcherProps = {
   localeStore?: LocaleStore;
 };
 
-export const LanguagesSwitcher: FC<TLanguagesSwitcher> = inject(
+export const LanguagesSwitcher: FC<TLanguagesSwitcherProps> = inject(
   STORE_IDS.LOCALE_STORE
 )(
-  ({ localeStore }: TLanguagesSwitcher): ReactElement => (
+  ({ localeStore }: TLanguagesSwitcherProps): ReactElement => (
     <ul className={style.languageSwitcher}>
       {locales.map(
-        (item: string, key: number): ReactElement => {
+        (item: string, index: number): ReactElement => {
           if (localeStore) {
             const { locale } = localeStore;
 
             return (
               <li
-                key={key}
+                key={index}
                 className={classNames(style.language, {
                   [style.current]: locale == item,
                 })}
               >
                 <a
                   onClick={(): void => {
-                    localeStore.setCurrentLanguage(locales[key]);
+                    localeStore.setCurrentLanguage(locales[index]);
                   }}
                 >
                   {item}

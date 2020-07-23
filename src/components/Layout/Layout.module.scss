@@ -2,6 +2,13 @@
 
 .main {
   flex-grow: 1;
+}
+
+.background {
+  background: linear-gradient(to top, lighten($orange, 20%), transparent 40%);
+}
+
+.container {
   max-width: $lg;
   margin: auto;
 }

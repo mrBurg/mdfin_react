@@ -1,1 +1,1 @@
-export { HowDoIt as default } from './HowDoIt';
+export { HowDoIt } from './HowDoIt';

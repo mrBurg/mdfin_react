@@ -2,7 +2,7 @@ import { observable, computed, toJS } from 'mobx';
 
 import { RegistrationApi } from '../apis';
 
-type TFormProps =
+type TFormData =
   | {
       namePlaceholder: string;
       buttonText: string;
@@ -10,16 +10,16 @@ type TFormProps =
   | undefined;
 
 export default class RegistrationStore {
-  @observable formProps: TFormProps;
+  @observable formData: TFormData;
 
   constructor(private registrationApi: RegistrationApi) {}
 
   public async initRegistrationForm(): Promise<void> {
-    this.formProps = await this.registrationApi.fetchFormData();
+    this.formData = await this.registrationApi.fetchFormData();
   }
 
   @computed
-  public get formData(): TFormProps {
-    return toJS(this.formProps);
+  public get formDataJSON(): TFormData {
+    return toJS(this.formData);
   }
 }

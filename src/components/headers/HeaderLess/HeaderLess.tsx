@@ -4,11 +4,9 @@ import Link from 'next/link';
 import style from './HeaderLess.module.scss';
 
 import { URLS } from '../../../routes';
-import LanguagesSwitcher from '../../LanguagesSwitcher';
 
 export const HeaderLess: FC = (): ReactElement => (
   <header className={style.header}>
-    <LanguagesSwitcher />
     <div className={style.container}>
       <Link href={URLS.HOME} as={URLS.HOME}>
         <a>

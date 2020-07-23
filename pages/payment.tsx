@@ -5,13 +5,20 @@ import Head from 'next/head';
 import { gt } from '../src/utils';
 import PageStore from '../src/stores/pageStore';
 import { fetchCopyright } from '../src/apis/static/footer';
+import { TJSON } from '../src/interfaces';
+import { fetchPageData } from '../src/apis/static/paymentPage';
+import { PaymentInfo } from '../src/components/sections';
+import Payment from '../src/components/Payment';
 
 type TPaymentPageProps = {
   pageStore: PageStore;
 };
 
 export default ({ pageStore }: TPaymentPageProps): ReactElement => {
-  const { documentTitle } = pageStore;
+  const {
+    documentTitle,
+    pageData: { pageTitle, paymentInfo },
+  } = pageStore;
 
   return (
     <>
@@ -19,7 +26,10 @@ export default ({ pageStore }: TPaymentPageProps): ReactElement => {
         <title>{gt.gettext(documentTitle)}</title>
       </Head>
 
-      <div>Payment</div>
+      <h2 className='page-title'>{gt.gettext(pageTitle)}</h2>
+
+      <Payment />
+      <PaymentInfo dataList={paymentInfo} />
     </>
   );
 };
@@ -27,9 +37,7 @@ export default ({ pageStore }: TPaymentPageProps): ReactElement => {
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
-  const pageData = {
-    documentTitle: 'Payment',
-  };
+  const pageData: TJSON = await fetchPageData();
   const copyright: string = await fetchCopyright();
 
   return {

@@ -1,15 +1,3 @@
-@function getInfinity($start, $infinity) {
-  $media: $start;
-
-  @if type-of($infinity) == bool {
-    @return $media;
-  } @else if type-of($infinity) == number {
-    @return '#{$media} and (max-width: #{$infinity})';
-  } @else if type-of($infinity) == string {
-    @return '#{$media} and (max-width: #{getSize($infinity)})';
-  }
-}
-
 @mixin respond($data, $infinity: false) {
   $type: 'only screen';
   $size: $xxs;

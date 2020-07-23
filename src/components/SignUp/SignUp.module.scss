@@ -1,3 +1,26 @@
-.SignUp {
+@import '../../scss/service';
+
+.signUp {
   width: 100%;
+  max-width: $xs;
+  margin: auto;
+}
+
+.input,
+.button {
+  width: 100%;
+}
+
+.input {
+  @extend %input;
+  margin-top: 18px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.button {
+  @extend %button;
+  margin-top: 35px;
 }

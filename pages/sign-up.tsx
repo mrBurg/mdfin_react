@@ -28,13 +28,6 @@ export default ({ pageStore }: TIndexPageProps): ReactElement => {
       <h2 className='page-title'>{gt.gettext(pageTitle)}</h2>
 
       <SignUp />
-
-      <style jsx>{`
-        .page-title {
-          margin: 80px auto 45px;
-          text-align: center;
-        }
-      `}</style>
     </>
   );
 };
@@ -42,18 +35,19 @@ export default ({ pageStore }: TIndexPageProps): ReactElement => {
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
-  const footerTemplate = {
+  const template = {
+    headerLess: true,
     footerLess: true,
   };
 
   const pageData: TJSON = await fetchPageData();
-  const copyright: string = await fetchCopyright({ ...footerTemplate });
+  const copyright: string = await fetchCopyright({ footerLess: true });
 
   return {
     props: {
       ...context,
       pageData: { copyright, ...pageData },
-      template: { headerLess: true, ...footerTemplate },
+      template,
     },
   };
 };
