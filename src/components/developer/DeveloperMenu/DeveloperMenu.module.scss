@@ -1,0 +1,36 @@
+@import '../../../scss/service';
+
+.developerMenu {
+  position: fixed;
+  background-color: $black;
+  color: $white;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  border-radius: 5px;
+
+  &:hover {
+    .list {
+      height: auto;
+    }
+  }
+}
+
+.list {
+  list-style: none;
+  height: 0;
+  overflow: hidden;
+}
+
+.item {
+  margin: 5px 0;
+
+  a {
+    color: $white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

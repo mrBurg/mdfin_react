@@ -1,4 +1,5 @@
 import { ReactElement, Component } from 'react';
+import InputMask from 'react-input-mask';
 
 import style from './SignUp.module.scss';
 
@@ -8,7 +9,7 @@ import { gt } from '../../utils';
 import { inject, observer } from 'mobx-react';
 import { STORE_IDS } from '../../stores';
 import RegistrationStore from '../../stores/registrationStore';
-import OTPInput from '../widgets/OTPWidget';
+import OTPWidget from '../widgets/OTPWidget';
 
 type TSignUpProps = {
   registrationStore?: RegistrationStore;
@@ -39,13 +40,13 @@ export class SignUp extends Component<TSignUpProps> {
               type={INPUT_TYPE.TEXT}
               placeholder={namePlaceholder}
             />
-            <input
+            <InputMask
               className={style.input}
-              type={INPUT_TYPE.TEXT}
-              placeholder={phoneMask}
+              mask={phoneMask}
+              placeholder={phoneMask.replace(/9/g, '*')}
             />
 
-            <OTPInput />
+            <OTPWidget className={style.otp} />
 
             <button className={style.button} type={BUTTON_TYPE.BUTTON}>
               {gt.gettext(buttonText)}

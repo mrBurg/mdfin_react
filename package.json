@@ -16,6 +16,7 @@
     "react": "^16.13.1",
     "react-accessible-accordion": "^3.3.0",
     "react-dom": "^16.13.1",
+    "react-input-mask": "^2.0.4",
     "react-scripts": "^3.4.1"
   },
   "scripts": {
@@ -24,8 +25,7 @@
     "next:dev": "next",
     "next:build": "next build",
     "next:start": "next start",
-    "next:server": "node server/index.js",
-    "next:server-ts": "ts-node -P tsconfig.server.json server/index.ts"
+    "next:server": "node server/index.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,6 +39,7 @@
     "@types/node-gettext": "^3.0.1",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
+    "@types/react-input-mask": "^2.0.5",
     "babel-plugin-inline-react-svg": "^1.1.1",
     "json-loader": "^0.5.7",
     "node-sass": "^4.14.1",

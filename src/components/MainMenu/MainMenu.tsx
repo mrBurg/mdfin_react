@@ -10,15 +10,13 @@ import { gt } from '../../utils';
 
 export const MainMenu: FC = (): ReactElement => (
   <ul className={style.menu}>
-    {mainMenu.map((item: TRouter, i: number) => {
-      const { href, title, button, hidden } = item;
-
-      if (hidden) return null;
+    {mainMenu.map((item: TRouter, index: number) => {
+      const { href, title, button } = item;
 
       const linkContent = button ? <SingInIcon /> : gt.gettext(title);
 
       return (
-        <li key={i}>
+        <li key={index}>
           <Link href={href}>
             <a>{linkContent}</a>
           </Link>

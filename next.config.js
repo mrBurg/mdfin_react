@@ -1,8 +1,12 @@
 const path = require('path');
 const dotenv = require('dotenv');
+const args = require('yargs').argv;
+
 const { SitemapPlugin } = require('./plugins');
 
-dotenv.config({ path: './.env.development' });
+let envVarPath = !args.p ? './.env.development' : './.env.production';
+
+dotenv.config({ path: envVarPath });
 
 module.exports = {
   env: {

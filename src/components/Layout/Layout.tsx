@@ -14,6 +14,7 @@ import Header from '../headers/Header';
 import FooterLess from '../footers/FooterLess';
 import Footer from '../footers/Footer';
 import { TJSON } from '../../interfaces';
+import { DeveloperMenu } from '../developer';
 
 export type TLayoutProps = {
   localeStore: LocaleStore;
@@ -26,6 +27,9 @@ type TComponentProps = {
   pageStore: PageStore;
   children?: ReactNode;
 };
+
+const { NODE_ENV } = process.env;
+const dev = NODE_ENV !== 'production';
 
 @inject(STORE_IDS.LOCALE_STORE, STORE_IDS.PAGE_STORE)
 @observer
@@ -53,6 +57,7 @@ export class Layout extends Component<TLayoutProps> {
 
     return (
       <WithLocale locale={locale}>
+        {dev && <DeveloperMenu />}
         {header}
         <main
           className={classNames(style.main, {

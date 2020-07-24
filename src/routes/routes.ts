@@ -1,9 +1,10 @@
+import { TJSON } from '../interfaces';
+
 export type TRouter = {
   href: URLS;
   title: string;
   alias?: string;
   button?: boolean;
-  hidden?: boolean;
 };
 
 export enum URLS {
@@ -45,9 +46,13 @@ export const mainMenu: Array<TRouter> = [
     title: 'Sign In',
     button: true,
   },
-  {
-    href: URLS.SIGN_UP,
-    title: 'Sign Up',
-    hidden: true,
-  },
 ];
+
+export const allRoutes: Array<TRouter> = [];
+
+for (let item in URLS) {
+  allRoutes.push({
+    href: (URLS as TJSON)[item],
+    title: item,
+  });
+}

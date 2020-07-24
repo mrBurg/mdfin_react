@@ -1,9 +1,9 @@
-// const http = require('http');
 const https = require('https');
 const express = require('express');
 const next = require('next');
 const { readFileSync } = require('fs');
 const dotenv = require('dotenv');
+const args = require('yargs').argv;
 
 const mainPage = require('./pages/main');
 const contactsPage = require('./pages/contacts');
@@ -13,16 +13,11 @@ const signInPage = require('./pages/signIn');
 const signUpPage = require('./pages/signUp');
 const footer = require('./footer');
 
-dotenv.config({ path: './.env.development' });
+let envVarPath = !args.p ? './.env.development' : './.env.production';
 
-const {
-  // HTTP_HOST,
-  // HTTP_PORT,
-  HTTPS_HOST,
-  HTTPS_PORT,
-  NODE_ENV,
-  PO_STATIC,
-} = process.env;
+dotenv.config({ path: envVarPath });
+
+const { HTTPS_HOST, HTTPS_PORT, NODE_ENV, PO_STATIC } = process.env;
 
 const dev = NODE_ENV !== 'production';
 const nextApp = next({ dev });
@@ -64,10 +59,8 @@ const serverCallback = ((err) => {
     return handle(req, res);
   });
 
-  // const httpServer = http.createServer(server);
   const httpsServer = https.createServer(credentials, server);
 
-  // httpServer.listen(HTTP_PORT, serverCallback('HTTP', HTTP_HOST, HTTP_PORT));
   httpsServer.listen(
     HTTPS_PORT,
     serverCallback('HTTPS', HTTPS_HOST, HTTPS_PORT)

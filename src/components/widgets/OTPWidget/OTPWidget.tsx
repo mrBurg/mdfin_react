@@ -10,9 +10,9 @@ type TOTPInputProps = {
   className?: string;
 };
 
-export const OTPWidget: FC<TOTPInputProps> = (): ReactElement => {
+export const OTPWidget: FC<TOTPInputProps> = ({ className }): ReactElement => {
   return (
-    <div className={style.otp}>
+    <div className={classNames(style.otp, className)}>
       <input
         className={classNames(style.input, style.error)}
         type={INPUT_TYPE.TEXT}
