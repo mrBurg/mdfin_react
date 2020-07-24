@@ -1,4 +1,4 @@
-import React, { Component, ReactElement, ReactNode } from 'react';
+import React, { PureComponent, ReactElement, ReactNode } from 'react';
 import { NextComponentType } from 'next';
 import { observer, inject } from 'mobx-react';
 import classNames from 'classnames';
@@ -15,6 +15,7 @@ import FooterLess from '../footers/FooterLess';
 import Footer from '../footers/Footer';
 import { TJSON } from '../../interfaces';
 import { DeveloperMenu } from '../developer';
+import { isDev } from '../../utils';
 
 export type TLayoutProps = {
   localeStore: LocaleStore;
@@ -28,12 +29,9 @@ type TComponentProps = {
   children?: ReactNode;
 };
 
-const { NODE_ENV } = process.env;
-const dev = NODE_ENV !== 'production';
-
 @inject(STORE_IDS.LOCALE_STORE, STORE_IDS.PAGE_STORE)
 @observer
-export class Layout extends Component<TLayoutProps> {
+export class Layout extends PureComponent<TLayoutProps> {
   public render(): ReactElement {
     const { Component, template, localeStore, pageStore } = this.props;
     const { locale } = localeStore;
@@ -57,7 +55,7 @@ export class Layout extends Component<TLayoutProps> {
 
     return (
       <WithLocale locale={locale}>
-        {dev && <DeveloperMenu />}
+        {isDev && <DeveloperMenu />}
         {header}
         <main
           className={classNames(style.main, {

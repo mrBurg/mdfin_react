@@ -9,30 +9,23 @@ import {
 
 import style from './AccordionWidget.module.scss';
 
-export const AccordionWidget: FC<{}> = (props: any): ReactElement | null => {
-  const faqListItems = Object.keys(props).map((key, index) => {
-    const { title, questions } = props[key];
+import { TJSON } from '../../../interfaces';
 
-    const qaList = Object.keys(questions).map((item, itemIndex) => {
-      const { question, answer } = questions[item];
+type TQuestion = {
+  question: string;
+  answer: string;
+};
 
-      return (
-        <AccordionItem
-          key={itemIndex}
-          className={style.accordion__item}
-          uuid={String(itemIndex)}
-        >
-          <AccordionItemHeading>
-            <AccordionItemButton className={style.accordion__button}>
-              <span>{question}</span>
-            </AccordionItemButton>
-          </AccordionItemHeading>
-          <AccordionItemPanel className={style.accordion__panel}>
-            <span>{answer}</span>
-          </AccordionItemPanel>
-        </AccordionItem>
-      );
-    });
+type TFaqItem = {
+  title: string;
+  questions: Array<TQuestion>;
+};
+
+type TFaqListItemsProps = Array<TFaqItem>;
+
+const renderFaqList = (props: TFaqListItemsProps): Array<ReactElement> =>
+  Object.keys(props).map((key: string, index: number) => {
+    const { title, questions } = (props as TJSON)[key];
 
     return (
       <div key={index}>
@@ -43,11 +36,34 @@ export const AccordionWidget: FC<{}> = (props: any): ReactElement | null => {
           allowZeroExpanded={true}
           className={style.accordion}
         >
-          <span>{qaList}</span>
+          <span>{renderQaList(questions)}</span>
         </Accordion>
       </div>
     );
   });
 
-  return <>{faqListItems}</>;
+const renderQaList = (questions: Array<TQuestion>): Array<ReactElement> =>
+  Object.keys(questions).map((item: string, index) => {
+    const { question, answer } = (questions as TJSON)[item];
+
+    return (
+      <AccordionItem
+        key={index}
+        className={style.accordion__item}
+        uuid={String(index)}
+      >
+        <AccordionItemHeading>
+          <AccordionItemButton className={style.accordion__button}>
+            <span>{question}</span>
+          </AccordionItemButton>
+        </AccordionItemHeading>
+        <AccordionItemPanel className={style.accordion__panel}>
+          <span>{answer}</span>
+        </AccordionItemPanel>
+      </AccordionItem>
+    );
+  });
+
+export const AccordionWidget: FC<{}> = (props: any): ReactElement => {
+  return <>{renderFaqList(props)}</>;
 };

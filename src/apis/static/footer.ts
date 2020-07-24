@@ -4,11 +4,11 @@ import { METHOD } from '../../constants';
 import { URIS } from '../../routes';
 import { makeStaticUrl } from '../../utils';
 
-type TFetchCopyrightData = {
+type TFetchCopyright = {
   footerLess: boolean;
 };
 
-export const fetchCopyright = async (params?: TFetchCopyrightData) => {
+export const fetchCopyright = async (params?: TFetchCopyright) => {
   let requestConfig: AxiosRequestConfig = {
     baseURL: makeStaticUrl(),
     method: METHOD.GET,

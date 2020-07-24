@@ -1,6 +1,6 @@
 import { URIS } from '../../routes';
-import { fetchPageStaticData } from '../commonMethods';
+import { fetchPageStatic } from '../commonMethods';
 
 export const fetchPageData = async () => {
-  return await fetchPageStaticData({ url: URIS.PAYMENT });
+  return await fetchPageStatic({ url: URIS.PAYMENT });
 };

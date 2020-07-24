@@ -1,25 +1,43 @@
-import { observable, computed, toJS } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 
 import { RegistrationApi } from '../apis';
+import OTPStore from './OTPStore';
 
-type TFormData =
-  | {
-      namePlaceholder: string;
-      buttonText: string;
-    }
-  | undefined;
+type TFormStatic = {
+  namePlaceholder: string;
+  buttonText: string;
+};
+
+export type TFormData = {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+};
 
 export default class RegistrationStore {
-  @observable formData: TFormData;
+  @observable formStaticData?: TFormStatic;
 
-  constructor(private registrationApi: RegistrationApi) {}
+  constructor(
+    private registrationApi: RegistrationApi,
+    private otpStore: OTPStore
+  ) {}
 
+  @action
   public async initRegistrationForm(): Promise<void> {
-    this.formData = await this.registrationApi.fetchFormData();
+    const formStaticData = await this.registrationApi.fetchFormStatic();
+
+    runInAction(() => {
+      this.formStaticData = formStaticData;
+    });
   }
 
-  @computed
-  public get formDataJSON(): TFormData {
-    return toJS(this.formData);
+  @action
+  public async sendForm(data: TFormData) {
+    const otpData = await this.registrationApi.sendForm(data);
+
+    this.otpStore.setUserData({
+      ...otpData,
+      ...data,
+    });
   }
 }

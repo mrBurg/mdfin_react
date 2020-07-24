@@ -3,15 +3,15 @@ import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import { METHOD } from '../constants';
 import { makeStaticUrl } from '../utils';
 
-type TFetchPageStaticDataProps = {
+type TFetchPageStaticProps = {
   url: string;
   method?: Method;
 };
 
-export const fetchPageStaticData = async ({
+export const fetchPageStatic = async ({
   url,
   method = METHOD.GET,
-}: TFetchPageStaticDataProps) => {
+}: TFetchPageStaticProps) => {
   let requestConfig: AxiosRequestConfig = {
     baseURL: makeStaticUrl(),
     method,

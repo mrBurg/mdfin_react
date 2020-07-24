@@ -4,7 +4,7 @@ import { METHOD } from '../constants';
 import { URIS } from '../routes';
 
 export class PaymentApi {
-  public fetchFormData = async () => {
+  public fetchFormStatic = async () => {
     let requestConfig: AxiosRequestConfig = {
       baseURL: makeStaticUrl(),
       method: METHOD.GET,

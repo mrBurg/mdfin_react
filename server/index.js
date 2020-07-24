@@ -20,6 +20,7 @@ dotenv.config({ path: envVarPath });
 const { HTTPS_HOST, HTTPS_PORT, NODE_ENV, PO_STATIC } = process.env;
 
 const dev = NODE_ENV !== 'production';
+
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 const credentials = {

@@ -3,13 +3,14 @@ import { useStaticRendering } from 'mobx-react';
 
 import { TJSON } from '../interfaces';
 import { isServer } from '../utils';
-import { LoanApi, PaymentApi } from '../apis';
+import { LoanApi, PaymentApi, OTPApi } from '../apis';
 import LocaleStore from './localeStore';
 import PageStore from './pageStore';
 import LoanStore from './loanStore';
 import RegistrationStore from './registrationStore';
 import { RegistrationApi } from '../apis/RegistrationApi';
 import PaymentStore from './paymentStore';
+import OTPStore from './OTPStore';
 
 export enum STORE_IDS {
   LOCALE_STORE = 'localeStore',
@@ -17,6 +18,7 @@ export enum STORE_IDS {
   LOAN_STORE = 'loanStore',
   REGISTRATION_STORE = 'registrationStore',
   PAYMENT_STORE = 'paymentStore',
+  OTP_STORE = 'otpStore',
 }
 
 export type TStores = {
@@ -25,17 +27,21 @@ export type TStores = {
   [STORE_IDS.LOAN_STORE]: LoanStore;
   [STORE_IDS.REGISTRATION_STORE]: RegistrationStore;
   [STORE_IDS.PAYMENT_STORE]: PaymentStore;
+  [STORE_IDS.OTP_STORE]: OTPStore;
 };
 
 const loanApi: LoanApi = new LoanApi();
 const registrationApi: RegistrationApi = new RegistrationApi();
 const paymentApi: PaymentApi = new PaymentApi();
+const otpApi: OTPApi = new OTPApi();
 
 const localeStore: LocaleStore = new LocaleStore();
 const pageStore: PageStore = new PageStore();
 const loanStore: LoanStore = new LoanStore(loanApi);
+const otpStore: OTPStore = new OTPStore(otpApi);
 const registrationStore: RegistrationStore = new RegistrationStore(
-  registrationApi
+  registrationApi,
+  otpStore
 );
 const paymentStore: PaymentStore = new PaymentStore(paymentApi);
 
@@ -50,6 +56,7 @@ function initializeStores(initialData: TJSON) {
     [STORE_IDS.LOAN_STORE]: loanStore,
     [STORE_IDS.REGISTRATION_STORE]: registrationStore,
     [STORE_IDS.PAYMENT_STORE]: paymentStore,
+    [STORE_IDS.OTP_STORE]: otpStore,
   };
 
   if (initialData) {

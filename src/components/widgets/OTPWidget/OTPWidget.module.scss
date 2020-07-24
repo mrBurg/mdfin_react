@@ -1,4 +1,5 @@
 @import '../../../scss/service';
+@import '../../../scss/grid/animations.scss';
 
 .input {
   @extend %input;
@@ -16,4 +17,21 @@
   background-color: transparent;
   margin-top: 5px;
   cursor: pointer;
+}
+
+.testOTP {
+  @extend %box-shadow;
+  position: fixed;
+  left: 0;
+  top: 0;
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+  background-color: $yellow;
+  font-size: 3em;
+  font-weight: bold;
+  letter-spacing: 0.3em;
+  z-index: 999;
+  color: $red;
+  animation: fade-out 0.2s linear 5s forwards;
 }

@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import { NextComponentType } from 'next';
 import { Provider } from 'mobx-react';
+import { configure } from 'mobx';
 
 import '../src/scss/index.scss';
 
@@ -13,6 +14,8 @@ type TAppProps = {
   Component: NextComponentType;
   pageProps: TJSON;
 };
+
+configure({ enforceActions: 'always' });
 
 export default ({ Component, pageProps }: TAppProps): ReactElement => {
   const { pageData, template } = pageProps;

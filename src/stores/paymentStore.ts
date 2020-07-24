@@ -1,25 +1,23 @@
-import { observable, computed, toJS } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 
 import { PaymentApi } from '../apis';
 
-type TFormData =
-  | {
-      title: string;
-      buttonText: string;
-    }
-  | undefined;
+type TFormStatic = {
+  title: string;
+  buttonText: string;
+};
 
 export default class PaymentStore {
-  @observable formData: TFormData;
+  @observable formData?: TFormStatic;
 
   constructor(private paymentApi: PaymentApi) {}
 
+  @action
   public async initPaymentForm(): Promise<void> {
-    this.formData = await this.paymentApi.fetchFormData();
-  }
+    const formData = await this.paymentApi.fetchFormStatic();
 
-  @computed
-  public get formDataJSON(): TFormData {
-    return toJS(this.formData);
+    runInAction(() => {
+      this.formData = formData;
+    });
   }
 }

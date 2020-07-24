@@ -1,7 +1,11 @@
+export const PO_API_HOST: string = process.env.PO_API_HOST || '';
+export const PO_API_PORT: string = process.env.PO_API_PORT || '';
 export const PO_API: string = process.env.PO_API || '';
 export const PO_STATIC: string = process.env.PO_STATIC || '';
 export const HTTPS_HOST: string = process.env.HTTPS_HOST || '';
 export const HTTPS_PORT: string = process.env.HTTPS_PORT || '';
+
+export const eventPrefixes: Array<string> = ['webkit', 'moz', 'MS', 'o', ''];
 
 export enum METHOD {
   GET = 'get',
@@ -10,10 +14,9 @@ export enum METHOD {
 
 export enum BUTTON_TYPE {
   BUTTON = 'button',
-  RESET = 'reset',
-  SUBMIT = 'submit',
 }
 
 export enum INPUT_TYPE {
   TEXT = 'text',
+  TEL = 'tel',
 }

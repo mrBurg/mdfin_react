@@ -1,4 +1,4 @@
-import { ReactElement, Component } from 'react';
+import { ReactElement, PureComponent } from 'react';
 
 import style from './Payment.module.scss';
 
@@ -13,7 +13,7 @@ type TPaymentProps = {
 
 @inject(STORE_IDS.PAYMENT_STORE)
 @observer
-export class Payment extends Component<TPaymentProps> {
+export class Payment extends PureComponent<TPaymentProps> {
   formData = null;
   public readonly state = {};
 

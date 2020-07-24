@@ -28,6 +28,11 @@ export enum URIS {
   PAYMENT_FORM = '/payment-form',
 }
 
+export enum APIS_URIS {
+  SEND_OTP = '/signup/sendOtp',
+  GET_OTP = '/test/getOtp',
+}
+
 export const mainMenu: Array<TRouter> = [
   {
     href: URLS.CONTACTS,

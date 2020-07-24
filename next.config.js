@@ -10,6 +10,8 @@ dotenv.config({ path: envVarPath });
 
 module.exports = {
   env: {
+    PO_API_HOST: process.env.PO_API_HOST,
+    PO_API_PORT: process.env.PO_API_PORT,
     PO_API: process.env.PO_API,
     PO_STATIC: process.env.PO_STATIC,
     HTTPS_HOST: process.env.HTTPS_HOST,
