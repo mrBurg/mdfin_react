@@ -1,4 +1,5 @@
 import { ReactElement, PureComponent, createRef, RefObject } from 'react';
+import InputMask from 'react-input-mask';
 import { inject, observer } from 'mobx-react';
 import classNames from 'classnames';
 
@@ -11,7 +12,6 @@ import OTPStore from '../../../stores/OTPStore';
 import { prefixedEvent } from '../../../utils';
 
 type TOTPInputProps = {
-  otpPopup: RefObject<HTMLDivElement>;
   className?: string;
   otpStore?: OTPStore;
 };
@@ -19,7 +19,6 @@ type TOTPInputProps = {
 const renderOTPData = (ref: RefObject<HTMLDivElement>, otpCode: string) => {
   if (ref.current) {
     prefixedEvent(ref.current, 'animationend', (element: HTMLElement) => {
-      console.info(element);
       element.remove();
     });
   }
@@ -51,10 +50,12 @@ export class OTPWidget extends PureComponent<TOTPInputProps> {
       return (
         <div className={classNames(style.otp, className)}>
           {renderOTPData(this.otpPopup, otpCode!)}
-          <input
-            className={classNames(style.input, style.error)}
-            type={INPUT_TYPE.TEXT}
-            placeholder={otpMask}
+          <InputMask
+            name='otp'
+            className={style.input}
+            type={INPUT_TYPE.TEL}
+            mask={otpMask}
+            placeholder={otpMask.replace(/9/g, '*')}
           />
           <p className={style.message}>
             Mật khẩu bạn đã nhập không chính xác, hãy thử lại
