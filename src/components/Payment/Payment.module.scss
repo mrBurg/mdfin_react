@@ -2,14 +2,26 @@
 
 .payment {
   max-width: $sm;
-  margin: auto;
+  width: 100%;
+
+  @include respond(sm) {
+    font-size: px2em(14px);
+  }
+}
+
+.title {
+  font-size: px2em(19px);
 }
 
 .fieldset {
-  border: none;
-  padding: 0;
-  margin-top: 10px;
+  margin-top: px2em(10px);
   display: flex;
+  // gap: px2em(35px);
+
+  @include respond(sm) {
+    flex-direction: column;
+    // gap: px2em(15px);
+  }
 }
 
 .input {
@@ -19,5 +31,12 @@
 
 .button {
   @extend %button;
-  margin-left: 35px;
+  background-color: $red;
+
+  margin-left: px2em(35px);
+
+  @include respond(sm) {
+    margin: 0;
+    margin-top: px2em(15px);
+  }
 }

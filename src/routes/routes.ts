@@ -1,36 +1,47 @@
-import { TJSON } from '../interfaces';
+import _ from 'lodash';
 
 export type TRouter = {
   href: URLS;
   title: string;
   alias?: string;
   button?: boolean;
+  subSteps?: any;
 };
 
 export enum URLS {
   HOME = '/',
+  index = '/index',
   CONTACTS = '/contacts',
   FAQ = '/faq',
   PAYMENT = '/payment',
   SIGN_IN = '/sign-in',
-  SIGN_UP = '/sign-up',
+  phoneverify = '/sign-up',
+  obligatory = '/client',
+  deal = '/deal',
+  application = '/application',
+  NOT_FOUND = '/404',
 }
 
 export enum URIS {
-  COPYRIGHT = '/copyright',
-  MAIN_PAGE = '/main-page',
-  CONTACTS = '/contacts-page',
-  PAYMENT = '/payment-page',
-  FAQ_PAGE = '/faq-page',
-  SIGN_IN = '/sign-in',
-  SIGN_UP = '/sign-up',
-  REGISTRATION_FORM = '/registration-form',
-  PAYMENT_FORM = '/payment-form',
+  CLEAR_CACHE = '/l10n/clear-cache',
+  L10N_LIST = '/l10n/list',
+  SEND_OTP_SIGN_UP = '/signup/sendOtp',
+  SEND_OTP_SIGN_IN = '/signin/sendOtp',
+  VALIDATE_OTP_SIGN_UP = '/signup/validateOtp',
+  VALIDATE_OTP_SIGN_IN = '/signin/validateOtp',
+  GET_OTP = '/test/getOtp',
+  CALCULATE = '/calculator/calculate',
+  GET_CLIENT_STEP = '/wizard/view',
+  WIZARD_START = '/wizard/start',
+  OBLIGATORY = '/wizard/obligatory',
+  DIRECTORY = '/directory/',
 }
 
-export enum APIS_URIS {
-  SEND_OTP = '/signup/sendOtp',
-  GET_OTP = '/test/getOtp',
+export enum CLIENT_STEP {
+  obligatory = 'aboutMyself',
+  address = 'addresses',
+  job = 'work',
+  attachment_account = 'documents',
 }
 
 export const mainMenu: Array<TRouter> = [
@@ -53,11 +64,10 @@ export const mainMenu: Array<TRouter> = [
   },
 ];
 
-export const allRoutes: Array<TRouter> = [];
-
-for (let item in URLS) {
-  allRoutes.push({
-    href: (URLS as TJSON)[item],
-    title: item,
-  });
-}
+export const allRoutes: Array<TRouter> = _.map(URLS, (val, key) => {
+  return {
+    href: val,
+    title: key,
+    subSteps: key == 'obligatory' ? CLIENT_STEP : null,
+  };
+});

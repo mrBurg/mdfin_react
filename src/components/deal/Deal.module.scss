@@ -1,0 +1,106 @@
+@import '../../scss/service/';
+
+.deal {
+  max-width: $md;
+  width: 100%;
+}
+
+.title {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.accent {
+  color: $red;
+}
+
+.dealNo {
+  a {
+    @extend .accent;
+    font-weight: bold;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.content {
+  margin-top: 30px;
+  display: flex;
+  // gap: 30px;
+}
+
+.column {
+  &:first-child {
+    flex-grow: 1;
+  }
+
+  &:last-child {
+    flex-grow: 2;
+    min-width: $xs;
+  }
+}
+
+.info {
+  margin-left: px2em(30px);
+}
+
+.links {
+  margin-top: 30px;
+
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.button {
+  @extend %button;
+  background-color: $red;
+  width: 100%;
+  margin: 30px 0;
+}
+
+.reject {
+  text-align-last: left;
+  color: $blue;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.datatable {
+  width: 100%;
+  box-shadow: 0 0 10px transparentize($black, 0.8);
+  // background-color: $white;
+  padding: 30px 40px;
+
+  thead {
+    text-align: center;
+  }
+
+  tbody {
+    tr {
+      td {
+        &:first-child {
+          color: $gray;
+        }
+
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+}
+
+.separator {
+  border: 1px solid $orange;
+  width: 90%;
+  margin: 10px auto;
+}

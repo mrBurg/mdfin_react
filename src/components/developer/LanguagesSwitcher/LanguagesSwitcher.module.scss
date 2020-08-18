@@ -1,20 +1,24 @@
-@import '../../../scss/service';
+@import "../../../scss/service";
 
 .language {
-  display: inline-block;
-  border-radius: 7px;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.button {
+  color: $white;
+  background-color: $black;
   transition: background-color 0.2s, color 0.2s;
   cursor: pointer;
+  padding: 0.3em;
+  user-select: none;
+  border: 1px solid $white;
+  border-radius: 7px;
 
   &.current,
   &:hover {
     background-color: $white;
     color: $black;
-  }
-
-  a {
-    display: block;
-    padding: 0.3em;
-    user-select: none;
   }
 }

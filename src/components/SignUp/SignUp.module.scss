@@ -3,7 +3,12 @@
 .signUp {
   width: 100%;
   max-width: $xs;
-  margin: auto;
+  margin-top: 85px;
+}
+
+.formTitle {
+  margin-bottom: 45px;
+  text-align: center;
 }
 
 .input,
@@ -15,7 +20,7 @@
   @extend %input;
   margin-top: 18px;
 
-  &:first-child {
+  &:first-of-type {
     margin-top: 0;
   }
 }
@@ -23,6 +28,7 @@
 .button {
   @extend %button;
   margin-top: 35px;
+  background-color: $red;
 }
 
 .otp {

@@ -1,6 +1,7 @@
 import { observable, action, runInAction } from 'mobx';
 
 import { PaymentApi } from '../apis';
+import { fetchStaticData } from '../apis/StaticApi';
 
 type TFormStatic = {
   title: string;
@@ -8,16 +9,20 @@ type TFormStatic = {
 };
 
 export default class PaymentStore {
-  @observable formData?: TFormStatic;
+  @observable formStatic?: TFormStatic;
 
+  //@ts-ignore
   constructor(private paymentApi: PaymentApi) {}
 
   @action
   public async initPaymentForm(): Promise<void> {
-    const formData = await this.paymentApi.fetchFormStatic();
+    const formStatic = await fetchStaticData({
+      block: 'payment',
+      path: 'form',
+    });
 
     runInAction(() => {
-      this.formData = formData;
+      this.formStatic = formStatic;
     });
   }
 }

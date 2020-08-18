@@ -1,5 +1,6 @@
-import React, { PureComponent, ReactElement, ReactNode } from 'react';
+import React, { PureComponent, ReactElement } from 'react';
 import { NextComponentType } from 'next';
+import { Router } from 'next/router';
 import { observer, inject } from 'mobx-react';
 import classNames from 'classnames';
 
@@ -7,63 +8,64 @@ import style from './Layout.module.scss';
 
 import WithLocale from './WithLocale';
 import { STORE_IDS } from '../../stores';
-import LocaleStore from '../../stores/localeStore';
-import PageStore from '../../stores/pageStore';
-import HeaderLess from '../headers/HeaderLess';
-import Header from '../headers/Header';
-import FooterLess from '../footers/FooterLess';
-import Footer from '../footers/Footer';
-import { TJSON } from '../../interfaces';
+import Header from '../Header';
+import Footer from '../Footer';
+import { TJSON, TComponenProps } from '../../interfaces';
 import { DeveloperMenu } from '../developer';
 import { isDev } from '../../utils';
 
 export type TLayoutProps = {
-  localeStore: LocaleStore;
-  pageStore: PageStore;
   Component: NextComponentType;
   template?: TJSON;
-};
+} & TComponenProps;
 
-type TComponentProps = {
-  pageStore: PageStore;
-  children?: ReactNode;
-};
-
-@inject(STORE_IDS.LOCALE_STORE, STORE_IDS.PAGE_STORE)
+@inject(STORE_IDS.LOCALE_STORE, STORE_IDS.PAGE_STORE, STORE_IDS.USER_STORE)
 @observer
 export class Layout extends PureComponent<TLayoutProps> {
+  constructor(props: TLayoutProps) {
+    super(props);
+
+    Router.events.on('routeChangeComplete', (url: string) => {
+      console.info(`Page changed to ${url}`);
+    });
+  }
+
+  componentDidMount() {
+    const { userStore } = this.props;
+
+    userStore.makeFingerprint();
+  }
+
   public render(): ReactElement {
-    const { Component, template, localeStore, pageStore } = this.props;
-    const { locale } = localeStore;
-    const { copyright } = pageStore;
+    const { Component, template, ...props } = this.props;
+    const {
+      localeStore: { locale },
+      pageStore: { copyright },
+    } = props;
 
-    const ComponentProps: TComponentProps = {
-      pageStore,
-    };
-
-    let backgroundStyle;
+    let hasBackground;
     let header: ReactElement = <Header />;
     let footer: ReactElement = <Footer copyright={copyright} />;
 
     if (template) {
       const { background, headerLess, footerLess } = template;
 
-      backgroundStyle = background;
-      if (headerLess) header = <HeaderLess />;
-      if (footerLess) footer = <FooterLess copyright={copyright} />;
+      hasBackground = background;
+      header = <Header less={headerLess} />;
+      footer = <Footer copyright={copyright} less={footerLess} />;
     }
 
     return (
       <WithLocale locale={locale}>
-        {isDev && <DeveloperMenu />}
+        {isDev && <DeveloperMenu {...props} />}
         {header}
         <main
           className={classNames(style.main, {
-            [style.background]: backgroundStyle,
+            [style.background]: hasBackground,
           })}
         >
           <div className={style.container}>
-            <Component {...ComponentProps} />
+            <Component {...props} />
           </div>
         </main>
         {footer}

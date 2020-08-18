@@ -1,18 +1,40 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { makeApiUrl, checkStatus } from '../utils';
+
+import { makeApiUri } from '../utils';
 import { METHOD } from '../constants';
-import { APIS_URIS } from '../routes';
+import { URIS } from '../routes';
+import { checkStatus } from './apiUtils';
+import { TJSON } from '../interfaces';
+import { TOtpProps } from '../stores/OtpStore';
 
-type TGetOtp = {
-  otpId: number;
-};
-
-export class OTPApi {
-  public getOtp = async (data: TGetOtp) => {
+export class OtpApi {
+  public getOtp = async (data: TOtpProps) => {
     let requestConfig: AxiosRequestConfig = {
-      baseURL: makeApiUrl(true),
+      baseURL: makeApiUri(),
       method: METHOD.POST,
-      url: APIS_URIS.GET_OTP,
+      url: URIS.GET_OTP,
+      data,
+    };
+
+    try {
+      const { data }: AxiosResponse = await axios(requestConfig);
+      const { status, error, errorDescription, ...otpData } = data;
+
+      if (checkStatus(status)) return otpData;
+
+      return { otpCode: null };
+    } catch (err) {
+      console.info(err);
+
+      return { otpCode: null };
+    }
+  };
+
+  public validateOtp = async (data: TJSON) => {
+    let requestConfig: AxiosRequestConfig = {
+      baseURL: makeApiUri(),
+      method: METHOD.POST,
+      url: (URIS as TJSON)[`VALIDATE_OTP${data.urisKey}`], //URIS.VALIDATE_OTP,
       data,
     };
 
@@ -27,13 +49,4 @@ export class OTPApi {
       return null;
     }
   };
-  /* if (isDev) {
-          const { status, ...otpCode } = await this.getOtp(otpData);
-
-          if (checkStatus(status))
-            otpData = {
-              ...otpData,
-              testData: otpCode,
-            };
-        } */
 }

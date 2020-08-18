@@ -1,10 +1,15 @@
 @import '../../scss/service';
+@import './../../scss/chunks';
 
-.menu {
+.desktopMenu {
   font-weight: 600;
   display: flex;
   flex-grow: 1;
-  justify-content: flex-end;
+  justify-content: space-between;
+
+  @include respond(sm) {
+    display: none;
+  }
 
   li {
     margin: 0 16px;
@@ -21,4 +26,66 @@
       }
     }
   }
+
+  .active {
+    border-bottom: 1px solid $gray;
+  }
+}
+
+.mobileMenu {
+  display: flex;
+  font-weight: 600;
+
+  @include respond(md, true) {
+    display: none;
+  }
+}
+
+.menu {
+  background: $white;
+  margin-top: 80px;
+  list-style: none;
+  transition: opacity 0.5s;
+
+  &Container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    display: none;
+    height: 100%;
+    background: transparentize($black, 0.7);
+
+    &Opened {
+      opacity: 1;
+      display: block;
+      animation: fade-in 0.2s;
+    }
+  }
+
+  .active {
+    background-color: $gray;
+  }
+
+  li {
+    a {
+      color: $black;
+      text-decoration: none;
+      padding: 16px 25px;
+      display: block;
+      transition: background-color 0.2s;
+
+      &:not(.active):hover {
+        background-color: lighten($gray, 18%);
+      }
+    }
+  }
+}
+
+.hamburger {
+  border: none;
+  background: none;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
 }

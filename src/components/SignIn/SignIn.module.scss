@@ -3,7 +3,12 @@
 .signIn {
   width: 100%;
   max-width: $xs;
-  margin: auto;
+  margin-top: 85px;
+}
+
+.pageTitle {
+  margin-bottom: 45px;
+  text-align: center;
 }
 
 .input,
@@ -23,6 +28,7 @@
 .button {
   @extend %button;
   margin-top: 35px;
+  background-color: $red;
 }
 
 .otp {

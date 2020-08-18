@@ -1,0 +1,29 @@
+@import '../../scss/service';
+
+.client {
+  max-width: $md;
+  width: 100%;
+}
+
+.steps {
+  text-align: center;
+  margin: 85px 0;
+  font-size: 0;
+}
+
+.step {
+  display: inline-block;
+  margin: 0 15px;
+  background-color: lighten($blue, 30);
+  width: 20%;
+  max-width: 130px;
+  height: 2px;
+
+  @include respond(sm) {
+    margin: 0 5px;
+  }
+
+  &_current {
+    background-color: $blue;
+  }
+}

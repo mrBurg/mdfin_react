@@ -3,21 +3,17 @@ import { GetStaticProps, GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 
 import { gt } from '../src/utils';
-import PageStore from '../src/stores/pageStore';
-import { fetchCopyright } from '../src/apis/static/footer';
-import { AccordionWidget } from '../src/components/widgets/AccordionWidget/AccordionWidget';
-import { TJSON } from '../src/interfaces';
-import { fetchPageData } from '../src/apis/static/faqPage';
+import { AccordionWidget } from '../src/components/widgets/AccordionWidget';
+import { TJSON, TCopyright, TComponenProps } from '../src/interfaces';
+import { fetchStaticData, fetchCopyright } from '../src/apis';
 
-type TFAQPageProps = {
-  pageStore: PageStore;
-};
-
-export default ({ pageStore }: TFAQPageProps): ReactElement => {
+const FaqPage = (props: TComponenProps): ReactElement => {
   const {
-    documentTitle,
-    pageData: { faqList },
-  } = pageStore;
+    pageStore: {
+      documentTitle,
+      pageData: { faqList },
+    },
+  } = props;
 
   return (
     <>
@@ -25,21 +21,29 @@ export default ({ pageStore }: TFAQPageProps): ReactElement => {
         <title>{gt.gettext(documentTitle)}</title>
       </Head>
 
-      <AccordionWidget {...faqList} />
+      <div className='page-container'>
+        <AccordionWidget {...faqList} />
+      </div>
     </>
   );
 };
 
+export default FaqPage;
+
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
-  const pageData: TJSON = await fetchPageData();
-  const copyright: string = await fetchCopyright();
+  const pageData: TJSON = await fetchStaticData({
+    block: 'faq-page',
+    path: 'static',
+  });
+
+  const copyright: TCopyright = await fetchCopyright();
 
   return {
     props: {
       ...context,
-      pageData: { copyright, ...pageData },
+      pageData: { copyright: copyright.normal, ...pageData },
     },
   };
 };

@@ -1,40 +1,33 @@
 const path = require('path');
 const dotenv = require('dotenv');
 const args = require('yargs').argv;
+const webpack = require('webpack');
 
 const { SitemapPlugin } = require('./plugins');
 
-let envVarPath = !args.p ? './.env.development' : './.env.production';
-
-dotenv.config({ path: envVarPath });
-
 module.exports = {
-  env: {
-    PO_API_HOST: process.env.PO_API_HOST,
-    PO_API_PORT: process.env.PO_API_PORT,
-    PO_API: process.env.PO_API,
-    PO_STATIC: process.env.PO_STATIC,
-    HTTPS_HOST: process.env.HTTPS_HOST,
-    HTTPS_PORT: process.env.HTTPS_PORT,
-  },
   distDir: 'build',
   webpack(config, options) {
-    const { HTTPS_HOST, HTTPS_PORT } = this.env;
+    const { PO_PROJECT_HOST, PO_PROJECT_PORT } = this.env;
 
     config.resolve.alias.normalize = 'normalize.css/normalize.css';
 
-    config.module.rules.push({
-      test: /\.pot?$/,
-      loaders: ['json-loader', 'po-gettext-loader'],
-    });
+    config.module.rules = [
+      ...config.module.rules,
+      {
+        test: /\.pot?$/,
+        loaders: ['json-loader', 'po-gettext-loader'],
+      },
+    ];
 
-    config.plugins.push(
+    config.plugins = [
+      ...config.plugins,
       new SitemapPlugin({
-        baseUrl: `${HTTPS_HOST}:${HTTPS_PORT}`,
+        baseUrl: `${PO_PROJECT_HOST}:${PO_PROJECT_PORT}`,
         pagesDirectory: path.resolve(__dirname, 'pages'),
         targetDirectory: './',
-      })
-    );
+      }),
+    ];
 
     // console.info(config, options);
     return config;

@@ -1,28 +1,39 @@
 @import '../../../scss/service';
 
 .section {
-  padding: 25px;
+  padding: px2em(25px);
   background-color: $yellow;
   border: 3px solid $white;
   border-width: 3px 0;
+  max-width: $lg;
+  width: 100%;
+
+  @include respond(sm) {
+    font-size: px2em(13px);
+  }
 }
 
 .title {
   text-align: center;
   font-size: px2em(24px);
+  transition: font-size 0.2s;
 }
 
 .items {
   display: flex;
-  margin-top: 20px;
+  margin-top: px2em(20px);
   counter-reset: numeration;
+
+  @include respond(xxs) {
+    flex-direction: column;
+  }
 }
 
 .item {
   flex-grow: 1;
   text-align: center;
-  color: #8f8f8e;
   color: lighten($black, 50%);
+  flex-basis: 33.33%;
 
   &Icon {
     width: 52px;
@@ -40,7 +51,7 @@
       position: absolute;
       left: 0;
       bottom: 0;
-      font-size: 4em;
+      font-size: 3.5em;
     }
   }
 

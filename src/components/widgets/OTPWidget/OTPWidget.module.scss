@@ -1,5 +1,4 @@
 @import '../../../scss/service';
-@import '../../../scss/grid/animations.scss';
 
 .input {
   @extend %input;
@@ -7,19 +6,36 @@
   text-align: center;
 }
 
+.error {
+  border-color: $red;
+}
+
+.agree_terms {
+  margin: px2em(20px) auto;
+  display: flex;
+  align-items: flex-start;
+}
+
+.resend {
+  padding: 0 px2em(30px);
+
+  .item {
+    margin-top: px2em(15px);
+  }
+}
+
 .message {
   color: lighten($red, 25%);
-  margin-top: 15px;
 }
 
 .button {
   border: none;
   background-color: transparent;
-  margin-top: 5px;
   cursor: pointer;
+  color: $blue;
 }
 
-.testOTP {
+.testOtp {
   @extend %box-shadow;
   position: fixed;
   left: 0;

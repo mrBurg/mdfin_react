@@ -17,7 +17,7 @@ msgstr "Liên Hệ"
 
 #: 
 msgid "FAQ"
-msgstr "FAQ CÂU HỎI THƯỜNG GẶP"
+msgstr "CÂU HỎI THƯỜNG GẶP"
 
 #: 
 msgid "Payment"
@@ -44,3 +44,10 @@ msgstr "Đăng Ký"
 msgid "Register Loan"
 msgstr "Đăng Ký Hồ Sơ Vay"
 
+#: 
+msgid "Enter Phone Number"
+msgstr "Nhập Số Điện Thoại"
+
+#: 
+msgid "Confirm"
+msgstr "Xác Nhận"

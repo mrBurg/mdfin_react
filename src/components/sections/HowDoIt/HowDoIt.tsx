@@ -13,28 +13,28 @@ type THowDoItProps = {
   items: Array<TItem>;
 };
 
-const renderItems = (items: Array<TItem>): Array<ReactElement> =>
-  items.map(
-    (item: TItem, index: number): ReactElement => {
-      const { data } = item;
-
-      return (
-        <div key={index} className={style.item}>
-          <div className={style.itemIcon} />
-          <p
-            className={style.itemText}
-            dangerouslySetInnerHTML={{ __html: data }}
-          />
-        </div>
-      );
-    }
-  );
-
 export const HowDoIt: FC<THowDoItProps> = ({ title, items }): ReactElement => {
   return (
     <section className={style.section}>
       <h2 className={style.title}>{title}</h2>
-      <div className={style.items}>{renderItems(items)}</div>
+      <div className={style.items}>
+        {items.map(
+          (item: TItem, index: number): ReactElement => {
+            const { data } = item;
+
+            return (
+              <div key={index} className={style.item}>
+                <div className={style.itemIcon} />
+                <p
+                  className={style.itemText}
+                  dangerouslySetInnerHTML={{ __html: data }}
+                />
+              </div>
+            );
+          }
+        )}
+      </div>
+
       <LoanButton className={style.loanButton} />
     </section>
   );

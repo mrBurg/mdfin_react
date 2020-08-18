@@ -1,18 +1,18 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { makeStaticUrl } from '../utils';
-import { METHOD } from '../constants';
+import axios, { AxiosResponse } from 'axios';
+
+import { makeStaticUri } from '../utils';
 import { URIS } from '../routes';
+import { TFetchStaticDataProps } from '../interfaces';
 
 export class PaymentApi {
-  public fetchFormStatic = async () => {
-    let requestConfig: AxiosRequestConfig = {
-      baseURL: makeStaticUrl(),
-      method: METHOD.GET,
-      url: URIS.PAYMENT_FORM,
-    };
-
+  public fetchFormStatic = async (params: TFetchStaticDataProps) => {
     try {
-      const { data }: AxiosResponse = await axios(requestConfig);
+      const { data }: AxiosResponse = await axios.get(
+        makeStaticUri(URIS.L10N_LIST),
+        {
+          params,
+        }
+      );
 
       return data;
     } catch (err) {

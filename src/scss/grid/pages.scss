@@ -1,4 +1,25 @@
-.page-title {
-  margin: 80px auto 45px;
-  text-align: center;
+@import '../service/';
+
+.page {
+  &-title {
+    margin: px2em(80px, 24px) auto px2em(45px, 24px);
+    text-align: center;
+    transition: font-size 0.2s;
+
+    @include respond(sm) {
+      font-size: px2em(22px);
+    }
+
+    @include respond(xs) {
+      font-size: px2em(20px);
+    }
+  }
+
+  &-container {
+    padding: 0 px2em(20px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

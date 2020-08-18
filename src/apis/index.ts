@@ -1,4 +1,6 @@
+export { fetchStaticData, fetchCopyright } from './StaticApi';
 export { LoanApi } from './LoanApi';
-export { RegistrationApi } from './RegistrationApi';
 export { PaymentApi } from './PaymentApi';
-export { OTPApi } from './OTPApi';
+export { UserApi } from './UserApi';
+export { OtpApi } from './OtpApi';
+export { CommonApi } from './CommonApi';

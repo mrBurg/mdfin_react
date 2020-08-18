@@ -14,11 +14,12 @@ export const Welcome: FC<TWelcomeProps> = ({
 }): ReactElement => {
   return (
     <section className={style.section}>
-      <h2 className={style.title}>{title}</h2>
+      <h1 className={style.title}>{title}</h1>
       <p
         className={style.description}
         dangerouslySetInnerHTML={{ __html: description }}
       />
+
       <ProductSelector className={style.productSelector} />
     </section>
   );

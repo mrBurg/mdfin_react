@@ -1,0 +1,43 @@
+.ui.dropdown {
+  .icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: #000;
+  }
+
+  .divider.text {
+    flex-grow: 1;
+  }
+
+  .icon {
+    background: url('/theme/icons/icons_16x16.svg') -48px -64px no-repeat;
+  }
+
+  .menu {
+    left: 0;
+    position: absolute;
+    display: none;
+    top: 100%;
+    background: $white;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+    border: 1px solid rgba(34, 36, 38, 0.15);
+    border-radius: 0.5em;
+    width: 100%;
+
+    &.visible {
+      display: block;
+      visibility: visible;
+    }
+
+    .item {
+      padding: px2em(10px);
+      text-align: center;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: lighten($gray, 18%);
+      }
+    }
+  }
+}

@@ -1,1 +1,1 @@
-export { OTPWidget as default } from './OTPWidget';
+export { OtpWidget as default } from './OtpWidget';

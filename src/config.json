@@ -3,6 +3,8 @@
   "defaultLocale": "vi-VN",
   "defaultLocaleDomain": "common",
   "localeStoreKey": "locale",
-  "phoneMask": "+84 - 99 - 999 - 99 - 99",
-  "otpMask": "A999"
+  "phoneMask": "+840 - 99 - 999 - 99 - 99",
+  "otpMask": "A999",
+  "maskChar": "_",
+  "showResend": 30000
 }

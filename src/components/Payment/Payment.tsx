@@ -3,47 +3,36 @@ import { ReactElement, PureComponent } from 'react';
 import style from './Payment.module.scss';
 
 import { BUTTON_TYPE, INPUT_TYPE } from '../../constants';
-import { inject, observer } from 'mobx-react';
-import { STORE_IDS } from '../../stores';
-import PaymentStore from '../../stores/paymentStore';
+import { observer } from 'mobx-react';
+import { TComponenProps } from '../../interfaces';
 
-type TPaymentProps = {
-  paymentStore?: PaymentStore;
-};
-
-@inject(STORE_IDS.PAYMENT_STORE)
 @observer
-export class Payment extends PureComponent<TPaymentProps> {
-  formData = null;
-  public readonly state = {};
-
+export class Payment extends PureComponent<TComponenProps> {
   componentDidMount(): void {
     const { paymentStore } = this.props;
 
-    if (paymentStore) paymentStore.initPaymentForm();
+    paymentStore.initPaymentForm();
   }
 
   render(): ReactElement | null {
-    const { paymentStore } = this.props;
+    const {
+      paymentStore: { formStatic },
+    } = this.props;
 
-    if (paymentStore) {
-      const { formData } = paymentStore;
+    if (formStatic) {
+      const { title } = formStatic;
 
-      if (formData) {
-        const { title, buttonText } = formData;
-
-        return (
-          <form className={style.payment}>
-            <h3>{title}</h3>
-            <fieldset className={style.fieldset}>
-              <input className={style.input} type={INPUT_TYPE.TEXT} />
-              <button className={style.button} type={BUTTON_TYPE.BUTTON}>
-                {buttonText}
-              </button>
-            </fieldset>
-          </form>
-        );
-      }
+      return (
+        <form className={style.payment}>
+          <h3 className={style.title}>{title}</h3>
+          <div className={style.fieldset}>
+            <input className={style.input} type={INPUT_TYPE.TEXT} />
+            <button className={style.button} type={BUTTON_TYPE.BUTTON}>
+              Thanh Toán Trực Tuyến
+            </button>
+          </div>
+        </form>
+      );
     }
 
     return null;

@@ -1,0 +1,98 @@
+{
+  "aboutMyself": {
+    "title": "Thông Tin Cá Nhân",
+    "name": "Họ Tên Đầy Đủ *",
+    "birthDate": "Ngày Sinh *",
+    "idNumber": "Số CMND/CCCD *",
+    "issueIdDate": "Ngày Cấp *",
+    "expireIdDate": "Có Giá Trị Đến *",
+    "gender": "Giới Tính *",
+    "maritalStatus": "Tình Trạng Hôn Nhân *",
+    "childrenAmount": "Số con ruột (dưới 16 tuổi) *",
+    "email": "Email *",
+    "loanPurpose": "Mục Đích Vay *",
+    "whatPhone": "Bạn sử dụng điện thoại di động thương hiệu gì *",
+    "phoneBrand": "Thương hiệu *",
+    "otherPhoneBrand": "Thương Hiệu Khác",
+    "phoneModel": "Loại *",
+    "otherPhoneModel": "Mẫu mã khác",
+    "otherPhoneNumber": "Số Điện Thoại Di Động Cá Nhân Khác"
+  },
+  "addresses": {
+    "title": "Địa Chỉ và Thông Tin Liên Hệ",
+    "city": "Tỉnh/Thành Phố",
+    "district": "Quận/Huyện",
+    "subdistrict": "Phường/Xã",
+    "street": "Đường",
+    "building": "Tòa Nhà",
+    "apartment": "Chung Cư",
+    "livingPeriod": "Thời gian cư trú",
+    "years": "Năm",
+    "months": "Tháng",
+    "thirdPartyPhone": "Số điện thoại người tham chiếu/người thân của bạn là gì?",
+    "thirdPartyName": "Tên người tham chiếu/người thân của bạn là gì?",
+    "thirdPartyRelation": "Mối quan hệ của bạn với người tham chiếu/người thân là gì?"
+  },
+  "work": {
+    "title": "Nghề Nghiệp",
+    "socialStatus": "Tình Trạng Lao Động",
+    "education": "Trình độ học vấn",
+    "company": "Tên Công Ty",
+    "industry": "Ngành Nghề",
+    "industryDetailed": "Ngành Nghề Chi Tiết",
+    "positionLevel": "Cấp bậc chức vụ",
+    "position": "Chức Vụ",
+    "workPeriod": "Số Năm làm việc tại công ty",
+    "years": "Năm",
+    "months": "Tháng",
+    "colleaguePhone": "Số Điện Thoại bộ phận Nhân Sự/Đồng Nghiệp",
+    "colleagueName": "Tên Người Phụ Trách Nhân Sự/Tên Đồng Nghiệp",
+    "jobPhoneRelationType": "Loại Số Điện Thoại liên hệ Công Ty",
+    "income": "Thu Nhập Sau Thuế Hàng Tháng"
+  },
+  "documents": {
+    "attachments": {
+      "isPresent": {
+        "title": "Thông Tin Tài Khoản và Chứng Từ",
+        "buttons": {
+          "idFront": "Tải lên CMND (Mặt Trước)",
+          "idBack": "Tải Lên CMND (Mặt Sau)",
+          "selfie": "Tải Lên Ảnh Chụp Selfie Cầm CMND Trên Tay",
+          "other": "Giấy Tờ Khác"
+        }
+      },
+      "notPresent": {
+        "title": "Chứng từ cần thiết và thông tin tài khoản",
+        "buttons": {
+          "idFront": "CMND/CCCD Mặt Trước",
+          "idBack": "CMND/CCCD Mặt Sau",
+          "selfie": "Ảnh chụp selfie cầm CMND/CCCD",
+          "other": "Giấy Tờ Khác"
+        }
+      }
+    },
+    "accounts": {
+      "isPresent": {
+        "title": "Thêm Tài Khoản Ngân Hàng"
+      },
+      "notPresent": {
+        "bank account": "Chọn Tài Khoản Ngân Hàng"
+      },
+      "buttons": {
+        "add": "Tài khoản ngân hàng mới",
+        "select": "Chọn Ngân Hàng",
+        "enter": "Số Tài Khoản Ngân Hàng",
+        "confirm": "Xác Nhận"
+      }
+    },
+    "docs": {
+      "idFront": "CMND hoặc CCCD (Mặt Trước)",
+      "idBack": "CMND hoặc CCCD (Mặt Sau)",
+      "selfie": "Ảnh Chụp Chân Dung Cá Nhân cùng với CMND/CCCD của bạn",
+      "other": "Các loại giấy tờ chứng từ khác",
+      "selectAccount": "Chọn Tài Khoản Ngân Hàng",
+      "selectBank": "Chọn Ngân Hàng",
+      "accountNumber": "Số Tài Khoản"
+    }
+  }
+}

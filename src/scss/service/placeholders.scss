@@ -4,9 +4,9 @@
 
 %input {
   color: $gray;
-  padding: 12px 35px;
+  padding: px2em(12px) px2em(35px);
   border: 1px solid $gray;
-  border-radius: 8px;
+  border-radius: px2em(8px);
 
   &.error {
     border-color: lighten($red, 25%);
@@ -15,9 +15,8 @@
 
 %button {
   cursor: pointer;
-  background-color: $red;
-  padding: 12px 35px;
+  padding: px2em(12px) px2em(35px);
   border: none;
-  border-radius: 8px;
+  border-radius: px2em(8px);
   color: $white;
 }

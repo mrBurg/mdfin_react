@@ -44,3 +44,11 @@ msgstr "Registration"
 msgid "Register Loan"
 msgstr "Register Loan"
 
+#: 
+msgid "Enter Phone Number"
+msgstr "Enter phone number"
+
+#: 
+msgid "Confirm"
+msgstr "Confirm"
+

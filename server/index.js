@@ -1,26 +1,34 @@
 const https = require('https');
+const http = require('http');
 const express = require('express');
 const next = require('next');
 const { readFileSync } = require('fs');
 const dotenv = require('dotenv');
 const args = require('yargs').argv;
 
-const mainPage = require('./pages/main');
-const contactsPage = require('./pages/contacts');
-const faqPage = require('./pages/faq');
-const paymentPage = require('./pages/payment');
-const signInPage = require('./pages/signIn');
-const signUpPage = require('./pages/signUp');
-const footer = require('./footer');
+// const mainPage = require('./modules/main');
 
-let envVarPath = !args.p ? './.env.development' : './.env.production';
+switch (true) {
+  case args.t:
+    dotenv.config({ path: './.env.production.local' });
+    break;
+  case args.p:
+    dotenv.config({ path: './.env.production' });
+    break;
+  default:
+    dotenv.config({ path: './.env.development' });
+    break;
+}
 
-dotenv.config({ path: envVarPath });
-
-const { HTTPS_HOST, HTTPS_PORT, NODE_ENV, PO_STATIC } = process.env;
+const {
+  HTTPS_SERVER_HOST,
+  HTTPS_PORT,
+  HTTP_SERVER_HOST,
+  HTTP_PORT,
+  NODE_ENV,
+} = process.env;
 
 const dev = NODE_ENV !== 'production';
-
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 const credentials = {
@@ -48,22 +56,25 @@ const serverCallback = ((err) => {
 
   const server = express();
 
-  server.use(PO_STATIC, mainPage);
-  server.use(PO_STATIC, contactsPage);
-  server.use(PO_STATIC, faqPage);
-  server.use(PO_STATIC, paymentPage);
-  server.use(PO_STATIC, signInPage);
-  server.use(PO_STATIC, signUpPage);
-  server.use(PO_STATIC, footer);
+  // server.use('/static', mainPage);
 
   server.all('*', (req, res) => {
     return handle(req, res);
   });
 
+  if (dev) {
+    const httpServer = http.createServer(server);
+
+    httpServer.listen(
+      HTTP_PORT,
+      serverCallback('HTTP', HTTP_SERVER_HOST, HTTP_PORT)
+    );
+  }
+
   const httpsServer = https.createServer(credentials, server);
 
   httpsServer.listen(
     HTTPS_PORT,
-    serverCallback('HTTPS', HTTPS_HOST, HTTPS_PORT)
+    serverCallback('HTTPS', HTTPS_SERVER_HOST, HTTPS_PORT)
   );
 })();

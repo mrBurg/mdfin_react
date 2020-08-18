@@ -1,0 +1,27 @@
+@import '../../scss/service/';
+
+$border-color: #bfbfbe;
+
+.header {
+  @extend %box-shadow;
+  border-bottom: 1px solid $border-color;
+  padding: px2em(25px);
+  z-index: 1;
+}
+
+.container {
+  max-width: $md;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.less {
+  justify-content: center;
+}
+
+.mobileMenu {
+  display: flex;
+  justify-content: space-between;
+}

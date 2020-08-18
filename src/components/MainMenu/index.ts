@@ -1,1 +1,1 @@
-export { MainMenu as default } from './MainMenu';
+export { MainMenuWithRouter as default } from './MainMenu';
