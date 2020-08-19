@@ -18,6 +18,8 @@ export const NotDifficult: FC<TNotDifficultProps> = ({
       <div className={classNames(style.item, style.content)}>
         <h2 className={style.title}>{title}</h2>
         <div className={style.description}>{description}</div>
+
+        <LoanButton className={style.loanButton} />
       </div>
     </section>
   );

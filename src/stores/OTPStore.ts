@@ -5,7 +5,7 @@ import { OtpApi } from '../apis';
 import { UserApi } from '../apis';
 import UserStore from './UserStore';
 import { URLS } from '../routes';
-import { setToLocalStorage, getMD5, isDev, delay } from '../utils';
+import { setToLocalStorage, getMD5, isDev, isTest, delay } from '../utils';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../constants';
 import { TJSON } from '../interfaces';
 import { showResend } from './../../src/config.json';
@@ -40,7 +40,7 @@ export default class OtpStore {
   public async updateOtpState({ otpId, phoneNumber }: TOtpProps) {
     this.otpReady = !!otpId;
 
-    if (isDev) {
+    if (isDev || isTest) {
       const { otpCode } = await this.otpApi.getOtp({ otpId, phoneNumber });
 
       runInAction(() => {

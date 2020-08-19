@@ -28,6 +28,8 @@ export default class LoanStore {
   public async calculate(loanData: TFormData): Promise<void> {
     let requestConfig = this.commonApi.postRequestConfig('CALCULATE', loanData);
 
+    console.info(requestConfig);
+
     const response = await this.loanApi.calculate(requestConfig);
 
     if (response) {

@@ -1,9 +1,7 @@
+export const ENVIRONMENT: string = process.env.ENVIRONMENT || '';
+export const PO_API: string = process.env.PO_API || '';
 export const PO_API_HOST: string = process.env.PO_API_HOST || '';
 export const PO_API_PORT: string = process.env.PO_API_PORT || '';
-export const PO_API: string = process.env.PO_API || '';
-export const PO_STATIC: string = process.env.PO_STATIC || '';
-export const HTTPS_SERVER_HOST: string = process.env.HTTPS_SERVER_HOST || '';
-export const HTTPS_PORT: string = process.env.HTTPS_PORT || '';
 export const ACCESS_TOKEN_KEY: string = process.env.ACCESS_TOKEN_KEY || '';
 export const REFRESH_TOKEN_KEY: string = process.env.REFRESH_TOKEN_KEY || '';
 export const SESSIONID_KEY: string = process.env.SESSIONID_KEY || '';

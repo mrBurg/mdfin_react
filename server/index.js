@@ -6,7 +6,9 @@ const { readFileSync } = require('fs');
 const dotenv = require('dotenv');
 const args = require('yargs').argv;
 
-// const mainPage = require('./modules/main');
+const test = require('./routes/test');
+
+dotenv.config({ path: './.env' });
 
 switch (true) {
   case args.t:
@@ -21,15 +23,17 @@ switch (true) {
 }
 
 const {
+  ENVIRONMENT,
   HTTPS_SERVER_HOST,
   HTTPS_PORT,
   HTTP_SERVER_HOST,
   HTTP_PORT,
-  NODE_ENV,
 } = process.env;
 
-const dev = NODE_ENV !== 'production';
-const nextApp = next({ dev });
+const isDev = ENVIRONMENT == 'development';
+const isTest = ENVIRONMENT == 'test';
+
+const nextApp = next({ dev: isDev });
 const handle = nextApp.getRequestHandler();
 const credentials = {
   key: readFileSync('./certificates/localhost.key', { encoding: 'utf8' }),
@@ -56,13 +60,13 @@ const serverCallback = ((err) => {
 
   const server = express();
 
-  // server.use('/static', mainPage);
+  server.use('/static', test);
 
   server.all('*', (req, res) => {
     return handle(req, res);
   });
 
-  if (dev) {
+  if (isDev || isTest) {
     const httpServer = http.createServer(server);
 
     httpServer.listen(

@@ -33,9 +33,9 @@
     "next:next": "next",
     "next:build": "next build",
     "next:start": "next start",
-    "vn:dev": "node server/index.js",
-    "vn:test": "next build & node server/index.js -t",
-    "vn:prod": "next build & node server/index.js -p"
+    "vn:dev": "node ./scripts/prepareCompile.js & node server/index.js",
+    "vn:test": "node ./scripts/prepareCompile.js -t & next build & node server/index.js -t",
+    "vn:prod": "node ./scripts/prepareCompile.js -p & next build & node server/index.js -p"
   },
   "eslintConfig": {
     "extends": "react-app"
