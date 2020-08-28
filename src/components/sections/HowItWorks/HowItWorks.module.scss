@@ -30,7 +30,7 @@
   }
 
   &Data {
-    @extend %box-shadow;
+    @extend %big-shadow;
     padding: px2em(30px);
     height: 100%;
     display: flex;

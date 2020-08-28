@@ -1,5 +1,5 @@
 import { ReactElement, Component } from 'react';
-import { withRouter, NextRouter } from 'next/router';
+import { withRouter } from 'next/router';
 import Link from 'next/link';
 import classNames from 'classnames';
 import _ from 'lodash';
@@ -9,15 +9,11 @@ import style from './MainMenu.module.scss';
 import SingInIcon from './icons/sing-in-icon.svg';
 import Hamburger from './icons/hamburger.svg';
 
-import { mainMenu, TRouter } from '../../routes';
+import { mainMenu } from '../../routes';
 import { gt } from '../../utils';
 import { BUTTON_TYPE } from '../../constants';
-
-type TMainMenuProps = {
-  router: NextRouter;
-};
-
-type TMainMenuState = { isOpened: boolean };
+import { TMainMenuProps, TMainMenuState } from './@types';
+import { TRouter } from '../../routes/@types';
 
 class MainMenu extends Component<TMainMenuProps> {
   public readonly state: TMainMenuState = {

@@ -1,1 +1,1 @@
-export { LoanButton as default } from './LoanButton';
+export { LoanButton } from './LoanButton';

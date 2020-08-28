@@ -3,7 +3,6 @@ import Router from 'next/router';
 
 import { checkStatus } from './apiUtils';
 import { URLS } from '../routes';
-import { TJSON } from '../interfaces';
 import { getMD5, setToLocalStorage } from '../utils';
 import { SESSIONID_KEY } from '../constants';
 
@@ -35,8 +34,9 @@ export class LoanApi {
       }
     } catch (err) {
       if (err.response.status == 401) {
-        alert('errResponse - 401: ПЕРЕЛОГИНЬСЯ!!!!!');
-        return Router.push((URLS as TJSON)['SIGN_IN']);
+        alert('wizardStart: errResponse - 401: ПЕРЕЛОГИНЬСЯ!!!!!');
+        //this.commonApi.refreshToken();
+        return Router.push(URLS.SIGN_IN);
       }
 
       console.info(err);

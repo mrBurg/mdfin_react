@@ -1,12 +1,8 @@
 import { ReactElement, FC } from 'react';
 
 import style from './Welcome.module.scss';
-import ProductSelector from '../../ProductSelector';
-
-export type TWelcomeProps = {
-  title: string;
-  description: string;
-};
+import { ProductSelector } from '../../ProductSelector';
+import { TWelcomeProps } from './@types';
 
 export const Welcome: FC<TWelcomeProps> = ({
   title,

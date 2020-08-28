@@ -20,8 +20,8 @@ msgid "FAQ"
 msgstr "FAQ"
 
 #: 
-msgid "Payment"
-msgstr "Payment"
+msgid "Repayment"
+msgstr "Repayment"
 
 #: 
 msgid "Sign In"
@@ -32,7 +32,6 @@ msgid "Currency"
 msgstr "USD"
 
 #: 
-#, fuzzy
 msgid "More"
 msgstr "More"
 

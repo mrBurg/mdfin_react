@@ -13,19 +13,18 @@ import _ from 'lodash';
 import style from './DeveloperMenu.module.scss';
 
 import { makeStaticUri } from '../../../utils';
-import { allRoutes, TRouter, URIS } from '../../../routes';
+import { allRoutes, URIS } from '../../../routes';
 import { LanguagesSwitcher } from '..';
 import { STORE_IDS } from '../../../stores';
-import UserStore from '../../../stores/UserStore';
-
-type TDeveloperMenuProps = {
-  userStore: UserStore;
-};
+import { TDeveloperMenuProps } from './@types';
+import { TRouter } from '../../../routes/@types';
 
 @inject(STORE_IDS.USER_STORE)
 export class DeveloperMenu extends Component<TDeveloperMenuProps> {
+  public readonly state = {
+    floatRight: true,
+  };
   private menuRef: RefObject<HTMLDivElement> = createRef();
-  private menuFloatRight: boolean = true;
 
   private async updateStatic(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
@@ -49,37 +48,6 @@ export class DeveloperMenu extends Component<TDeveloperMenuProps> {
     userStore.logOut();
   };
 
-  private setCurrentStepHendler(currentStep: string) {
-    const { userStore } = this.props;
-
-    userStore.setCurrentStep(currentStep);
-  }
-
-  private renderClientSubStep(subSteps: any) {
-    return (
-      <ul className={style.sublist}>
-        {_.map(subSteps, (step, index) => {
-          return (
-            <li key={index} className={style.item}>
-              <Link href='#'>
-                <a
-                  className={style.link}
-                  onClick={(event: MouseEvent<HTMLAnchorElement>) => {
-                    event.preventDefault();
-
-                    this.setCurrentStepHendler(step);
-                  }}
-                >
-                  {step}
-                </a>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    );
-  }
-
   render(): ReactElement {
     return (
       <div
@@ -88,26 +56,30 @@ export class DeveloperMenu extends Component<TDeveloperMenuProps> {
         onContextMenu={(event: MouseEvent<HTMLDivElement>) => {
           event.preventDefault();
 
-          if (this.menuRef.current) {
-            this.menuFloatRight = !this.menuFloatRight;
+          this.setState((state: any) => {
+            return {
+              ...state,
+              floatRight: !state.floatRight,
+            };
+          });
 
-            this.menuRef.current.style.right = this.menuFloatRight
-              ? '0'
-              : 'auto';
+          if (this.menuRef.current) {
+            const { floatRight } = this.state;
+
+            this.menuRef.current.style.right = floatRight ? '0' : 'auto';
           }
         }}
       >
         <p>Developer Menu</p>
         <ul className={style.list}>
           {allRoutes.map((item: TRouter, index: number) => {
-            const { href, title, subSteps } = item;
+            const { href, title } = item;
 
             return (
               <li key={index} className={style.item}>
                 <Link href={href}>
                   <a className={style.link}>{title}</a>
                 </Link>
-                {subSteps && this.renderClientSubStep(subSteps)}
               </li>
             );
           })}

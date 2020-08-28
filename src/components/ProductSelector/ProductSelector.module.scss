@@ -73,10 +73,10 @@
 }
 
 .loanInfo {
+  border-spacing: 0 px2em(10px);
   background-color: lighten($orange, 15%);
   width: 100%;
   padding: px2em(20px);
-  border-spacing: 0 px2em(10px);
 
   &Value {
     text-align: right;

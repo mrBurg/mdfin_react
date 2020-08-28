@@ -6,11 +6,7 @@ import style from './LanguagesSwitcher.module.scss';
 
 import { STORE_IDS } from '../../../stores';
 import { locales } from '../../../config.json';
-import LocaleStore from '../../../stores/LocaleStore';
-
-type TLanguagesSwitcherProps = {
-  localeStore?: LocaleStore;
-};
+import { TLanguagesSwitcherProps } from './@types';
 
 export const LanguagesSwitcher: FC<TLanguagesSwitcherProps> = inject(
   STORE_IDS.LOCALE_STORE

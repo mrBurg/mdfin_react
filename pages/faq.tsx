@@ -22,7 +22,7 @@ const FaqPage = (props: TComponenProps): ReactElement => {
       </Head>
 
       <div className='page-container'>
-        <AccordionWidget {...faqList} />
+        <AccordionWidget data={faqList} exclusive={false} fluid />
       </div>
     </>
   );

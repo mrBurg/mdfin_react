@@ -1,1 +1,1 @@
-export { ProductSelector as default } from './ProductSelector';
+export { ProductSelector } from './ProductSelector';

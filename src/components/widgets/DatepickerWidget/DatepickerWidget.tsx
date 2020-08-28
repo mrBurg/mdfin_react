@@ -1,32 +1,16 @@
 import React, { PureComponent } from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
+import classNames from 'classnames';
 
 //import 'react-datepicker/dist/react-datepicker.css';
+import style from './DatepickerWidget.module.scss';
 
-//import style from './DatepickerWidget.module.scss';
-export type THandleChangeDate = {
-  (date: Date): Date;
-};
-
-type TDatepickerWidgetProps = {
-  name: string;
-  placeholderText: string;
-  handleChangeDate: THandleChangeDate;
-  selected?: Date;
-};
-
-export class DatepickerWidget extends PureComponent<TDatepickerWidgetProps> {
+export class DatepickerWidget extends PureComponent<ReactDatePickerProps> {
   render() {
-    const { placeholderText, name } = this.props;
+    const { className, ...props } = this.props;
 
     return (
-      <DatePicker
-        name={name}
-        placeholderText={placeholderText}
-        selected={this.props.selected}
-        onChange={this.props.handleChangeDate}
-        dateFormat='dd/MM/yyyy'
-      />
+      <DatePicker className={classNames(className, style.select)} {...props} />
     );
   }
 }

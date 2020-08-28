@@ -1,6 +1,7 @@
 import { ReactElement, PureComponent, FormEvent } from 'react';
 import InputMask from 'react-input-mask';
 import { observer } from 'mobx-react';
+import classNames from 'classnames';
 
 import style from './Authorization.module.scss';
 
@@ -12,9 +13,10 @@ import {
   URIS_SUFFIX,
 } from '../../constants';
 import { gt } from '../../utils';
-import OtpWidget from '../widgets/OtpWidget';
-import { TFormData } from '../../stores/UserStore';
+import { Otp } from '../Otp';
 import { TComponenProps, TOnInputChangeHandler } from '../../interfaces';
+import { OtpStore } from '../../stores/OtpStore';
+import { TUserObligatory } from '../../stores/@types/userStore';
 
 @observer
 export class Authorization extends PureComponent<
@@ -22,13 +24,15 @@ export class Authorization extends PureComponent<
     page: URIS_SUFFIX;
   }
 > {
-  public readonly state: TFormData = {
+  public readonly state: TUserObligatory = {
     name: '',
     phoneNumber: '',
   };
 
   private submitForm() {
     const { userStore, otpStore, page } = this.props;
+
+    if (!this.validateForm(otpStore, page)) return;
 
     otpStore.updateUrisKey(page);
 
@@ -41,17 +45,50 @@ export class Authorization extends PureComponent<
     this.submitForm();
   };
 
+  private validateForm(otpStore: OtpStore, page: URIS_SUFFIX): boolean {
+    const { name, phoneNumber } = this.state;
+    const itsSignUp = page == URIS_SUFFIX.SIGN_UP;
+
+    if (itsSignUp && name && phoneNumber) {
+      otpStore.setValidForm(true);
+      return true;
+    } else if (phoneNumber) {
+      otpStore.setValidForm(true);
+      return true;
+    } else {
+      otpStore.setValidForm(false);
+      return false;
+    }
+  }
+
   private onChangeHandler: TOnInputChangeHandler = ({
     currentTarget: { name, value },
   }) => {
+    const { otpStore } = this.props;
     this.setState(
-      (state: TFormData): TFormData => {
+      (state: TUserObligatory): TUserObligatory => {
+        return {
+          ...state,
+          [name]: value,
+        };
+      }
+    );
+    otpStore.setValidForm(true);
+  };
+
+  private onChangeHandlerPhone: TOnInputChangeHandler = ({
+    currentTarget: { name, value },
+  }) => {
+    const { otpStore } = this.props;
+    this.setState(
+      (state: TUserObligatory): TUserObligatory => {
         return {
           ...state,
           [name]: value.replace(/[\s-]/g, ''),
         };
       }
     );
+    otpStore.setValidForm(true);
   };
 
   render(): ReactElement {
@@ -60,7 +97,7 @@ export class Authorization extends PureComponent<
       pageStore: {
         pageData: { formTitle, pageTitle, namePlaceholder, phonePlaceHolder },
       },
-      otpStore: { otpReady },
+      otpStore: { otpReady, validForm },
       page,
     } = this.props;
 
@@ -72,30 +109,34 @@ export class Authorization extends PureComponent<
         {itsSignUp && (
           <input
             name={FIELD_NAME.NAME}
-            className={style.input}
+            className={classNames(style.input, {
+              [style.error]: !validForm,
+            })}
             type={INPUT_TYPE.TEXT}
             value={name}
             placeholder={namePlaceholder}
             onChange={this.onChangeHandler}
             disabled={otpReady}
+            maxLength={50}
+            pattern='[\s\p{L}]*'
           />
         )}
         <InputMask
           name={FIELD_NAME.PHONE_NUMBER}
-          className={style.input}
+          className={classNames(style.input, { [style.error]: !validForm })}
           type={INPUT_TYPE.TEL}
           mask={phoneMask}
           value={phoneNumber}
           placeholder={phonePlaceHolder || phoneMask.replace(/9/g, '*')}
-          onChange={this.onChangeHandler}
+          onChange={this.onChangeHandlerPhone}
           disabled={otpReady}
         />
 
-        {otpReady && <OtpWidget className={style.otp} {...this.props} />}
+        {otpReady && <Otp className={style.otp} {...this.props} />}
 
         {!otpReady && (
           <button className={style.button} type={BUTTON_TYPE.SUBMIT}>
-            {gt.gettext('More')}
+            {itsSignUp ? gt.gettext('More') : 'Đăng Nhập'}
           </button>
         )}
       </form>

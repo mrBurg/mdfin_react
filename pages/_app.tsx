@@ -10,9 +10,9 @@ import 'rc-slider/assets/index.css';
 import '../src/scss/index.scss';
 
 import { TStores, useStore } from '../src/stores';
-import Layout from '../src/components/Layout';
-import { TLayoutProps } from '../src/components/Layout/Layout';
+import { Layout } from '../src/components/Layout';
 import { TJSON } from '../src/interfaces';
+import { TLayoutProps } from '../src/components/Layout/@types';
 
 type TApp = {
   ({ Component, pageProps }: TAppProps): ReactElement;

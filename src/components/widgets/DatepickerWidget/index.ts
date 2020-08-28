@@ -1,1 +1,1 @@
-export { DatepickerWidget as default } from './DatepickerWidget';
+export { DatepickerWidget } from './DatepickerWidget';

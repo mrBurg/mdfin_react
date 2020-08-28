@@ -2,15 +2,7 @@ import { FC, ReactElement } from 'react';
 import classNames from 'classnames';
 
 import style from './HowItWorks.module.scss';
-
-type TItem = {
-  data: string;
-};
-
-type THowItWorksProps = {
-  title: string;
-  items: Array<TItem>;
-};
+import { THowItWorksProps, TItem } from './@types';
 
 export const HowItWorks: FC<THowItWorksProps> = ({
   title,

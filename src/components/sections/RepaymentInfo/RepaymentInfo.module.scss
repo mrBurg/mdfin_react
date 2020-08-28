@@ -1,0 +1,63 @@
+@import '../../../scss/service';
+
+.container {
+  max-width: $sm;
+  width: 100%;
+}
+
+.section {
+  display: flex;
+  margin-top: px2em(50px);
+  // gap: px2em(75px);
+  // transition: gap 0.2s;
+
+  /* @include respond(sm) {
+    gap: px2em(resize(75px, 0.5));
+  } */
+
+  /* @include respond(xxs) {
+    gap: px2em(resize(75px, 0.2));
+  } */
+
+  &Text {
+    margin-left: px2em(75px);
+    transition: margin-left 0.2s;
+
+    @include respond(sm) {
+      margin-left: px2em(resize(75px, 0.5));
+    }
+
+    @include respond(xxs) {
+      margin-left: px2em(resize(75px, 0.2));
+    }
+  }
+}
+
+.icon {
+  background: url('/theme/icons/icons_56x56.svg') no-repeat;
+  background-position-y: -56px;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+$position-x: -56px;
+
+@for $i from 0 through 3 {
+  .icon#{$i} {
+    background-position-x: $position-x * ($i + 1);
+  }
+}
+
+.title {
+  margin-bottom: px2em(15px);
+}
+
+.text,
+.list {
+  color: lighten($black, 50%);
+}
+
+.list {
+  list-style: none;
+}

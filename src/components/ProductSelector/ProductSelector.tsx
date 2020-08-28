@@ -1,31 +1,23 @@
-import { ReactElement, /* ChangeEvent, */ PureComponent } from 'react';
+import { ReactElement, PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
 import classNames from 'classnames';
 import moment from 'moment';
 
 import style from './ProductSelector.module.scss';
 
-import LoanButton from '../LoanButton';
-import { gt } from '../../utils';
-
-import SliderWidget from '../widgets/SliderWidget';
-
+import { LoanButton } from '../LoanButton';
+import { gt, divideDigits } from '../../utils';
+import { SliderWidget } from '../widgets/SliderWidget';
 import { sliderAmountProps, sliderTermProps } from './props.json';
 import { INPUT_TYPE } from '../../constants';
-import PageStore from '../../stores/PageStore';
-import LoanStore, { TFormData } from '../../stores/LoanStore';
 import { STORE_IDS } from '../../stores';
-
-type TProductSelectorProps = {
-  pageStore?: PageStore;
-  loanStore?: LoanStore;
-  className?: string;
-};
+import { TProductSelectorData } from '../../stores/@types/loanStore';
+import { TProductSelectorProps } from './@types';
 
 @inject(STORE_IDS.PAGE_STORE, STORE_IDS.LOAN_STORE)
 @observer
 export class ProductSelector extends PureComponent<TProductSelectorProps> {
-  public readonly state: TFormData = {
+  public readonly state: TProductSelectorData = {
     productId: 1,
     amount: 2000000,
     term: 20,
@@ -34,13 +26,17 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
   componentDidMount() {
     const { loanStore } = this.props;
 
-    if (loanStore) loanStore.calculate(this.state);
+    if (loanStore) {
+      loanStore.calculate(this.state);
+    }
   }
 
   private calculate() {
     const { loanStore } = this.props;
 
-    if (loanStore) loanStore.calculate(this.state);
+    if (loanStore) {
+      loanStore.calculate(this.state);
+    }
   }
 
   private handleAmountChange = async (
@@ -48,7 +44,7 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
     calc: boolean
   ): Promise<void> => {
     this.setState(
-      (state: TFormData): TFormData => {
+      (state: TProductSelectorData): TProductSelectorData => {
         return {
           ...state,
           amount: amount,
@@ -64,7 +60,7 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
     calc: boolean
   ): Promise<void> => {
     await this.setState(
-      (state: TFormData): TFormData => {
+      (state: TProductSelectorData): TProductSelectorData => {
         return {
           ...state,
           term: term,
@@ -91,9 +87,7 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
                     <span>"Số Tiền Cần Vay"</span>
                     <input
                       name='amount'
-                      value={amount?.toLocaleString(undefined, {
-                        maximumFractionDigits: 2,
-                      })}
+                      value={divideDigits(amount!)}
                       className={style.sliderInput}
                       type={INPUT_TYPE.TEXT}
                       readOnly={true}
@@ -134,16 +128,13 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
                   <tr>
                     <td>Số Tiền Cần Vay</td>
                     <td className={style.loanInfoValue}>
-                      {amount} {gt.gettext('Currency')}
+                      {divideDigits(amount!)} {gt.gettext('Currency')}
                     </td>
                   </tr>
                   <tr>
                     <td>Tổng Tiền Cần Thanh Toán</td>
                     <td className={style.loanInfoValue}>
-                      {totalAmount?.toLocaleString(undefined, {
-                        maximumFractionDigits: 2,
-                      })}{' '}
-                      {gt.gettext('Currency')}
+                      {divideDigits(totalAmount!)} {gt.gettext('Currency')}
                     </td>
                   </tr>
                   <tr>

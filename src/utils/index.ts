@@ -12,3 +12,13 @@ export const delay: Function = (() => {
     counter = setTimeout(callback, ms);
   };
 })();
+
+export function withStore(store: any, callBack: Function) {
+  if (store) return callBack(store);
+
+  try {
+    throw new Error('Received store does not exist');
+  } catch (error) {
+    console.info(error.message);
+  }
+}

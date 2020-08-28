@@ -6,17 +6,13 @@ import style from './LoanButton.module.scss';
 import { BUTTON_TYPE } from '../../constants';
 import { inject } from 'mobx-react';
 import { STORE_IDS } from '../../stores';
-import LoanStore from '../../stores/LoanStore';
-import UserStore from '../../stores/UserStore';
 import { gt } from '../../utils';
+import { TLoanButtonProps } from './@types';
 
-type TLoanButtonProps = {
-  className?: string;
-  loanStore?: LoanStore;
-  userStore?: UserStore;
-};
-
-export const LoanButton: FC<TLoanButtonProps> = inject(STORE_IDS.LOAN_STORE, STORE_IDS.USER_STORE)(
+export const LoanButton: FC<TLoanButtonProps> = inject(
+  STORE_IDS.LOAN_STORE,
+  STORE_IDS.USER_STORE
+)(
   ({ className, loanStore, userStore }): ReactElement => {
     return (
       <button

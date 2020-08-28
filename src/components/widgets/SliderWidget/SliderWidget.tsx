@@ -3,14 +3,7 @@ import Slider from 'rc-slider';
 
 import style from './SliderWidget.module.scss';
 
-import { TJSON } from '../../../interfaces';
-
-type TSliderWidgetProps = {
-  sliderValue?: number;
-  sliderProps: TJSON;
-  onValueSliderChange: Function;
-  onAfterChange: Function;
-};
+import { TSliderWidgetProps } from './@types';
 
 export class SliderWidget extends PureComponent<TSliderWidgetProps> {
   private handleChange = (value: number): void => {

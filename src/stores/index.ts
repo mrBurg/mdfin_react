@@ -3,21 +3,21 @@ import { useStaticRendering } from 'mobx-react';
 
 import { TJSON } from '../interfaces';
 import { isServer } from '../utils';
-import { LoanApi, PaymentApi, OtpApi, CommonApi } from '../apis';
-import LocaleStore from './LocaleStore';
-import PageStore from './PageStore';
-import LoanStore from './LoanStore';
-import PaymentStore from './PaymentStore';
+import { LoanApi, RepaymentApi, OtpApi, CommonApi } from '../apis';
+import { LocaleStore } from './LocaleStore';
+import { PageStore } from './PageStore';
+import { LoanStore } from './LoanStore';
+import { RepaymentStore } from './RepaymentStore';
 import { UserApi } from '../apis';
-import UserStore from './UserStore';
-import OtpStore from './OtpStore';
+import { UserStore } from './UserStore';
+import { OtpStore } from './OtpStore';
 
 export enum STORE_IDS {
   LOCALE_STORE = 'localeStore',
   PAGE_STORE = 'pageStore',
   LOAN_STORE = 'loanStore',
   REGISTRATION_STORE = 'registrationStore',
-  PAYMENT_STORE = 'paymentStore',
+  REPAYMENT_STORE = 'repaymentStore',
   USER_STORE = 'userStore',
   OTP_STORE = 'otpStore',
 }
@@ -26,7 +26,7 @@ export type TStores = {
   [STORE_IDS.LOCALE_STORE]: LocaleStore;
   [STORE_IDS.PAGE_STORE]: PageStore;
   [STORE_IDS.LOAN_STORE]: LoanStore;
-  [STORE_IDS.PAYMENT_STORE]: PaymentStore;
+  [STORE_IDS.REPAYMENT_STORE]: RepaymentStore;
   [STORE_IDS.USER_STORE]: UserStore;
   [STORE_IDS.OTP_STORE]: OtpStore;
 };
@@ -34,17 +34,17 @@ export type TStores = {
 //APIS
 const commonApi: CommonApi = new CommonApi();
 const loanApi: LoanApi = new LoanApi();
-const paymentApi: PaymentApi = new PaymentApi();
+const repaymentApi: RepaymentApi = new RepaymentApi();
 const userApi: UserApi = new UserApi();
 const otpApi: OtpApi = new OtpApi();
 
 //STORES
 const localeStore: LocaleStore = new LocaleStore();
-const pageStore: PageStore = new PageStore();
+const pageStore: PageStore = new PageStore(commonApi);
 const loanStore: LoanStore = new LoanStore(loanApi, userApi, commonApi);
-const paymentStore: PaymentStore = new PaymentStore(paymentApi);
+const repaymentStore: RepaymentStore = new RepaymentStore(repaymentApi);
 const userStore: UserStore = new UserStore(userApi, commonApi);
-const otpStore: OtpStore = new OtpStore(otpApi, userApi);
+const otpStore: OtpStore = new OtpStore(otpApi, commonApi);
 
 let stores: TStores | undefined;
 
@@ -55,7 +55,7 @@ function initializeStores(initialData: TJSON) {
     [STORE_IDS.LOCALE_STORE]: localeStore,
     [STORE_IDS.PAGE_STORE]: pageStore,
     [STORE_IDS.LOAN_STORE]: loanStore,
-    [STORE_IDS.PAYMENT_STORE]: paymentStore,
+    [STORE_IDS.REPAYMENT_STORE]: repaymentStore,
     [STORE_IDS.USER_STORE]: userStore,
     [STORE_IDS.OTP_STORE]: otpStore,
   };

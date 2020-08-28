@@ -3,7 +3,7 @@ import { observable, action } from 'mobx';
 import { gt } from '../utils';
 import { defaultLocale } from '../config.json';
 
-export default class LocaleStore {
+export class LocaleStore {
   @observable public locale: string = defaultLocale;
 
   @action setCurrentLanguage(data: string) {

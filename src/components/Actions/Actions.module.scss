@@ -1,0 +1,46 @@
+@import '../../scss/service';
+
+.actions {
+  max-width: px2em(230px);
+  flex-shrink: 0;
+
+  @include respond(sm) {
+    max-width: none;
+  }
+}
+
+.label {
+  text-align: center;
+  color: mix($gray, $black, 50%);
+  font-weight: bold;
+}
+
+.input {
+  @extend %input;
+  width: 100%;
+  margin-top: px2em(15px);
+}
+
+.button {
+  @extend %button;
+  @extend %small-shadow;
+  background-color: $white;
+  color: $black;
+  width: 100%;
+  margin-top: px2em(40px);
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: lighten($gray, 18%);
+  }
+
+  &Text {
+    color: $gray;
+    font-size: px2em(12px);
+  }
+
+  &Amount {
+    font-size: px2em(18px);
+    margin-top: px2em(10px, 18px);
+  }
+}

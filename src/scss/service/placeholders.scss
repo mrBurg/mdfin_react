@@ -1,9 +1,12 @@
-%box-shadow {
-  box-shadow: 0 0 50px transparentize($black, 0.8);
+%big-shadow {
+  box-shadow: 0 0 px2em(50px) transparentize($black, 0.8);
+}
+
+%small-shadow {
+  box-shadow: 0 0 px2em(10px) transparentize($black, 0.8);
 }
 
 %input {
-  color: $gray;
   padding: px2em(12px) px2em(35px);
   border: 1px solid $gray;
   border-radius: px2em(8px);
@@ -19,4 +22,5 @@
   border: none;
   border-radius: px2em(8px);
   color: $white;
+  background-color: $gray;
 }

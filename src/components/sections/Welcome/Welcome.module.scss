@@ -9,6 +9,8 @@
 
   @include respond(sm) {
     font-size: px2em(13px);
+    padding-top: px2em(20px);
+    background: lighten($gray, 10%);
   }
 
   @include respond(xxs) {

@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { gt } from '../src/utils';
 import { TJSON, TCopyright, TComponenProps } from '../src/interfaces';
 import { fetchStaticData, fetchCopyright } from '../src/apis';
-import Authorization from '../src/components/Authorization';
+import { Authorization } from '../src/components/Authorization';
 import { URIS_SUFFIX } from '../src/constants';
 
 const SignUpPage = (props: TComponenProps): ReactElement => {

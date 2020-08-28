@@ -5,7 +5,7 @@ import { METHOD } from '../constants';
 import { URIS } from '../routes';
 import { checkStatus } from './apiUtils';
 import { TJSON } from '../interfaces';
-import { TOtpProps } from '../stores/OtpStore';
+import { TOtpProps } from '../stores/@types/otpStore';
 
 export class OtpApi {
   public getOtp = async (data: TOtpProps) => {

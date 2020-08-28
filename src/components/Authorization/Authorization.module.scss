@@ -3,12 +3,20 @@
 .authorization {
   width: 100%;
   max-width: $xs;
-  margin-top: 85px;
+  margin-top: px2em(85px);
+
+  @include respond(xs) {
+    margin-top: px2em(resize(85px, 0.4));
+  }
 }
 
 .formTitle {
   margin-bottom: 45px;
   text-align: center;
+
+  @include respond(xs) {
+    margin-bottom: px2em(resize(45px, 0.4));
+  }
 }
 
 .input,
@@ -33,4 +41,8 @@
 
 .otp {
   margin-top: 18px;
+}
+
+.error {
+  border-color: $red;
 }

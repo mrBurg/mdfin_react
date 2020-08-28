@@ -50,3 +50,17 @@ export const getMD5 = (data: string): string => {
 
   return md5(data);
 };
+
+export function writeTag(string: string, tags: TJSON): string {
+  _.map(tags, (val, key) => {
+    const regExp = new RegExp(`\\\${${key}}`, 'gm');
+
+    string = string.replace(regExp, val);
+  });
+
+  return string;
+}
+
+export function divideDigits(number: number) {
+  return String(number).replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1 ');
+}

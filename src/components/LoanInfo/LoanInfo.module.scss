@@ -1,0 +1,46 @@
+@import '../../scss/service';
+
+.datatable {
+  @extend %small-shadow;
+  width: 100%;
+  padding: px2em(30px) px2em(40px);
+
+  thead {
+    text-align: center;
+
+    td {
+      padding-bottom: px2em(20px);
+    }
+  }
+
+  tbody {
+    td {
+      &:first-child {
+        color: $gray;
+      }
+
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+}
+
+.separator {
+  border: 1px solid $orange;
+  width: 90%;
+  margin: px2em(10px) auto;
+}
+
+.accent {
+  font-weight: bold;
+}
+
+.link {
+  @extend .accent;
+  color: $red;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}

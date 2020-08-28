@@ -1,6 +1,7 @@
 @import '../../../scss/service';
 
 .developerMenu {
+  user-select: none;
   position: fixed;
   background-color: $black;
   color: $white;

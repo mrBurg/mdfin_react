@@ -3,12 +3,9 @@ import classNames from 'classnames';
 
 import style from './Header.module.scss';
 
-import MainMenu from '../MainMenu';
+import { MainMenu } from '../MainMenu';
 import { Logo } from '../Logo';
-
-type THeaderProps = {
-  less?: boolean;
-};
+import { THeaderProps } from './@types';
 
 export const Header: FC<THeaderProps> = ({ less }): ReactElement => (
   <header className={style.header}>

@@ -33,6 +33,7 @@
     "next:next": "next",
     "next:build": "next build",
     "next:start": "next start",
+    "copy:env": "node ./scripts/prepareCompile.js -t",
     "vn:dev": "node ./scripts/prepareCompile.js & node server/index.js",
     "vn:test": "node ./scripts/prepareCompile.js -t & next build & node server/index.js -t",
     "vn:prod": "node ./scripts/prepareCompile.js -p & next build & node server/index.js -p"
@@ -57,7 +58,6 @@
     "@types/react-input-mask": "^2.0.5",
     "@types/react-select": "^3.0.16",
     "babel-plugin-inline-react-svg": "^1.1.1",
-    "cross-env": "^7.0.2",
     "json-loader": "^0.5.7",
     "node-sass": "^4.14.1",
     "po-gettext-loader": "^1.0.0",

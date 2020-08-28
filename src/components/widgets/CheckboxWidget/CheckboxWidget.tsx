@@ -3,11 +3,7 @@ import { Checkbox } from 'semantic-ui-react';
 import classNames from 'classnames';
 
 import style from './CheckboxWidget.module.scss';
-
-type TCheckboxWidgetProps = {
-  className?: string;
-  label?: string;
-};
+import { TCheckboxWidgetProps } from './@types';
 
 export const CheckboxWidget: FC<TCheckboxWidgetProps> = ({
   className,

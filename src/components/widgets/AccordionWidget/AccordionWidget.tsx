@@ -3,21 +3,10 @@ import { Accordion } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import style from './AccordionWidget.module.scss';
-
-type TQuestion = {
-  question: string;
-  answer: string;
-};
-
-type TFaqItem = {
-  title: string;
-  questions: Array<TQuestion>;
-};
-
-type TFaqListItemsProps = Array<TFaqItem>;
+import { TQuestion, TFaqListItemsProps, TFaqItem } from './@types';
 
 const renderPanels = (questions: Array<TQuestion>) => {
-  return questions.map((item: TQuestion, key: number) => {
+  return _.map(questions, (item: TQuestion, key: number) => {
     const { question, answer } = item;
 
     return {
@@ -42,9 +31,11 @@ const renderPanels = (questions: Array<TQuestion>) => {
 export const AccordionWidget: FC<TFaqListItemsProps> = (
   props
 ): ReactElement => {
+  const { data, ...accordionProps } = props;
+
   return (
     <>
-      {_.map(props, (item: TFaqItem, index: number) => {
+      {_.map(data, (item: TFaqItem, index: number) => {
         const { title, questions } = item;
 
         return (
@@ -54,8 +45,7 @@ export const AccordionWidget: FC<TFaqListItemsProps> = (
             <Accordion
               className={style.accordion}
               panels={renderPanels(questions)}
-              exclusive={false}
-              fluid
+              {...accordionProps}
             />
           </section>
         );

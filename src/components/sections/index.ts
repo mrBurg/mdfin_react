@@ -3,4 +3,4 @@ export { HowItWorks } from './HowItWorks';
 export { HowDoIt } from './HowDoIt';
 export { NotDifficult } from './NotDifficult';
 export { Contacts } from './Contacts';
-export { PaymentInfo } from './PaymentInfo';
+export { RepaymentInfo } from './RepaymentInfo';

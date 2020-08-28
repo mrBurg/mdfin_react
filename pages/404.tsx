@@ -33,7 +33,6 @@ export const getStaticProps: GetStaticProps = async (
 ) => {
   const template = {
     headerLess: true,
-    footerLess: true,
   };
 
   const copyright: TCopyright = await fetchCopyright();
@@ -41,7 +40,7 @@ export const getStaticProps: GetStaticProps = async (
   return {
     props: {
       ...context,
-      pageData: { copyright: copyright.less },
+      pageData: { copyright: copyright.normal },
       template,
     },
   };

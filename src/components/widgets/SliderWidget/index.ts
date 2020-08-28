@@ -1,1 +1,1 @@
-export { SliderWidget as default } from './SliderWidget';
+export { SliderWidget } from './SliderWidget';

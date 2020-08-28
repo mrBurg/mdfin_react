@@ -3,7 +3,8 @@
 $border-color: #bfbfbe;
 
 .header {
-  @extend %box-shadow;
+  @extend %big-shadow;
+  background-color: lighten($gray, 15%);
   border-bottom: 1px solid $border-color;
   padding: px2em(25px);
   z-index: 1;

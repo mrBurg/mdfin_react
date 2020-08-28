@@ -19,7 +19,9 @@
   }
 
   &Content {
-    margin-left: px2em(30px);
+    @include respond(md) {
+      margin-left: px2em(30px);
+    }
   }
 
   &Title {

@@ -1,7 +1,7 @@
 @import '../../../scss/service';
 
 .feedback {
-  @extend %box-shadow;
+  @extend %big-shadow;
   display: flex;
   padding: px2em(30px);
   max-width: $lg;
@@ -71,6 +71,17 @@
       background: url('/theme/icons/icons_16x16.svg') 0 -64px no-repeat;
       vertical-align: middle;
       margin-right: 5px;
+    }
+  }
+}
+
+.phone {
+  a {
+    text-decoration: none;
+    color: $black;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 }

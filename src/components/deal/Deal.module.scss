@@ -3,42 +3,24 @@
 .deal {
   max-width: $md;
   width: 100%;
+  margin-top: px2em(85px);
+
+  @include respond(sm) {
+    max-width: px2em(370px);
+    margin-top: px2em(50px);
+  }
 }
 
 .title {
-  margin-top: 50px;
   text-align: center;
 }
 
-.accent {
-  color: $red;
-}
-
-.dealNo {
-  a {
-    @extend .accent;
-    font-weight: bold;
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
 .content {
-  margin-top: 30px;
   display: flex;
   // gap: 30px;
-}
 
-.column {
-  &:first-child {
-    flex-grow: 1;
-  }
-
-  &:last-child {
-    flex-grow: 2;
-    min-width: $xs;
+  @include respond(sm) {
+    flex-direction: column;
   }
 }
 
@@ -74,33 +56,29 @@
   }
 }
 
-.datatable {
-  width: 100%;
-  box-shadow: 0 0 10px transparentize($black, 0.8);
-  // background-color: $white;
-  padding: 30px 40px;
+.item {
+  flex-grow: 1;
+}
 
-  thead {
-    text-align: center;
-  }
+.actions {
+  margin-left: px2em(30px);
 
-  tbody {
-    tr {
-      td {
-        &:first-child {
-          color: $gray;
-        }
-
-        &:last-child {
-          text-align: right;
-        }
-      }
-    }
+  @include respond(sm) {
+    margin-left: 0;
+    margin-top: px2em(30px);
+    width: 100%;
   }
 }
 
-.separator {
-  border: 1px solid $orange;
-  width: 90%;
-  margin: 10px auto;
+.button {
+  @extend %button;
+  background-color: $red;
+  max-width: px2em(230px);
+  width: 100%;
+  display: block;
+  margin: px2em(30px) auto;
+
+  @include respond(sm) {
+    max-width: none;
+  }
 }

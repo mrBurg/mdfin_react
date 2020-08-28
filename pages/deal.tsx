@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { gt } from '../src/utils';
 import { TCopyright, TComponenProps } from '../src/interfaces';
 import { fetchCopyright } from '../src/apis';
-import { Deal } from '../src/components/deal';
+import { Deal } from '../src/components/Deal';
 
 const DealPage = (props: TComponenProps): ReactElement => {
   const {
@@ -30,6 +30,9 @@ export default DealPage;
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
+  const template = {
+    footerLess: true,
+  };
   /* const pageData: TJSON = await fetchStaticData({
     block: 'deal-page',
     path: 'static',
@@ -41,7 +44,8 @@ export const getStaticProps: GetStaticProps = async (
   return {
     props: {
       ...context,
-      pageData: { copyright: copyright.normal, ...pageData },
+      pageData: { copyright: copyright.less, ...pageData },
+      template,
     },
   };
 };

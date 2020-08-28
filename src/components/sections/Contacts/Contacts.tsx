@@ -4,19 +4,7 @@ import _ from 'lodash';
 
 import style from './Contacts.module.scss';
 import { Feedback } from '../Feedback';
-
-type TListProps = Array<string>;
-
-type TItemProps = {
-  title: string;
-  list: TListProps;
-};
-
-type TContactsProps = {
-  [key: string]: TItemProps;
-};
-
-type TIndex = number | string;
+import { TContactsProps, TItemProps, TIndex } from './@types';
 
 export const Contacts: FC<TContactsProps> = (props): ReactElement => (
   <>
@@ -35,7 +23,7 @@ export const Contacts: FC<TContactsProps> = (props): ReactElement => (
                     case 'phones':
                       return (
                         <li key={index}>
-                          <a href={`callto:${item}`}>{item}</a>
+                          <a href={`tel:${item}`}>{item}</a>
                         </li>
                       );
                     case 'emails':

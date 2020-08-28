@@ -1,0 +1,107 @@
+@import '../../scss/service/';
+
+.application {
+  max-width: $md;
+  width: 100%;
+  margin-top: 50px;
+
+  @include respond(md) {
+    max-width: px2em(370px);
+  }
+}
+
+.title {
+  text-align: center;
+}
+
+.content {
+  margin-top: 30px;
+  display: flex;
+  // gap: 30px;
+
+  @include respond(md) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}
+
+.actions {
+  flex-grow: 1;
+  min-width: px2em(280px);
+  max-width: px2em(310px);
+
+  @include respond(md) {
+    margin-top: px2em(30px);
+    max-width: none;
+  }
+}
+
+.info {
+  margin-left: px2em(30px);
+  flex-grow: 2;
+  min-width: $xxs;
+
+  @include respond(md) {
+    margin-left: 0;
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+.links {
+  margin-top: 30px;
+
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.accountsButton,
+.otpButton {
+  @extend %button;
+  background-color: $red;
+  width: 100%;
+}
+
+.otpButton {
+  margin-top: px2em(30px);
+}
+
+.refuse {
+  display: inline-block;
+  text-align-last: left;
+  color: $blue;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: px2em(30px);
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &Select {
+    background-color: $orange;
+    color: $white;
+    margin-top: px2em(30px);
+
+    [class~='icon'] {
+      background-position-y: -48px !important;
+    }
+
+    [class~='menu'] {
+      color: $black;
+    }
+  }
+}
+
+.otp {
+  margin-top: px2em(30px);
+
+  [class~='resend '] {
+    padding: 0;
+  }
+}

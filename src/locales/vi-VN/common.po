@@ -20,7 +20,7 @@ msgid "FAQ"
 msgstr "CÂU HỎI THƯỜNG GẶP"
 
 #: 
-msgid "Payment"
+msgid "Repayment"
 msgstr "Thang Toán Khoản Vay"
 
 #: 
@@ -32,7 +32,6 @@ msgid "Currency"
 msgstr "VND"
 
 #: 
-#, fuzzy
 msgid "More"
 msgstr "Thêm"
 
@@ -51,3 +50,4 @@ msgstr "Nhập Số Điện Thoại"
 #: 
 msgid "Confirm"
 msgstr "Xác Nhận"
+

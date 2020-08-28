@@ -4,7 +4,7 @@
   "defaultLocaleDomain": "common",
   "localeStoreKey": "locale",
   "phoneMask": "+840 - 99 - 999 - 99 - 99",
-  "otpMask": "A999",
+  "otpMask": "9999",
   "maskChar": "_",
   "showResend": 30000
 }

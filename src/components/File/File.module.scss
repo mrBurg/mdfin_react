@@ -1,0 +1,53 @@
+@import './../../scss/service';
+
+.file,
+.button {
+  font-size: px2em(14px);
+  width: px2em(170px);
+  height: px2em(170px);
+  padding: px2em(14px);
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  color: lighten($black, 50%);
+  user-select: none;
+}
+
+.button {
+  @extend %small-shadow;
+  background-color: $white;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+
+  @include respond(sm) {
+    margin-top: px2em(20px);
+    width: 100%;
+    flex-flow: row;
+    height: auto;
+  }
+}
+
+.input {
+  display: none;
+}
+
+.fileIcon,
+.addIcon {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  background-image: url('/theme/icons/icons_56x56.svg');
+  background-repeat: no-repeat;
+}
+
+.fileIcon {
+  background-position: -56px -112px;
+}
+
+.addIcon {
+  background-position: 0 -112px;
+  border-radius: 50%;
+}

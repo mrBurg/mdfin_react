@@ -1,5 +1,6 @@
+import { ChangeEvent, MouseEvent, KeyboardEvent, FormEvent } from 'react';
+
 import { TStores } from '../stores';
-import { ChangeEvent, MouseEvent, KeyboardEvent } from 'react';
 
 export type TJSON = {
   [key: string]: any;
@@ -21,8 +22,10 @@ export type TOnInputChangeHandler = (
   event: ChangeEvent<HTMLInputElement>
 ) => void;
 
-export type TOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => void;
-
-export type TOnClickHandler = (
-  event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>
+export type TOnInputKeyUpHandler = (
+  event: KeyboardEvent<HTMLInputElement>
 ) => void;
+
+export type TOnClickHandler = (event: MouseEvent<HTMLElement>) => void;
+
+export type TOnSubmitHandler = (event: FormEvent<HTMLFormElement>) => void;

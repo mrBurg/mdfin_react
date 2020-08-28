@@ -1,5 +1,5 @@
 {
-  "aboutMyself": {
+  "obligatory": {
     "name": "Họ Tên Đầy Đủ",
     "birthDate": "Ngày Sinh",
     "idNumber": "Số CMND/CCCD",
@@ -17,7 +17,7 @@
     "otherModel": "Mẫu mã khác",
     "otherPhoneNumber": "Số Điện Thoại Di Động Cá Nhân Khác"
   },
-  "addresses": {
+  "address": {
     "city": "Tỉnh/Thành Phố",
     "district": "Quận/Huyện",
     "subdistrict": "Phường/Xã",
@@ -31,10 +31,10 @@
     "otherName": "Tên người tham chiếu/người thân của bạn là gì?",
     "otherRelation": "Mối quan hệ của bạn với người tham chiếu/người thân là gì?"
   },
-  "work": {
+  "job": {
     "socialStatus": "Tình Trạng Lao Động",
     "education": "Trình độ học vấn",
-    "company": "Tên Công Ty",
+    "companyName": "Tên Công Ty",
     "industry": "Ngành Nghề",
     "industryDetailed": "Ngành Nghề Chi Tiết",
     "position": "Cấp bậc chức vụ PositionChức Vụ",

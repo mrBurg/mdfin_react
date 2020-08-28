@@ -1,0 +1,15 @@
+@import '../../../scss/service';
+@import '../ClientTabs.module.scss';
+
+.obligatory {
+  @extend %client-form;
+
+  .phonesTitle {
+    margin-bottom: 15px;
+    width: 48%;
+
+    @include respond(xs) {
+      width: 100%;
+    }
+  }
+}

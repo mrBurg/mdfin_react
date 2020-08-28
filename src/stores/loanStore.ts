@@ -2,21 +2,11 @@ import Router from 'next/router';
 import { observable, runInAction } from 'mobx';
 
 import { LoanApi, CommonApi, UserApi } from '../apis';
-import { URLS } from '../routes';
+import { URIS, URLS } from '../routes';
 import { TJSON } from '../interfaces';
+import { TLoanData, TProductSelectorData } from './@types/loanStore';
 
-export type TFormData = {
-  productId?: number;
-  amount?: number;
-  term?: number;
-};
-
-type TLoanData = {
-  totalAmount?: number;
-  dateTo?: string;
-} & TFormData;
-
-export default class LoanStore {
+export class LoanStore {
   @observable public loanData: TLoanData = {};
 
   constructor(
@@ -25,10 +15,11 @@ export default class LoanStore {
     private commonApi: CommonApi
   ) {}
 
-  public async calculate(loanData: TFormData): Promise<void> {
-    let requestConfig = this.commonApi.postRequestConfig('CALCULATE', loanData);
-
-    console.info(requestConfig);
+  public async calculate(loanData: TProductSelectorData): Promise<void> {
+    let requestConfig = this.commonApi.postRequestConfig(
+      URIS.CALCULATE,
+      loanData
+    );
 
     const response = await this.loanApi.calculate(requestConfig);
 
@@ -46,29 +37,33 @@ export default class LoanStore {
 
   public async getLoan(userStore: any): Promise<void | boolean> {
     let requestConfig = this.commonApi.postHeaderRequestConfig(
-      'WIZARD_START',
+      URIS.WIZARD_START,
       this.loanData
     );
 
-    //const { view } = await this.loanApi.wizardStart(requestConfig);
     const response = await this.loanApi.wizardStart(requestConfig);
-    console.log(response);
-    if (response) {
-      const { view } = response;
+
+    if (response && response.view) {
+      let { view } = response;
+
+      //временная затычка, пока нет нормального "роутинга"
+      /* if (view == 'address' || view == 'job' || view == 'documents') {
+        view = 'obligatory';
+      } */
 
       if (view == 'obligatory') {
         let requestConfigWizard = this.commonApi.getHeaderRequestConfig(
-          'OBLIGATORY',
+          URIS.obligatory,
           this.loanData
         );
 
-        const { obligatory } = await this.userApi.getWizardObligatory(
+        const { obligatory } = await this.userApi.getWizardData(
           requestConfigWizard
         );
         userStore.updateStore(obligatory);
       }
 
-      //return null;
+      //ПЕРЕПИСАТЬ, чтобы пробрасывало клиента на нужную страницу/шаг.
       return Router.push((URLS as TJSON)[view]);
     }
 

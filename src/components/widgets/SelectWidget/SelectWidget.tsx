@@ -1,30 +1,16 @@
-import { FC, ReactElement } from 'react';
+import { PureComponent } from 'react';
 import { Select } from 'semantic-ui-react';
 import classNames from 'classnames';
 
 import style from './SelectWidget.module.scss';
+import { TSelectWidgetProps } from './@types';
 
-type TOptions = {
-  text: string;
-  value: string;
-};
+export class SelectWidget extends PureComponent<TSelectWidgetProps> {
+  render() {
+    const { className, ...props } = this.props;
 
-type TSelectWidget = {
-  options: Array<TOptions>;
-  placeholder?: string;
-  className?: string;
-};
-
-export const SelectWidget: FC<TSelectWidget> = ({
-  placeholder,
-  options,
-  className,
-}): ReactElement => {
-  return (
-    <Select
-      options={options}
-      placeholder={placeholder}
-      className={classNames(style.select, className)}
-    />
-  );
-};
+    return (
+      <Select className={classNames(style.select, className)} {...props} />
+    );
+  }
+}

@@ -8,7 +8,7 @@ type TWithLocaleProps = {
   locale: string;
 };
 
-const WithLocale: FC<TWithLocaleProps> = ({
+export const WithLocale: FC<TWithLocaleProps> = ({
   children,
   locale,
 }: TWithLocaleProps): ReactElement => {
@@ -19,5 +19,3 @@ const WithLocale: FC<TWithLocaleProps> = ({
 
   return <>{children}</>;
 };
-
-export default WithLocale;
