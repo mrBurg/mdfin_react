@@ -1,0 +1,104 @@
+@import '../../../../scss/service';
+
+.attachments {
+  max-width: $sm;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.fullrow {
+  flex-basis: 100%;
+}
+
+.documents {
+  width: 100%;
+
+  .buttons {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+
+    .button {
+      box-shadow: 0 0 10px transparentize($black, 0.8);
+      background-color: $white;
+      border-radius: 6px;
+      width: 150px;
+      height: 150px;
+      border: none;
+      color: lighten($black, 50%);
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .file {
+      display: none;
+    }
+
+    .icon {
+      width: 50px;
+      height: 50px;
+      background-color: #4d4d4d;
+      border-radius: 50%;
+      flex-shrink: 0;
+
+      &:before {
+        content: '+';
+        font-size: 70px;
+        color: $white;
+        line-height: 47px;
+        display: block;
+      }
+    }
+  }
+}
+
+.bankAccount {
+  .title {
+    margin-top: 85px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .select {
+    max-width: 355px;
+    margin: auto auto 30px;
+  }
+
+  .button,
+  .input {
+    min-width: 250px;
+  }
+
+  .button {
+    @extend %button;
+    background-color: $orange;
+  }
+
+  .input {
+    @extend %input;
+  }
+}
+
+.nextStep {
+  @extend %button;
+  background-color: $red;
+  width: 100%;
+  max-width: 220px;
+  margin: 50px auto;
+}

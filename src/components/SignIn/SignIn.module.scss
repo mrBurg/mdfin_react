@@ -1,0 +1,36 @@
+@import '../../scss/service';
+
+.signIn {
+  width: 100%;
+  max-width: $xs;
+  margin-top: 85px;
+}
+
+.pageTitle {
+  margin-bottom: 45px;
+  text-align: center;
+}
+
+.input,
+.button {
+  width: 100%;
+}
+
+.input {
+  @extend %input;
+  margin-top: 18px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.button {
+  @extend %button;
+  margin-top: 35px;
+  background-color: $red;
+}
+
+.otp {
+  margin-top: 18px;
+}

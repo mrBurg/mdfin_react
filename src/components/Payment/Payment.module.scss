@@ -1,0 +1,42 @@
+@import '../../scss/service';
+
+.payment {
+  max-width: $sm;
+  width: 100%;
+
+  @include respond(sm) {
+    font-size: px2em(14px);
+  }
+}
+
+.title {
+  font-size: px2em(19px);
+}
+
+.fieldset {
+  margin-top: px2em(10px);
+  display: flex;
+  // gap: px2em(35px);
+
+  @include respond(sm) {
+    flex-direction: column;
+    // gap: px2em(15px);
+  }
+}
+
+.input {
+  @extend %input;
+  flex-grow: 1;
+}
+
+.button {
+  @extend %button;
+  background-color: $red;
+
+  margin-left: px2em(35px);
+
+  @include respond(sm) {
+    margin: 0;
+    margin-top: px2em(15px);
+  }
+}
