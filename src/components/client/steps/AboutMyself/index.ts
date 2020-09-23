@@ -1,1 +1,0 @@
-export { AboutMyself } from './AboutMyself';
