@@ -1,0 +1,1 @@
+export { CellData } from './CellData';

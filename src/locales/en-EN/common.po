@@ -6,6 +6,7 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: MDFin VN\n"
 "Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: 
 msgid "Site Title"
@@ -20,8 +21,8 @@ msgid "FAQ"
 msgstr "FAQ"
 
 #: 
-msgid "Payment"
-msgstr "Payment"
+msgid "Repayment"
+msgstr "Repayment"
 
 #: 
 msgid "Sign In"
@@ -32,7 +33,6 @@ msgid "Currency"
 msgstr "USD"
 
 #: 
-#, fuzzy
 msgid "More"
 msgstr "More"
 
@@ -44,3 +44,77 @@ msgstr "Registration"
 msgid "Register Loan"
 msgstr "Register Loan"
 
+#: 
+msgid "Enter Phone Number"
+msgstr "Enter phone number"
+
+#: 
+msgid "Confirm"
+msgstr "Confirm"
+
+#: 
+msgid "amount"
+msgstr "loan amount"
+
+#: 
+msgid "term"
+msgstr "loan term"
+
+#: 
+msgid "extensionAmount"
+msgstr "extension amount"
+
+#: 
+msgid "totalAmount"
+msgstr "Amount of payment"
+
+#: 
+msgid "dateTo"
+msgstr "Payment date"
+
+#: 
+msgid "lastPaymentDate"
+msgstr "Last payment date"
+
+#: 
+msgid "lastPaymentAmount"
+msgstr "Last Payment Amount"
+
+#: 
+msgid "dealNo"
+msgstr "Agreements"
+
+#: 
+msgid "appnum"
+msgstr "Agreements"
+
+#: 
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] "day"
+msgstr[1] "days"
+
+#:
+msgid "toPay"
+msgstr "Pay"
+
+#:
+msgid "loanAgreement"
+msgstr "Loan Agreement"
+
+#:
+msgid "maskedName"
+msgstr "Name"
+
+#: 
+msgid "Second"
+msgid_plural "Seconds"
+msgstr[0] "second"
+msgstr[1] "seconds"
+
+#: 
+msgctxt "Will be redirected"
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "You will be redirected in %d second"
+msgstr[1] "You will be redirected in %d seconds"

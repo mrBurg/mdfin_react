@@ -1,24 +1,119 @@
 @import '../../scss/service';
+@import '../../scss/chunks';
 
-.menu {
+.desktopMenu {
   font-weight: 600;
   display: flex;
   flex-grow: 1;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+
+  @include respond(sm) {
+    display: none;
+  }
 
   li {
-    margin: 0 16px;
+    margin: 0 px2em($font-size);
     display: inline-block;
-    vertical-align: middle;
+
+    &:hover {
+      border-bottom: 1px solid $gray;
+    }
 
     a {
       vertical-align: middle;
       color: $black;
       text-decoration: none;
+    }
+  }
 
-      &:hover {
-        text-decoration: underline;
+  .active {
+    border-bottom: 1px solid $gray;
+  }
+
+  .button {
+    border: none;
+
+    &:hover {
+      border: none;
+    }
+  }
+}
+
+.mobileMenu {
+  display: flex;
+  font-weight: 600;
+
+  @include respond(md, true) {
+    display: none;
+  }
+
+  .menu {
+    box-shadow: px2em(-10px) px2em(10px) px2em(10px) transparentize($black, 0.8);
+    background: $white;
+    list-style: none;
+    transition: opacity 0.5s;
+    width: 55%;
+    margin-top: 80px;
+
+    &Container {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      display: none;
+      align-items: flex-start;
+      justify-content: flex-end;
+
+      &Opened {
+        opacity: 1;
+        display: flex;
+        animation: fade-in 0.2s;
+      }
+    }
+
+    li {
+      text-align: center;
+
+      a {
+        color: $black;
+        text-decoration: none;
+        padding: px2em($font-size) px2em(25px);
+        display: block;
+        transition: background-color 0.2s;
+      }
+
+      &:not(.active):hover {
+        background-color: lighten($gray, 18%);
+      }
+    }
+
+    .active {
+      background-color: $gray;
+    }
+
+    .button {
+      .logout {
+        padding: 16px 25px;
+        width: 100%;
       }
     }
   }
+}
+
+.logout {
+  border: none;
+  background: none;
+  font-size: 0;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.hamburger {
+  border: none;
+  background: none;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
 }

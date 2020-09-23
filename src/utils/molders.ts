@@ -1,50 +1,66 @@
+import md5 from 'md5';
+import _ from 'lodash';
+
 import { TJSON } from '../interfaces';
-import {
-  HTTPS_HOST,
-  PO_STATIC,
-  PO_API,
-  HTTPS_PORT,
-  PO_API_HOST,
-  PO_API_PORT,
-  eventPrefixes,
-} from '../constants';
+import { PO_API, PO_API_HOST, PO_API_PORT, EVENT_PREFIXES } from '../constants';
+import { URIS } from '../routes';
+import { isDev } from '.';
 
 export const jsonToQueryString = (json: TJSON, encode?: boolean): string =>
   (window.location.search ? '&' : '?') +
-  Object.keys(json)
-    .map((key) =>
-      encode
-        ? `${encodeURIComponent(key)}=${encodeURIComponent(json[key])}`
-        : `${key}=${json[key]}`
-    )
-    .join('&');
+  _.map(json, (value: string, key: string) => {
+    if (encode) {
+      key = encodeURIComponent(key);
+      value = encodeURIComponent(value);
+    }
 
-export const makeStaticUrl = (port?: boolean): string => {
-  if (port) return `${HTTPS_HOST}:${HTTPS_PORT + PO_STATIC}`;
+    return `${key}=${value}`;
+  }).join('&');
 
-  return HTTPS_HOST + PO_STATIC;
+export const makeStaticUri = (uri: URIS, port?: boolean): string => {
+  let staticUri = !port ? PO_API_HOST : `${PO_API_HOST}:${PO_API_PORT}`;
+
+  return staticUri + PO_API + uri;
 };
 
-export const makeApiUrl = (port?: boolean): string => {
-  if (port) return `${PO_API_HOST}:${PO_API_PORT + PO_API}`;
+export const makeApiUri = (port?: boolean): string => {
+  let staticUri = !port ? PO_API_HOST : `${PO_API_HOST}:${PO_API_PORT}`;
 
-  return PO_API_HOST + PO_API_PORT;
+  return staticUri + PO_API;
 };
 
 export const prefixedEvent = (
-  element: any,
-  transition: string,
+  element: HTMLElement,
+  animationType: string,
   callback: Function
 ) => {
-  for (let p in eventPrefixes) {
-    if (!eventPrefixes[p]) {
-      transition = transition.toLowerCase();
-    }
+  _.map(EVENT_PREFIXES, (val: string, index: number, arr: Array<string>) => {
+    if (!arr[index]) animationType = animationType.toLowerCase();
 
-    element.addEventListener(eventPrefixes[p] + transition, () => {
+    element.addEventListener(val + animationType, () => {
       callback(element);
     });
-  }
+  });
 
   return element;
 };
+
+export const getMD5 = (data: string): string => {
+  if (isDev) return data;
+
+  return md5(data);
+};
+
+export function writeTag(string: string, tags: TJSON): string {
+  _.map(tags, (val, key) => {
+    const regExp = new RegExp(`\\\${${key}}`, 'gm');
+
+    string = string.replace(regExp, val);
+  });
+
+  return string;
+}
+
+export function divideDigits(number: number) {
+  return String(number).replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1 ');
+}

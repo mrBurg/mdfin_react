@@ -1,52 +1,40 @@
 import { ReactElement } from 'react';
 import { GetStaticProps, GetStaticPropsContext } from 'next';
-import Head from 'next/head';
 
-import { gt } from '../src/utils';
-import PageStore from '../src/stores/pageStore';
-import { fetchCopyright } from '../src/apis/static/footer';
-import { TJSON } from '../src/interfaces';
-import { fetchPageData } from '../src/apis/static/signUpPage';
-import SignUp from '../src/components/SignUp';
+import { TJSON, TCopyright, TComponenProps } from '../src/interfaces';
+import { fetchCopyright, fetchStaticData } from '../src/apis';
+import { Authorization } from '../src/components/Authorization';
+import { URIS_SUFFIX } from '../src/constants';
 
-type TIndexPageProps = {
-  pageStore: PageStore;
-};
-
-export default ({ pageStore }: TIndexPageProps): ReactElement => {
-  const {
-    documentTitle,
-    pageData: { pageTitle },
-  } = pageStore;
-
+const SignUpPage = (props: TComponenProps): ReactElement => {
   return (
-    <>
-      <Head>
-        <title>{gt.gettext(documentTitle)}</title>
-      </Head>
-
-      <h2 className='page-title'>{gt.gettext(pageTitle)}</h2>
-
-      <SignUp />
-    </>
+    <div className='page-container'>
+      <Authorization page={URIS_SUFFIX.SIGN_UP} {...props} />
+    </div>
   );
 };
+
+export default SignUpPage;
 
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
-  const template = {
-    headerLess: true,
-    footerLess: true,
-  };
+  const template: TJSON = await fetchStaticData({
+    block: 'sign-up-page',
+    path: 'template',
+  });
 
-  const pageData: TJSON = await fetchPageData();
-  const copyright: string = await fetchCopyright({ footerLess: true });
+  const pageData: TJSON = await fetchStaticData({
+    block: 'sign-up-page',
+    path: 'static',
+  });
+
+  const copyright: TCopyright = await fetchCopyright();
 
   return {
     props: {
       ...context,
-      pageData: { copyright, ...pageData },
+      pageData: { copyright: copyright.less, ...pageData },
       template,
     },
   };

@@ -1,0 +1,34 @@
+@import '../../scss/service';
+
+.title {
+  margin-top: 50px;
+}
+
+.bankAccount {
+  font-size: px2em($font-size);
+  width: 100%;
+  max-width: $md;
+
+  @include respond(md) {
+    font-size: 0.9em;
+  }
+
+  @include respond(sm) {
+    font-size: 0.8em;
+  }
+
+  .title {
+    text-align: center;
+    margin-top: px2em(45px, 24px);
+    margin-bottom: px2em(30px, 24px);
+  }
+}
+
+.submitButton {
+  @extend %button;
+  background-color: $red;
+  width: 100%;
+  max-width: 220px;
+  margin: 50px auto;
+  display: block;
+}

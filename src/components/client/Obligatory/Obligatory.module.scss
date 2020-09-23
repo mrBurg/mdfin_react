@@ -1,0 +1,6 @@
+@import '../../../scss/service';
+@import '../Client.module.scss';
+
+.obligatory {
+  @extend .client-form;
+}

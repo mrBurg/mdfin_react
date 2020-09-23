@@ -3,10 +3,9 @@ import classNames from 'classnames';
 
 import style from './NotDifficult.module.scss';
 
-type TNotDifficultProps = {
-  title: string;
-  description: string;
-};
+import { LoanButton } from '../../LoanButton';
+import { TNotDifficultProps } from './@types';
+import { gt } from '../../../utils';
 
 export const NotDifficult: FC<TNotDifficultProps> = ({
   title,
@@ -17,7 +16,15 @@ export const NotDifficult: FC<TNotDifficultProps> = ({
       <div className={classNames(style.item, style.image)} />
       <div className={classNames(style.item, style.content)}>
         <h2 className={style.title}>{title}</h2>
-        <div className={style.description}>{description}</div>
+        <div
+          className={style.description}
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
+
+        <LoanButton
+          className={style.loanButton}
+          label={gt.gettext('Register Loan')}
+        />
       </div>
     </section>
   );

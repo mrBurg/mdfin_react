@@ -1,14 +1,19 @@
 @import '../../../scss/service';
 
-$resizeCoef: 0.5;
-
 .section {
-  padding: 25px;
+  padding: px2em(25px);
+  max-width: $lg;
+  width: 100%;
+
+  @include respond(sm) {
+    font-size: px2em(13px);
+  }
 }
 
 .title {
   text-align: center;
   font-size: px2em(24px);
+  transition: font-size 0.2s;
 }
 
 .items {
@@ -17,23 +22,23 @@ $resizeCoef: 0.5;
 }
 
 .item {
-  padding: 20px 45px;
+  padding: px2em(20px) px2em(30px);
   width: 50%;
 
-  @include respond(xxs) {
+  @include respond(md) {
     width: 100%;
-    padding: resize(20px, $resizeCoef) resize(45px, $resizeCoef);
   }
 
   &Data {
-    @extend %box-shadow;
-    padding: 30px 50px;
+    @extend %big-shadow;
+    padding: px2em(30px);
     height: 100%;
     display: flex;
+    align-items: center;
 
+    $resizeCoef: 0.5;
     @include respond(xxs) {
-      width: 100%;
-      padding: resize(30px, $resizeCoef) resize(50px, $resizeCoef);
+      padding: resize(30px, $resizeCoef) resize(30px, $resizeCoef);
     }
   }
 
@@ -42,7 +47,7 @@ $resizeCoef: 0.5;
     height: 56px;
     background: url('/theme/icons/icons_56x56.svg') no-repeat;
     flex-shrink: 0;
-    margin-right: 45px;
+    margin-right: px2em(45px);
     align-self: center;
 
     @for $i from 1 through 4 {

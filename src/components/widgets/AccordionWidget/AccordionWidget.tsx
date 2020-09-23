@@ -1,69 +1,55 @@
-import React, { FC, ReactElement } from 'react';
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemHeading,
-  AccordionItemButton,
-  AccordionItemPanel,
-} from 'react-accessible-accordion';
+import React, { ReactElement, FC } from 'react';
+import { Accordion } from 'semantic-ui-react';
+import _ from 'lodash';
 
 import style from './AccordionWidget.module.scss';
+import { TQuestion, TFaqListItemsProps, TFaqItem } from './@types';
 
-import { TJSON } from '../../../interfaces';
+const renderPanels = (questions: Array<TQuestion>) => {
+  return _.map(questions, (item: TQuestion, key: number) => {
+    const { question, answer } = item;
 
-type TQuestion = {
-  question: string;
-  answer: string;
+    return {
+      key,
+      title: {
+        className: style.accordionTitle,
+        children: (
+          <>
+            <span className={'content'}>{question}</span>
+            <i className={'icon'} />
+          </>
+        ),
+      },
+      content: {
+        className: 'panel',
+        content: <span>{answer}</span>,
+      },
+    };
+  });
 };
 
-type TFaqItem = {
-  title: string;
-  questions: Array<TQuestion>;
-};
+export const AccordionWidget: FC<TFaqListItemsProps> = (
+  props
+): ReactElement => {
+  const { data, ...accordionProps } = props;
 
-type TFaqListItemsProps = Array<TFaqItem>;
+  return (
+    <>
+      {_.map(data, (item: TFaqItem, index: number) => {
+        const { title, questions } = item;
 
-const renderFaqList = (props: TFaqListItemsProps): Array<ReactElement> =>
-  Object.keys(props).map((key: string, index: number) => {
-    const { title, questions } = (props as TJSON)[key];
+        return (
+          <section key={index} className={style.section}>
+            <h2 className={style.title}>{title}</h2>
 
-    return (
-      <div key={index}>
-        <h2 className={style.accordion__paragraph}>{title}</h2>
-
-        <Accordion
-          allowMultipleExpanded={true}
-          allowZeroExpanded={true}
-          className={style.accordion}
-        >
-          <span>{renderQaList(questions)}</span>
-        </Accordion>
-      </div>
-    );
-  });
-
-const renderQaList = (questions: Array<TQuestion>): Array<ReactElement> =>
-  Object.keys(questions).map((item: string, index) => {
-    const { question, answer } = (questions as TJSON)[item];
-
-    return (
-      <AccordionItem
-        key={index}
-        className={style.accordion__item}
-        uuid={String(index)}
-      >
-        <AccordionItemHeading>
-          <AccordionItemButton className={style.accordion__button}>
-            <span>{question}</span>
-          </AccordionItemButton>
-        </AccordionItemHeading>
-        <AccordionItemPanel className={style.accordion__panel}>
-          <span>{answer}</span>
-        </AccordionItemPanel>
-      </AccordionItem>
-    );
-  });
-
-export const AccordionWidget: FC<{}> = (props: any): ReactElement => {
-  return <>{renderFaqList(props)}</>;
+            <Accordion
+              className={style.accordion}
+              panels={renderPanels(questions)}
+              {...accordionProps}
+            />
+          </section>
+        );
+      })}
+    </>
+  );
 };

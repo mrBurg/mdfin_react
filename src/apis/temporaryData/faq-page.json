@@ -1,0 +1,132 @@
+{
+  "faqList": [
+    {
+      "title": "Điều kiện để được vay:",
+      "questions": [
+        {
+          "question": "Tôi có thể nhận được bao nhiêu tiền khi đăng ký vay lần đầu tiên?",
+          "answer": "Bạn có thể nhận được từ 500 000 đến 2 500 000 VDN"
+        },
+        {
+          "question": "Lãi suất cho vay là bao nhiêu?",
+          "answer": "Chúng tôi có lãi suất cố định cho khoản vay: 0,03% mỗi ngày"
+        },
+        {
+          "question": "Giới hạn độ tuổi để được vay là gì?",
+          "answer": "Tuổi người vay từ 20 đến 60 tuổi"
+        },
+        {
+          "question": "Những giấy tờ nào cần thiết để có được một khoản vay?",
+          "answer": "CMND hoặc CCCD"
+        },
+        {
+          "question": "Tôi có thể được vay nếu tôi không có công việc chính thức?",
+          "answer": "Để có được một khoản vay, bạn có thể làm việc không chính thức (công việc thời vụ) hoặc tự doanh"
+        },
+        {
+          "question": "Tôi có thể vay được không nếu tôi vừa mới có việc làm?",
+          "answer": "Có, kinh nghiệm làm việc không quan trọng đối với chúng tôi"
+        },
+        {
+          "question": "Tôi có thể vay vào mục đích gì?",
+          "answer": "Khách hàng cam kết Khoản vay chỉ có thể được sử dụng cho mục đích hợp pháp được pháp luật cho phép"
+        },
+        {
+          "question": "Tôi có cần tài sản cầm cố để vay được tiền?",
+          "answer": "Có, điện thoại của bạn là tài sản cầm cố"
+        },
+        {
+          "question": "Tôi có thể vay tiền từ WebVay nếu hiện đang vay tại các tổ chức tín dụng khác không?",
+          "answer": "Có, bạn có thể vay tiền từ chúng tôi ngay cả khi bạn có các khoản vay hiện hữu trong các tổ chức tín dụng khác ngoại trừ WebVay"
+        },
+        {
+          "question": "Các loại phí liên quan đến khoản vay là gì?",
+          "answer": "Có 2 loại phí: phí tư vấn và phí dịch vụ thông tin"
+        },
+        {
+          "question": "Người cao tuổi có được vay không?",
+          "answer": "Có, nếu tại thời điểm đăng ký bạn có việc làm (thậm chí thời vụ và không chính thức) và dưới 60 tuổi"
+        }
+      ]
+    },
+    {
+      "title": "Quy Trình nhận khoản vay:",
+      "questions": [
+        {
+          "question": "Mất bao lâu để vay tiền?",
+          "answer": "Nhận một khoản vay mất lên đến 8 phút"
+        },
+        {
+          "question": "Làm thế nào để có được một khoản vay?",
+          "answer": "Để đăng ký khoản vay, bạn phải điền vào đơn đăng ký trên trang web, đính kèm bản scan CMND hoặc CCCD của bạn, hãy giữ điện thoại bên mình 15 phút sau khi tạo đơn đăng ký, trả lời câu hỏi của nhân viên thẩm định qua điện thoại khi bạn được gọi, cung cấp số tài khoản ngân hàng của bạn mà bạn muốn nhận tiền"
+        },
+        {
+          "question": "Tôi có thể được giải ngân tiền vào thẻ tín dụng không?",
+          "answer": "Không, chúng tôi chĩ giải ngân vào tài khoản ngân hàng"
+        }
+      ]
+    },
+    {
+      "title": "Thủ tục trả nợ vay:",
+      "questions": [
+        {
+          "question": "Làm thế nào để thanh toán một khoản vay?",
+          "answer": "Để trả nợ, bạn có thể đăng nhập vào tài khoản cá nhân của mình hoặc thanh toán qua ví điện tữ Payoo, Momo, bạn cũng có thể trả nợ trực tiếp trên trang web của chúng tôi hoặc ViettelPost (cửa hàng và POS) hoặc gửi thanh toán bằng chuyển khoản qua bất kỳ ngân hàng nào"
+        },
+        {
+          "question": "Tôi có thể thanh toán một khoản vay qua ngân hàng?",
+          "answer": "Bạn có thể hoàn trả khoản vay tại bất kỳ chi nhánh ngân hàng nào"
+        },
+        {
+          "question": "Tôi cần có những giấy tờ gì để trả nợ cho khoản vay tại bất kỳ ngân hàng nào?",
+          "answer": "Để trả tiền vay, hãy mang theo số hợp đồng vay, thông tin công ty vay và CMND hoặc CCCD với bạn"
+        },
+        {
+          "question": "Một người khác có thể trả nợ thay cho khách hàng?",
+          "answer": "Có, thay vì khách hàng, một người khác có thể thay mặt trả nợ"
+        },
+        {
+          "question": "Tôi có thể gia hạn thời hạn sử dụng khoản vay không?",
+          "answer": "Bạn có thể gia hạn thời hạn sử dụng khoản vay, bạn cần phải trả một số tiền để gia hạn"
+        },
+        {
+          "question": "Tôi có thể trả nợ sớm hơn không?",
+          "answer": "Bạn có thể hoàn trả khoản vay trước thời hạn"
+        },
+        {
+          "question": "Khoản vay có thể được gia hạn bao nhiêu lần?",
+          "answer": "Có thể được gia hạn bao nhiêu lần tùy ý, nhưng không quá 360 ngày kể từ ngày vay ban đầu"
+        },
+        {
+          "question": "Tôi có thể thanh toán khoản vay thành nhiều lần được không",
+          "answer": "Có, bạn có thể hoàn trả khoản vay qua nhiều khoản thanh toán"
+        }
+      ]
+    },
+    {
+      "title": "Điều kiện để đăng ký lại khoản vay:",
+      "questions": [
+        {
+          "question": "Khi đăng ký lại khoản vay, tôi sẽ cần điền lại đơn và chờ kết quả thẩm định?",
+          "answer": "Không, khi đăng ký lại, bạn sẽ chỉ cần chọn thời hạn và số tiền cho vay trong Tài Khoản cá nhân của mình"
+        },
+        {
+          "question": "Mất bao lâu để duyệt một khoản vay?",
+          "answer": "Ít hơn 3 phút"
+        },
+        {
+          "question": "Tôi có thể vay được không nếu khoản trước chưa được trả hết?",
+          "answer": "Bạn chỉ có thể có 1 khoản vay một lần tại Webvay. Bạn phải hoàn tất thanh toán khoản vay hiện hữu để có thể đăng ký khoản vay mới"
+        },
+        {
+          "question": "Nếu có sự chậm trễ trong thanh toán khoản vay trước đó, tôi có thể vay lại được không?",
+          "answer": "Có, điều quan trọng là khoản vay trước đó phải được hoàn tất thanh toán toàn bộ"
+        },
+        {
+          "question": "Tôi có thể nhận được bao nhiêu khi đăng ký lại khoản vay?",
+          "answer": "Đối với khách hàng thường xuyên, số tiền cho vay sẽ tăng"
+        }
+      ]
+    }
+  ]
+}

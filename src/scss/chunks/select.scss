@@ -1,0 +1,107 @@
+.ui.dropdown {
+  &.selection {
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid $gray;
+    padding: px2em(12px) px2em(25px);
+    border-radius: px2em(8px);
+    align-items: center;
+
+    &.active {
+      .search {
+        display: block;
+      }
+    }
+    .search {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 85%;
+      height: 100%;
+      padding: 10px;
+      border: none;
+      background: $white;
+      border-radius: px2em(8px);
+      padding: px2em(12px) px2em(25px);
+    }
+
+    .icon {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: url('/theme/icons/icons_16x16.svg') -48px -64px no-repeat;
+      flex-shrink: 0;
+    }
+
+    .divider.text {
+      flex-grow: 1;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .menu {
+      left: 0;
+      position: absolute;
+      display: none;
+      top: 100%;
+      background: $white;
+      box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+      border: 1px solid rgba(34, 36, 38, 0.15);
+      border-radius: px2em(8px);
+      width: 100%;
+      z-index: 10;
+      overflow-x: hidden;
+      overflow-y: auto;
+      backface-visibility: hidden;
+      transition: opacity 0.1s ease;
+      max-height: 21.37142857rem;
+
+      @include respond(lg) {
+        max-height: 16.02857143rem;
+      }
+
+      @include respond(md) {
+        max-height: 10.68571429rem;
+      }
+
+      @include respond(ms) {
+        max-height: 8.01428571rem;
+      }
+
+      &:after,
+      &:before {
+        display: none;
+      }
+
+      &.visible {
+        display: block;
+        visibility: visible;
+      }
+
+      .item {
+        padding: px2em(10px);
+        text-align: center;
+        transition: background-color 0.2s;
+
+        &:not(.selected):hover {
+          background-color: lighten($gray, 18%);
+        }
+
+        &.selected {
+          background-color: $gray;
+        }
+      }
+    }
+  }
+
+  &.scrolling {
+    .menu {
+      max-height: 300px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+}

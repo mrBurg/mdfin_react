@@ -1,26 +1,70 @@
 @import '../../scss/service';
 
 .productSelector {
-  border-radius: 8px;
+  border-radius: px2em(8px);
   background-color: $orange;
   width: 100%;
   height: 100%;
-  max-width: 655px;
-  min-height: 178px;
   display: flex;
-}
 
-.loanButton {
-  display: block;
-  margin: 7px auto 0;
+  @include respond(sm) {
+    flex-direction: column;
+  }
+
+  @include respond(xs) {
+    font-size: px2em(14px);
+  }
 }
 
 .item {
   width: 50%;
+
+  @include respond(sm) {
+    width: 100%;
+  }
 }
 
-.loanData {
-  padding: 7px;
+.loanData,
+.calculator {
+  padding: px2em(7px);
+}
+
+.calculator {
+  border-right: 2px solid $white;
+
+  @include respond(sm) {
+    border-right: none;
+    border-bottom: 2px solid $white;
+  }
+}
+
+.slider {
+  &Container {
+    margin: 0px px2em(30px);
+  }
+
+  &Panel {
+    margin: px2em(15px) 0px px2em(40px) 0px;
+  }
+
+  &Output {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  &Input {
+    width: 170px;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.2em;
+    font-weight: 600;
+    text-align: right;
+  }
 }
 
 .loanTitle {
@@ -29,11 +73,25 @@
 }
 
 .loanInfo {
+  border-spacing: 0 px2em(10px);
   background-color: lighten($orange, 15%);
   width: 100%;
+  padding: px2em(20px);
+
+  &Value {
+    text-align: right;
+    font-weight: bold;
+  }
 }
 
-.calculator {
-  border-right: 2px solid $white;
-  padding: 7px;
+.loanButton {
+  display: block;
+  margin: 7px auto 0;
+}
+
+.notification {
+  font-size: px2em(14px);
+  font-weight: 600;
+  text-align: center;
+  padding: px2em(10px) px2em(20px) 0 px2em(20px);
 }

@@ -1,0 +1,47 @@
+@import '../../scss/service';
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  @include respond(sm) {
+    width: 100%;
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:after {
+    content: '';
+    flex: auto;
+  }
+}
+
+.notEmpty {
+  @extend %small-shadow;
+  width: 100%;
+  margin: px2em(15px) auto;
+  padding: px2em(20px);
+
+  .file {
+    @include respond(xs) {
+      width: 33%;
+    }
+
+    @include respond(xxs) {
+      width: 50%;
+    }
+  }
+
+  .button {
+    @include respond(xs) {
+      width: 100%;
+    }
+  }
+}

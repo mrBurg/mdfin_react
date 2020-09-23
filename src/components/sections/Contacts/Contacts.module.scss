@@ -2,7 +2,7 @@
 
 .contacts {
   display: flex;
-  justify-content: center;
+  flex-grow: 1;
 
   @include respond(md) {
     flex-direction: column;
@@ -10,10 +10,26 @@
 }
 
 .section {
-  padding: 75px 165px;
+  padding: px2em(30px) px2em(80px);
 
-  a {
-    text-decoration: none;
+  @include respond(md) {
+    display: flex;
+    // gap: px2em(30px);
+    padding: px2em(resize(30em, 0.5)) px2em(resize(80px, 0.2));
+  }
+
+  &Content {
+    @include respond(md) {
+      margin-left: px2em(30px);
+    }
+  }
+
+  &Title {
+    margin-top: px2em(30px);
+
+    @include respond(md) {
+      margin-top: 0;
+    }
   }
 }
 .icon {
@@ -30,11 +46,19 @@
   background-position: -224px 0;
 }
 
-.title {
-  margin-top: 30px;
-}
-
 .list {
   margin-top: 20px;
   list-style: none;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.feedback {
+  max-width: none !important;
 }

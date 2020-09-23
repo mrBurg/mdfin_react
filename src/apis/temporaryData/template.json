@@ -1,0 +1,51 @@
+{
+  "main-page": {},
+  "contacts-page": {
+    "background": true
+  },
+  "deal-page": {
+    "footerLess": true
+  },
+  "faq-page": {},
+  "application-page": {
+    "footerLess": true
+  },
+  "repayment-page": {},
+  "inprocess-page": {
+    "footerLess": true
+  },
+  "sendmoney-page": {
+    "footerLess": true
+  },
+  "sign-in-page": {
+    "footerLess": true
+  },
+  "sign-up-page": {
+    "headerLess": true,
+    "footerLess": true
+  },
+  "wrongaccount-page": {
+    "footerLess": true
+  },
+  "notify-page": { "footerLess": true },
+  "address-page": {
+    "headerLess": true,
+    "footerLess": true
+  },
+  "documents-page": {
+    "headerLess": true,
+    "footerLess": true
+  },
+  "job-page": {
+    "headerLess": true,
+    "footerLess": true
+  },
+  "obligatory-page": {
+    "headerLess": true,
+    "footerLess": true
+  },
+  "page-404": {
+    "headerLess": true,
+    "footerLess": true
+  }
+}

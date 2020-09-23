@@ -1,36 +1,9 @@
 import { FC, ReactElement } from 'react';
 import classNames from 'classnames';
+import _ from 'lodash';
 
 import style from './HowItWorks.module.scss';
-
-type TItem = {
-  data: string;
-};
-
-type THowItWorksProps = {
-  title: string;
-  items: Array<TItem>;
-};
-
-const renderItems = (items: Array<TItem>): Array<ReactElement> =>
-  items.map(
-    (item: TItem, index: number): ReactElement => {
-      const { data } = item;
-
-      return (
-        <div key={index} className={style.item}>
-          <div className={style.itemData}>
-            <div
-              className={classNames(style.itemIcon, style[`itemIcon${index}`])}
-            />
-            <div>
-              <span dangerouslySetInnerHTML={{ __html: data }} />
-            </div>
-          </div>
-        </div>
-      );
-    }
-  );
+import { THowItWorksProps, TItem } from './@types';
 
 export const HowItWorks: FC<THowItWorksProps> = ({
   title,
@@ -39,7 +12,30 @@ export const HowItWorks: FC<THowItWorksProps> = ({
   return (
     <section className={style.section}>
       <h2 className={style.title}>{title}</h2>
-      <div className={style.items}>{renderItems(items)}</div>
+      <div className={style.items}>
+        {_.map(
+          items,
+          (item: TItem, index: number): ReactElement => {
+            const { data } = item;
+
+            return (
+              <div key={index} className={style.item}>
+                <div className={style.itemData}>
+                  <div
+                    className={classNames(
+                      style.itemIcon,
+                      style[`itemIcon${index}`]
+                    )}
+                  />
+                  <div>
+                    <span dangerouslySetInnerHTML={{ __html: data }} />
+                  </div>
+                </div>
+              </div>
+            );
+          }
+        )}
+      </div>
     </section>
   );
 };

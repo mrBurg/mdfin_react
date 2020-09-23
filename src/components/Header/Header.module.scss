@@ -1,0 +1,29 @@
+@import '../../scss/service/';
+
+$border-color: #bfbfbe;
+
+.header {
+  @extend %big-shadow;
+  background-color: lighten($gray, 15%);
+  border-bottom: 1px solid $border-color;
+  padding: px2em(25px);
+  z-index: 1;
+  // position: relative;
+}
+
+.container {
+  max-width: $md;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.less {
+  justify-content: center;
+}
+
+.mobileMenu {
+  display: flex;
+  justify-content: space-between;
+}

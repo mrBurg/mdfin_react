@@ -14,11 +14,11 @@
 
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-mdfin_react.code-workspace
+/.env.local
+/.env.development.local
+/.env.test.local
+/.env.production.local
+*.code-workspace
 sitemap.xml
 
 npm-debug.log*

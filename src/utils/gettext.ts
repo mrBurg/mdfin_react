@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import GetText from 'node-gettext';
 
 import { defaultLocale, locales, defaultLocaleDomain } from '../config.json';
@@ -11,9 +12,23 @@ const localesData: TJSON = {
   viVN,
 };
 
-export const gt: GetText = new GetText();
+class XGetText extends GetText {
+  public xnpgettext(
+    msgctxt: string,
+    msgid: string,
+    msgidPlural: string,
+    count: number
+  ): string {
+    return this.npgettext(msgctxt, msgid, msgidPlural, count).replace(
+      '%d',
+      String(count)
+    );
+  }
+}
 
-locales.forEach((locale: string): void => {
+export const gt: XGetText = new XGetText();
+
+_.map(locales, (locale: string): void => {
   gt.addTranslations(
     locale,
     defaultLocaleDomain,

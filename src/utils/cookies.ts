@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import { TJSON } from '../interfaces';
 
 type TCookieData = { path: string; expires: number };
@@ -44,7 +46,7 @@ export function getCookie(name: string): string | void {
     '; '
   );
 
-  cookiesData.map((part: string): void => {
+  _.map(cookiesData, (part: string): void => {
     const cookiePart: Array<string> = part.split('=');
 
     cookies[cookiePart[0]] = cookiePart[1];

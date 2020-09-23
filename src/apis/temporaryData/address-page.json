@@ -1,0 +1,16 @@
+{
+  "documentTitle": "WEBVAY",
+  "title": "Địa Chỉ và Thông Tin Liên Hệ",
+  "cityProvince": "Tỉnh/Thành Phố *",
+  "district": "Quận/Huyện *",
+  "wardCommune": "Phường/Xã *",
+  "street": "Đường *",
+  "building": "Tòa Nhà *",
+  "apartment": "Chung Cư",
+  "livingPeriod": "Thời gian cư trú",
+  "years": "Năm *",
+  "months": "Tháng *",
+  "thirdPartyPhone": "Số điện thoại người tham chiếu/người thân của bạn là gì?",
+  "thirdPartyName": "Tên người tham chiếu/người thân của bạn là gì?",
+  "thirdPartyRelation": "Mối quan hệ của bạn với người tham chiếu/người thân là gì?"
+}

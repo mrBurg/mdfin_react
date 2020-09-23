@@ -1,1 +1,0 @@
-export { AccordionWidget as default} from './AccordionWidget';

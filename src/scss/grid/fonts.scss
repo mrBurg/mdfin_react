@@ -29,6 +29,28 @@ $fonts: (
       display: swap,
     ),
   ),
+  NunitoSans: (
+    Regular: (
+      weight: normal,
+      style: normal,
+      display: swap,
+    ),
+    Bold: (
+      weight: bold,
+      style: normal,
+      display: swap,
+    ),
+    Italic: (
+      weight: normal,
+      style: italic,
+      display: swap,
+    ),
+    BoldItalic: (
+      weight: bold,
+      style: italic,
+      display: swap,
+    ),
+  ),
 );
 
 $formats: (

@@ -1,51 +1,56 @@
 import { ReactElement } from 'react';
 import { GetStaticProps, GetStaticPropsContext } from 'next';
-import Head from 'next/head';
 
-import { gt } from '../src/utils';
-import PageStore from '../src/stores/pageStore';
-import { fetchCopyright } from '../src/apis/static/footer';
 import {
   Welcome,
   HowItWorks,
   HowDoIt,
   NotDifficult,
 } from '../src/components/sections';
-import { fetchPageData } from '../src/apis/static/mainPage';
-import { TJSON } from '../src/interfaces';
+import { TJSON, TCopyright, TComponenProps } from '../src/interfaces';
+import { fetchCopyright, fetchStaticData } from '../src/apis';
+import { Feedback } from '../src/components/sections/Feedback';
 
-type TIndexPageProps = {
-  pageStore: PageStore;
-};
-
-export default ({ pageStore }: TIndexPageProps): ReactElement => {
-  const { documentTitle, pageData } = pageStore;
-  const { welcome, howItWorks, howDoIt, notDifficult } = pageData;
+const IndexPage = (props: TComponenProps): ReactElement => {
+  const {
+    pageStore: {
+      pageData: { welcome, howItWorks, howDoIt, notDifficult },
+    },
+  } = props;
 
   return (
     <>
-      <Head>
-        <title>{gt.gettext(documentTitle)}</title>
-      </Head>
-
       <Welcome {...welcome} />
       <HowItWorks {...howItWorks} />
       <HowDoIt {...howDoIt} />
       <NotDifficult {...notDifficult} />
+      <Feedback />
     </>
   );
 };
 
+export default IndexPage;
+
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
-  const pageData: TJSON = await fetchPageData();
-  const copyright: string = await fetchCopyright();
+  const template: TJSON = await fetchStaticData({
+    block: 'main-page',
+    path: 'template',
+  });
+
+  const pageData: TJSON = await fetchStaticData({
+    block: 'main-page',
+    path: 'static',
+  });
+
+  const copyright: TCopyright = await fetchCopyright();
 
   return {
     props: {
       ...context,
-      pageData: { copyright, ...pageData },
+      pageData: { copyright: copyright.normal, ...pageData },
+      template,
     },
   };
 };

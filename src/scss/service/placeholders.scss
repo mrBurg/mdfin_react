@@ -1,12 +1,15 @@
-%box-shadow {
-  box-shadow: 0 0 50px transparentize($black, 0.8);
+%big-shadow {
+  box-shadow: 0 0 px2em(50px) transparentize($black, 0.8);
+}
+
+%small-shadow {
+  box-shadow: 0 0 px2em(10px) transparentize($black, 0.8);
 }
 
 %input {
-  color: $gray;
-  padding: 12px 35px;
+  padding: px2em(12px) px2em(35px);
   border: 1px solid $gray;
-  border-radius: 8px;
+  border-radius: px2em(8px);
 
   &.error {
     border-color: lighten($red, 25%);
@@ -15,9 +18,14 @@
 
 %button {
   cursor: pointer;
-  background-color: $red;
-  padding: 12px 35px;
+  padding: px2em(12px) px2em(35px);
   border: none;
-  border-radius: 8px;
+  border-radius: px2em(8px);
   color: $white;
+  background-color: $gray;
+
+  &:disabled {
+    opacity: 0.2;
+    cursor: auto;
+  }
 }

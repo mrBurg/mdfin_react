@@ -1,0 +1,32 @@
+@import '../../../scss/service';
+@import '../Client.module.scss';
+
+.documents {
+  @extend .client-form;
+
+  .attachments {
+    @include respond(md) {
+      font-size: 0.9em;
+    }
+
+    @include respond(sm) {
+      font-size: 0.8em;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+    }
+  }
+
+  .bankAccount {
+    .title {
+      margin-top: px2em(85px, 24px);
+    }
+  }
+
+  .fullrow {
+    flex-basis: 100%;
+  }
+}

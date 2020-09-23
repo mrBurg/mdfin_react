@@ -2,9 +2,15 @@
 
 * {
   margin: 0;
-  outline: none;
+  outline: none !important;
   padding: 0;
   box-sizing: border-box;
+
+  &::-moz-focus-inner,
+  &::-moz-focus-outer {
+    border: 0;
+    padding: 0;
+  }
 }
 
 body,
@@ -37,4 +43,10 @@ body {
   font-size: $font-size;
   font-weight: 400;
   min-width: $xxs;
+}
+
+.disabled {
+  opacity: 0.2;
+  cursor: auto;
+  pointer-events: none;
 }

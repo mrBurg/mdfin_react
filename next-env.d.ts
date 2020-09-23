@@ -1,6 +1,14 @@
 /// <reference types="next" />
 /// <reference types="next/types/global" />
 
+declare interface Window {
+  requestIdleCallback: Function;
+}
+
+declare interface Console {
+  toJS: (data: any) => void;
+}
+
 declare module '*.po' {
   const poModule: { [key: string]: string };
 

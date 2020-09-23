@@ -20,21 +20,21 @@
         $media: '(max-width: #{$xs})';
 
         @if $infinity {
-          $min: '(min-width: #{$xxs})';
+          $min: '(min-width: #{$xxs + 1})';
           $media: getInfinity($min, $infinity);
         }
       } @else if $param == 'sm' {
         $media: '(max-width: #{$sm})';
 
         @if $infinity {
-          $min: '(min-width: #{$xs})';
+          $min: '(min-width: #{$xs + 1})';
           $media: getInfinity($min, $infinity);
         }
       } @else if $param == 'md' {
         $media: '(max-width: #{getSize(md)})';
 
         @if $infinity {
-          $min: '(min-width: #{$sm})';
+          $min: '(min-width: #{$sm + 1})';
           $media: getInfinity($min, $infinity);
         }
       } @else if $param == 'lg' {

@@ -1,14 +1,27 @@
 @import '../../../scss/service/';
 
 .section {
-  background: url('/main-page/welcome/background.jpg') center top / cover
+  background: url('/images/main-page/welcome/background.jpg') center top / 130%
     no-repeat;
-  padding: 210px 25px 25px;
+  padding: 210px px2em(25px) px2em(25px);
+  max-width: $lg;
+  width: 100%;
+
+  @include respond(sm) {
+    font-size: px2em(13px);
+    padding-top: px2em(20px);
+    background: lighten($gray, 10%);
+  }
+
+  @include respond(xxs) {
+    font-size: px2em(11px);
+  }
 }
 
 .title,
 .description {
   text-align: center;
+  transition: font-size 0.2s;
 }
 
 .title {
@@ -16,10 +29,9 @@
 }
 
 .description {
-  font-size: px2em(23px);
-  padding: 20px 0;
+  font-size: px2em(22px);
 }
 
 .productSelector {
-  margin: auto;
+  margin: px2em(20px) auto 0;
 }

@@ -1,6 +1,6 @@
 import { useEffect, ReactElement, FC, ReactNode } from 'react';
 
-import { localeStoreKey } from '../../config.json';
+import { LOCALE_KEY } from '../../constants';
 import { setToLocalStorage } from '../../utils';
 
 type TWithLocaleProps = {
@@ -8,16 +8,14 @@ type TWithLocaleProps = {
   locale: string;
 };
 
-const WithLocale: FC<TWithLocaleProps> = ({
+export const WithLocale: FC<TWithLocaleProps> = ({
   children,
   locale,
 }: TWithLocaleProps): ReactElement => {
   useEffect((): void => {
-    setToLocalStorage(localeStoreKey, locale);
+    setToLocalStorage(LOCALE_KEY, locale);
     document.documentElement.lang = locale;
   });
 
   return <>{children}</>;
 };
-
-export default WithLocale;

@@ -1,48 +1,43 @@
 import { ReactElement, FC } from 'react';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import classNames from 'classnames';
+import _ from 'lodash';
 
 import style from './LanguagesSwitcher.module.scss';
 
 import { STORE_IDS } from '../../../stores';
 import { locales } from '../../../config.json';
-import LocaleStore from '../../../stores/localeStore';
-
-type TLanguagesSwitcherProps = {
-  localeStore?: LocaleStore;
-};
+import { TLanguagesSwitcherProps } from './@types';
 
 export const LanguagesSwitcher: FC<TLanguagesSwitcherProps> = inject(
   STORE_IDS.LOCALE_STORE
 )(
-  ({ localeStore }: TLanguagesSwitcherProps): ReactElement => (
-    <ul className={style.languageSwitcher}>
-      {locales.map(
-        (item: string, index: number): ReactElement => {
+  observer(
+    ({ localeStore }: TLanguagesSwitcherProps): ReactElement => (
+      <ul className={style.language}>
+        {_.map(locales, (item: string, index: number): ReactElement | null => {
           if (localeStore) {
             const { locale } = localeStore;
 
             return (
-              <li
-                key={index}
-                className={classNames(style.language, {
-                  [style.current]: locale == item,
-                })}
-              >
-                <a
+              <li key={index}>
+                <button
+                  className={classNames(style.button, {
+                    [style.current]: locale == item,
+                  })}
                   onClick={(): void => {
                     localeStore.setCurrentLanguage(locales[index]);
                   }}
                 >
                   {item}
-                </a>
+                </button>
               </li>
             );
           }
 
-          return <></>;
-        }
-      )}
-    </ul>
+          return null;
+        })}
+      </ul>
+    )
   )
 );

@@ -1,39 +1,37 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { makeApiUrl, checkStatus } from '../utils';
-import { METHOD } from '../constants';
-import { APIS_URIS } from '../routes';
 
-type TGetOtp = {
-  otpId: number;
-};
+import { CommonApi } from '.';
+import { handleErrors } from '../utils';
+import { checkStatus } from './apiUtils';
 
-export class OTPApi {
-  public getOtp = async (data: TGetOtp) => {
-    let requestConfig: AxiosRequestConfig = {
-      baseURL: makeApiUrl(true),
-      method: METHOD.POST,
-      url: APIS_URIS.GET_OTP,
-      data,
-    };
+export class OtpApi extends CommonApi {
+  public getOtp = async (
+    requestConfig: AxiosRequestConfig
+  ): Promise<{ otpCode: any }> => {
+    try {
+      const { data }: AxiosResponse = await axios(requestConfig);
+      const { status, error, errorDescription, ...otpData } = data;
 
+      if (checkStatus(status)) return otpData;
+
+      return { otpCode: null };
+    } catch (err) {
+      handleErrors(err);
+
+      return { otpCode: null };
+    }
+  };
+
+  public validateOtp = async (
+    requestConfig: AxiosRequestConfig
+  ): Promise<any> => {
     try {
       const { data }: AxiosResponse = await axios(requestConfig);
       const { status, error, errorDescription, ...otpData } = data;
 
       if (checkStatus(status)) return otpData;
     } catch (err) {
-      console.info(err);
-
-      return null;
+      handleErrors(err);
     }
   };
-  /* if (isDev) {
-          const { status, ...otpCode } = await this.getOtp(otpData);
-
-          if (checkStatus(status))
-            otpData = {
-              ...otpData,
-              testData: otpCode,
-            };
-        } */
 }

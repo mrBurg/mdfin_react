@@ -1,0 +1,19 @@
+{
+  "title": "Thông Tin Cá Nhân",
+  "name": "Họ Tên Đầy Đủ",
+  "birthDate": "Ngày Sinh",
+  "idNumber": "Số CMND/CCCD",
+  "issueDate": "Ngày Cấp",
+  "expireDate": "Có Giá Trị Đến",
+  "gender": "Giới Tính",
+  "maritalStatus": "Tình Trạng Hôn Nhân",
+  "childrenAmount": "Số con ruột (dưới 16 tuổi)",
+  "email": "Email",
+  "loanPurpose": "Mục Đích Vay",
+  "whatPhone": "Bạn sử dụng điện thoại di động thương hiệu gì",
+  "phoneBrand": "Thương hiệu",
+  "otherPhoneBrand": "Thương Hiệu Khác",
+  "phoneModel": "Loại",
+  "otherPhoneModel": "Mẫu mã khác",
+  "otherPhoneNumber": "Số Điện Thoại Di Động Cá Nhân Khác"
+}

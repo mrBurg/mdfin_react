@@ -6,6 +6,7 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: MDFin VN\n"
 "Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: 
 msgid "Site Title"
@@ -17,10 +18,10 @@ msgstr "Liên Hệ"
 
 #: 
 msgid "FAQ"
-msgstr "FAQ CÂU HỎI THƯỜNG GẶP"
+msgstr "CÂU HỎI THƯỜNG GẶP"
 
 #: 
-msgid "Payment"
+msgid "Repayment"
 msgstr "Thang Toán Khoản Vay"
 
 #: 
@@ -32,7 +33,6 @@ msgid "Currency"
 msgstr "VND"
 
 #: 
-#, fuzzy
 msgid "More"
 msgstr "Thêm"
 
@@ -44,3 +44,74 @@ msgstr "Đăng Ký"
 msgid "Register Loan"
 msgstr "Đăng Ký Hồ Sơ Vay"
 
+#: 
+msgid "Enter Phone Number"
+msgstr "Nhập Số Điện Thoại"
+
+#: 
+msgid "Confirm"
+msgstr "Xác Nhận"
+
+#: 
+msgid "amount"
+msgstr "Số Tiền Vay"
+
+#: 
+msgid "term"
+msgstr "Kỳ Hạn"
+
+#: 
+msgid "extensionAmount"
+msgstr "Số Tiền Gia Hạn Thêm"
+
+#: 
+msgid "totalAmount"
+msgstr "Khoản tiền thanh toán"
+
+#: 
+msgid "dateTo"
+msgstr "Ngày đến hạn thanh toán"
+
+#: 
+msgid "lastPaymentDate"
+msgstr "Ngày thanh toán gần nhất"
+
+#: 
+msgid "lastPaymentAmount"
+msgstr "Số tiền thanh toán lần gần nhất"
+
+#: 
+msgid "dealNo"
+msgstr "Những Thỏa Thuận"
+
+#: 
+msgid "appnum"
+msgstr "Những Thỏa Thuận"
+
+#: 
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] "ngày"
+
+#:
+msgid "toPay"
+msgstr "Thanh Toán"
+
+#:
+msgid "loanAgreement"
+msgstr "Hợp đồng Vay"
+
+#:
+msgid "maskedName"
+msgstr "Khách hàng"
+
+#: 
+msgid "Second"
+msgid_plural "Seconds"
+msgstr[0] "giây"
+
+#: 
+msgctxt "Will be redirected"
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "Bạn sẽ được chuyển hướng sau %d giây"
