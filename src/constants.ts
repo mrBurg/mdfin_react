@@ -101,9 +101,9 @@ export enum FIELD_NAME {
   APARTMENT = 'apartment',
   YEARS = 'currentPlaceLivingYear',
   MONTHS = 'currentPlaceLivingMonth',
-  THIRD_PARTY_PHONE = 'phoneNumber',
-  THIRD_PARTY_NAME = 'name',
-  THIRD_PARTY_RELATION = 'type_id',
+  THIRD_PARTY_PHONE = 'thirdParty_phoneNumber',
+  THIRD_PARTY_NAME = 'thirdParty_name',
+  THIRD_PARTY_RELATION = 'thirdParty_type_id',
 
   /* Job */
   JOB_ID = 'job_id',

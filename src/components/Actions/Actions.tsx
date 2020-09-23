@@ -57,8 +57,8 @@ export class Actions extends PureComponent<TActionsProps> {
 
     return (
       <div className={classNames(className, style.actions)}>
-        <div className={style.label}>
-          <span>Thanh Toán</span>
+        <label className={style.amount}>
+          <p className={style.amountText}>Thanh Toán</p>
           <input
             required
             name={FIELD_NAME.PAYMENT_AMOUNT}
@@ -68,7 +68,7 @@ export class Actions extends PureComponent<TActionsProps> {
             onChange={this.onChangeHandler}
             placeholder={'Thanh Toán'}
           />
-        </div>
+        </label>
         <button
           data-amount={extensionAmount}
           type={BUTTON_TYPE.BUTTON}

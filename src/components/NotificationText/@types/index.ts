@@ -1,13 +1,10 @@
-import { UserStore } from '../../../stores/UserStore';
-import { LoanStore } from '../../../stores/LoanStore';
+import { TStores } from '../../../stores';
 import { TCabinetApplication } from '../../../stores/@types/loanStore';
 
 export type TNotificationText = {
   className?: string;
   viewId?: string;
-  userStore?: UserStore;
-  loanStore?: LoanStore;
-};
+} & TStores;
 
 export type TState = {
   isRender: boolean;

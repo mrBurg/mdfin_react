@@ -40,7 +40,10 @@ export class UserStore {
     this.callbackSequence = [];
   }
 
-  public async fetchWithAuth(callback: Function): Promise<void> {
+  public async fetchWithAuth(
+    callback: Function,
+    tokenRequired: boolean = true
+  ): Promise<void> {
     return new Promise(async (resolve) => {
       const accessToken = this.userApi.getAccessToken;
 
@@ -70,8 +73,12 @@ export class UserStore {
           }
         }
       } else {
-        this.completeCalls();
+        if (tokenRequired && Router.route != URLS.HOME) {
+          console.info(`Redirect to ${URLS.HOME}`);
+          Router.push(URLS.HOME);
+        }
 
+        this.completeCalls();
         resolve();
       }
     });
@@ -103,7 +110,7 @@ export class UserStore {
     };
   }
 
-  /** Обновление адреса */
+  /** Обновление адреса - получение данный на визарде */
   @action
   public updateStore_Address(
     dataAddress: TUserAddress,
@@ -114,6 +121,26 @@ export class UserStore {
       ...dataAddress,
     };
     this.userDataContacts = dataContacts!;
+  }
+
+  /** Обновление елемента адреса */
+  @action
+  public updateStore_userDataAddress(data: TJSON, _keyName?: string) {
+    this.userDataAddress = {
+      ...this.userDataAddress,
+      ...data,
+    };
+  }
+
+  /** Обновление елемента адреса (контакты)*/
+  @action
+  public updateStore_userDataContacts(data: TJSON, _keyName?: string) {
+    const newArray = {
+      ...this.userDataContacts[0],
+      ...data,
+    };
+
+    this.userDataContacts = [newArray];
   }
 
   /** Обновление места работы */

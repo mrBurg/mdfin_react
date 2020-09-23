@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { TJSON } from '../interfaces';
 import { PO_API, PO_API_HOST, PO_API_PORT, EVENT_PREFIXES } from '../constants';
 import { URIS } from '../routes';
-import { isDev } from '.';
+import { isDev, isTest } from '.';
 
 export const jsonToQueryString = (json: TJSON, encode?: boolean): string =>
   (window.location.search ? '&' : '?') +
@@ -46,7 +46,7 @@ export const prefixedEvent = (
 };
 
 export const getMD5 = (data: string): string => {
-  if (isDev) return data;
+  if (isDev || isTest) return data;
 
   return md5(data);
 };

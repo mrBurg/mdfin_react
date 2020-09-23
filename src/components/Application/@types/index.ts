@@ -1,11 +1,8 @@
-import { PageStore } from '../../../stores/PageStore';
-
 import { TComponenProps } from '../../../interfaces';
 import { TAccount, TReasonId } from '../../../stores/@types/loanStore';
 
 export type TApplication = {
   staticData?: any;
-  pageStore?: PageStore;
 } & TComponenProps;
 
 export type TState = {
@@ -13,4 +10,10 @@ export type TState = {
   isRefuse: boolean;
   account?: TAccount;
   userDeclineReason: TReasonId;
+};
+
+export type TDataRow = {
+  text: string;
+  value?: string | number;
+  link?: string;
 };

@@ -25,28 +25,24 @@ export class Job extends PureComponent<TJob> {
   componentDidMount() {
     const { pageStore, userStore } = this.props;
 
-    userStore.fetchWithAuth(() => {
-      Promise.all([
-        userStore.getWizardData_Job(),
-        pageStore.getDirectory(DIRECTORIES.dirSocialStatus),
-        pageStore.getDirectory(DIRECTORIES.dirEducation),
-        pageStore.getDirectory(DIRECTORIES.dirIndustry),
-        pageStore.getDirectory(DIRECTORIES.dirJobPosType),
-        pageStore.getDirectory(DIRECTORIES.dirJobRelationType),
-      ]).then(() => {
-        new Promise((resolve) => {
-          this.setState({
-            isRender: true,
-            userDataJob: { ...userStore.userDataJob },
-          });
-          resolve();
-        }).then(() => {
-          if (this.state.userDataJob.industry_id)
-            pageStore.getDirectory(
-              DIRECTORIES.dirIndustryDetailed,
-              '' + this.state.userDataJob.industry_id
-            );
-        });
+    userStore.fetchWithAuth(async () => {
+      await userStore.getWizardData_Job();
+
+      pageStore.getDirectory(DIRECTORIES.dirSocialStatus);
+      pageStore.getDirectory(DIRECTORIES.dirEducation);
+      pageStore.getDirectory(DIRECTORIES.dirIndustry);
+      pageStore.getDirectory(DIRECTORIES.dirJobPosType);
+      pageStore.getDirectory(DIRECTORIES.dirJobRelationType);
+
+      if (this.state.userDataJob.industry_id)
+        await pageStore.getDirectory(
+          DIRECTORIES.dirIndustryDetailed,
+          String(this.state.userDataJob.industry_id)
+        );
+
+      this.setState({
+        isRender: true,
+        userDataJob: { ...userStore.userDataJob },
       });
     });
   }
@@ -214,7 +210,11 @@ export class Job extends PureComponent<TJob> {
                     </p>
                     <input
                       name={FIELD_NAME.WORK_YEARS}
-                      value={String(userDataJob.jobLastPeriodYear) || ''}
+                      value={
+                        !!userDataJob.jobLastPeriodYear
+                          ? String(userDataJob.jobLastPeriodYear)
+                          : ''
+                      }
                       className={style.input}
                       type={INPUT_TYPE.TEL}
                       placeholder={staticData.years}
@@ -225,7 +225,11 @@ export class Job extends PureComponent<TJob> {
                     />
                     <input
                       name={FIELD_NAME.WORK_MONTHS}
-                      value={String(userDataJob.jobLastPeriodMonth) || ''}
+                      value={
+                        !!userDataJob.jobLastPeriodMonth
+                          ? String(userDataJob.jobLastPeriodMonth)
+                          : ''
+                      }
                       className={style.input}
                       type={INPUT_TYPE.TEL}
                       placeholder={staticData.months}

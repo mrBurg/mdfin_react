@@ -24,7 +24,6 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
   componentDidMount() {
     const { loanStore, userStore } = this.props;
 
-    //console.log(toJS(sliderAmountProps));
     //надо переписать ключи продукта (которые в файле props.json) в sliderAmountProps из текущего продукта
 
     if (loanStore && userStore) {
@@ -34,7 +33,7 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
         this.setState({
           isRender: true,
         });
-      });
+      }, false);
     }
   }
 
@@ -112,7 +111,7 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
               <div className={style.sliderContainer}>
                 <div className={style.sliderPanel}>
                   <div className={style.sliderOutput}>
-                    <span>Số Tiền Cần Va"</span>
+                    <span>Số Tiền Cần Vay</span>
                     <input
                       name='amount'
                       value={divideDigits(amount)}
@@ -131,7 +130,7 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
 
                 <div className={style.sliderPanel}>
                   <div className={style.sliderOutput}>
-                    <span>Ngày</span>
+                    <span>Kỳ hạn khoản vay</span>
                     <input
                       name='term'
                       value={term}
@@ -160,7 +159,7 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
                     </td>
                   </tr>
                   <tr>
-                    <td>Tổng Tiền Cần Thanh Toán</td>
+                    <td>Tổng số tiền cần thanh toán</td>
                     <td className={style.loanInfoValue}>
                       {divideDigits(totalAmount!)} {gt.gettext('Currency')}
                     </td>

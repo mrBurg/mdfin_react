@@ -17,16 +17,17 @@ export class NotificationText extends PureComponent<TNotificationText> {
   };
 
   componentDidMount() {
-    const { loanStore, viewId } = this.props;
+    const { userStore, loanStore, viewId } = this.props;
 
-    if (loanStore) {
-      Promise.all([loanStore.getCabinetApplication()]).then(() => {
-        this.setState({
-          isRender: true,
-          cabinetApplication: { ...loanStore.cabinetApplication },
-        });
+    userStore.fetchWithAuth(async () => {
+      await loanStore.getCabinetApplication();
+
+      this.setState({
+        isRender: true,
+        cabinetApplication: { ...loanStore.cabinetApplication },
       });
-    }
+    });
+
     if (viewId == 'sendmoney') {
       this.refreshView();
 

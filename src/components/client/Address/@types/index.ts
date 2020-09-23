@@ -1,9 +1,5 @@
 import { PageStore } from '../../../../stores/PageStore';
 import { UserStore } from '../../../../stores/UserStore';
-import {
-  TUserAddress,
-  TUserContacts,
-} from '../../../../stores/@types/userStore';
 
 export type TAddress = {
   staticData: any;
@@ -13,6 +9,5 @@ export type TAddress = {
 
 export type TState = {
   isRender: boolean;
-  userDataAddress: TUserAddress;
-  userDataContacts: Array<TUserContacts>;
+  invalidFields: Array<string>;
 };

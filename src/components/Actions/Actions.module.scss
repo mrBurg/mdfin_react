@@ -9,10 +9,15 @@
   }
 }
 
-.label {
+.amount {
   text-align: center;
-  color: mix($gray, $black, 50%);
-  font-weight: bold;
+
+  &Text {
+    text-align: center;
+    color: mix($gray, $black, 50%);
+    font-weight: bold;
+    font-size: px2em(24px);
+  }
 }
 
 .input {

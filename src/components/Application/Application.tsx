@@ -8,7 +8,7 @@ import { SelectWidget } from '../widgets/SelectWidget';
 import { LoanInfo } from '../LoanInfo';
 import { Otp } from '../Otp';
 import { URIS_SUFFIX, FIELD_NAME } from '../../constants';
-import { TState, TApplication } from './@types';
+import { TState, TApplication, TDataRow } from './@types';
 import { DIRECTORIES } from '../../routes';
 import { Preloader } from '../Preloader';
 import { Accounts } from '../Accounts';
@@ -22,18 +22,16 @@ export class Application extends PureComponent<TApplication> {
   };
 
   componentDidMount() {
-    const { pageStore, loanStore } = this.props;
+    const { userStore, pageStore, loanStore } = this.props;
 
-    if (loanStore && pageStore) {
-      Promise.all([
-        loanStore.getCabinetApplication(),
-        pageStore.getDirectory(DIRECTORIES.dirDeclinedByClientReason),
-      ]).then(() => {
-        this.setState({
-          isRender: true,
-        });
+    userStore.fetchWithAuth(async () => {
+      await loanStore.getCabinetApplication();
+
+      pageStore.getDirectory(DIRECTORIES.dirDeclinedByClientReason);
+      this.setState({
+        isRender: true,
       });
-    }
+    });
   }
 
   // блок банковских счетов
@@ -82,23 +80,28 @@ export class Application extends PureComponent<TApplication> {
 
   //Клиент нажал линк "отказаться"
   private renderRefuse(): ReactElement {
-    const { pageStore } = this.props;
+    const {
+      pageStore: {
+        dirDeclinedByClientReason,
+        pageData: { reasonsRefuseTitle, refuse },
+      },
+    } = this.props;
     const { isRefuse } = this.state;
 
-    if (isRefuse && pageStore)
+    if (isRefuse)
       return (
         <SelectWidget
           name={FIELD_NAME.REASON_ID}
           className={style.refuseSelect}
-          placeholder={'Lý Do Từ Chối'}
-          options={pageStore.dirDeclinedByClientReason}
+          placeholder={reasonsRefuseTitle}
+          options={dirDeclinedByClientReason}
           onChange={this.handleChangeSelectDecline}
         />
       );
 
     return (
       <a className={style.refuse} onClick={this.setRefuse}>
-        Tôi Từ Chối
+        {refuse}
       </a>
     );
   }
@@ -148,34 +151,30 @@ export class Application extends PureComponent<TApplication> {
         cabinetApplication,
         cabinetApplication: { application },
       },
+      pageStore: { pageData },
     } = this.props;
 
-    if (application) {
-      const {
-        creditParams: { amount, term, totalAmount, extensionAmount, dateTo },
-        appnum,
-      } = application;
+    if (application && pageData) {
+      const { creditParams, appnum } = application;
+      const { loanInfoTitle, loanInfoFields } = pageData;
 
-      const paramsData = [
-        { text: 'amount', value: amount },
-        { text: 'term', value: term },
-        { text: 'totalAmount', value: totalAmount },
-        { text: 'extensionAmount', value: extensionAmount },
-        {
-          text: 'dateTo',
-          value: dateTo,
-        },
-        {
-          text: 'appnum',
-          value: appnum,
-          link: cabinetApplication.documentUnits![0].documents![0].url,
-        },
-      ];
+      const paramsData: Array<TDataRow> = _.map(creditParams, (item, key) => {
+        return {
+          text: loanInfoFields[key],
+          value: item,
+        };
+      }).filter((item) => item.text);
+
+      paramsData.push({
+        text: loanInfoFields.appnum,
+        value: appnum,
+        link: cabinetApplication.documentUnits![0].documents![0].url,
+      });
 
       return (
         <LoanInfo
           className={style.info}
-          title={'Thông Tin về Khoản Vay'}
+          title={loanInfoTitle}
           params={paramsData}
         />
       );
@@ -187,6 +186,7 @@ export class Application extends PureComponent<TApplication> {
   public render(): ReactElement | null {
     const {
       loanStore: { cabinetApplication },
+      pageStore: { pageData },
     } = this.props;
     const { isRender } = this.state;
 
@@ -204,8 +204,11 @@ export class Application extends PureComponent<TApplication> {
             <div className={style.actions}>
               {this.renderAccounts()}
               <div className={style.links}>
-                Tôi Chấp Nhận Các Điều Kiện và Điều Khoản của Khoản Vay và Ký
-                Hợp Đồng Vay
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: pageData.acceptTermsNotification,
+                  }}
+                />
               </div>
               {this.renderOtp()}
               {this.renderRefuse()}

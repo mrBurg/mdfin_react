@@ -17,10 +17,12 @@ export class Deal extends PureComponent<TDeal> {
   };
 
   componentDidMount() {
-    const { loanStore } = this.props;
+    const { userStore, loanStore } = this.props;
 
-    this.refreshView();
-    loanStore.getCabinetDeals().then(() => {
+    userStore.fetchWithAuth(async () => {
+      await this.refreshView();
+      await loanStore.getCabinetDeals();
+
       this.setState({
         isRender: true,
       });

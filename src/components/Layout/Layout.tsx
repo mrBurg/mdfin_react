@@ -39,7 +39,7 @@ export class Layout extends PureComponent<TLayoutProps> {
     userStore.makeFingerprint();
     userStore.fetchWithAuth(() => {
       userStore.updateUserState();
-    });
+    }, false);
   }
 
   public render(): ReactElement {

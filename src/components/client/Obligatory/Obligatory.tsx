@@ -2,9 +2,9 @@ import { ReactElement, PureComponent, FormEvent } from 'react';
 import InputMask from 'react-input-mask';
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
-//import moment from 'moment';
 import _ from 'lodash';
 import classNames from 'classnames';
+import moment from 'moment';
 
 import style from './Obligatory.module.scss';
 
@@ -31,29 +31,31 @@ export class Obligatory extends PureComponent<TObligatory> {
   componentDidMount() {
     const { pageStore, userStore } = this.props;
 
-    userStore.fetchWithAuth(() => {
-      Promise.all([
-        userStore.getWizardData_Obligatory(),
-        pageStore.getDirectory(DIRECTORIES.dirGender),
-        pageStore.getDirectory(DIRECTORIES.dirMaritalStatus),
-        pageStore.getDirectory(DIRECTORIES.dirLoanPurpose),
-        pageStore.getDirectory(DIRECTORIES.dirMobilePhoneBrand),
-      ]).then(() => {
-        //console.log(toJS(userStore));
-        new Promise((resolve) => {
-          if (userStore.userData.brand_id)
-            pageStore.getDirectory(
-              DIRECTORIES.dirMobilePhoneModel,
-              String(userStore.userData.brand_id)
-            );
+    userStore.fetchWithAuth(async () => {
+      await this.refreshView();
 
-          this.setState({
-            isRender: true,
-          });
-          resolve();
-        });
+      await userStore.getWizardData_Obligatory();
+
+      pageStore.getDirectory(DIRECTORIES.dirGender);
+      pageStore.getDirectory(DIRECTORIES.dirMaritalStatus);
+      pageStore.getDirectory(DIRECTORIES.dirLoanPurpose);
+      pageStore.getDirectory(DIRECTORIES.dirMobilePhoneBrand);
+
+      if (userStore.userData.brand_id)
+        await pageStore.getDirectory(
+          DIRECTORIES.dirMobilePhoneModel,
+          String(userStore.userData.brand_id)
+        );
+
+      this.setState({
+        isRender: true,
       });
     });
+  }
+
+  private async refreshView() {
+    const { userStore } = this.props;
+    if (userStore) userStore.getClientNextStep();
   }
 
   private onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
@@ -68,12 +70,11 @@ export class Obligatory extends PureComponent<TObligatory> {
     } = this.props;
 
     const validateItems = await this.validateItems();
-    //console.log(toJS(validateItems));
-
     const res = await this.validateForm(validateItems);
+
     if (!res) return;
 
-    //userStore.updateStore_UserData(userData);   //раньше, тут state писался в Store. Теперь, значения полей, пишутся напрямую в Store
+    //раньше, тут state писался в Store. Теперь, значения полей, пишутся напрямую в Store
     await userStore.saveWizardStep(URIS.obligatory, {
       obligatory: { ...userData },
     });
@@ -145,12 +146,8 @@ export class Obligatory extends PureComponent<TObligatory> {
     _.map(validateItems, (itemName: TField) => {
       validateItemsNames.push(itemName.name);
     });
-    //console.log('validateItemsNames: ', validateItemsNames);
     let invalidFields: string[] = this.state.invalidFields;
-    //console.log('invalidFields:', invalidFields);
-
     const validateResult: string[] = await validator(validateItems, userStore);
-    //console.log('validateResult:', validateResult);
 
     if (_.size(validateResult)) {
       this.setState(
@@ -261,13 +258,13 @@ export class Obligatory extends PureComponent<TObligatory> {
             <div className={style.fields}>
               <input
                 name={FIELD_NAME.NAME}
+                value={userData.name || ''}
                 className={classNames(style.input, {
                   [style.error]: invalidFields.includes(FIELD_NAME.NAME),
                 })}
                 type={INPUT_TYPE.TEXT}
                 placeholder={staticData.name}
                 title={staticData.name}
-                value={userData.name || ''}
                 onChange={this.onChangeHandler}
                 maxLength={50}
                 pattern='[\s\p{L}]*'
@@ -283,7 +280,9 @@ export class Obligatory extends PureComponent<TObligatory> {
                   className={style.datepickerInput}
                   wrapperClassName={style.datepickerWrapper}
                   selected={
-                    userData.birthDate ? new Date(userData.birthDate) : null
+                    userData.birthDate
+                      ? moment(userData.birthDate).toDate()
+                      : null
                   }
                   placeholderText={staticData.birthDate}
                   onChange={(date: Date): void => {
@@ -302,12 +301,12 @@ export class Obligatory extends PureComponent<TObligatory> {
 
               <input
                 name={FIELD_NAME.ID}
+                value={userData.cmnd_cccd || ''}
                 className={classNames(style.input, {
                   [style.error]: invalidFields.includes(FIELD_NAME.ID),
                 })}
                 type={INPUT_TYPE.TEL}
                 placeholder={staticData.idNumber}
-                value={userData.cmnd_cccd || ''}
                 onChange={this.onChangeHandler}
                 maxLength={12}
                 onBlur={this.validateField}
@@ -320,11 +319,13 @@ export class Obligatory extends PureComponent<TObligatory> {
               >
                 <DatepickerWidget
                   name={FIELD_NAME.ISSUE_DATE}
+                  selected={
+                    userData.issueDate
+                      ? moment(userData.issueDate).toDate()
+                      : null
+                  }
                   className={style.datepickerInput}
                   wrapperClassName={style.datepickerWrapper}
-                  selected={
-                    userData.issueDate ? new Date(userData.issueDate) : null
-                  }
                   placeholderText={staticData.issueDate}
                   onChange={(date: Date): void => {
                     this.handleChangeDate({
@@ -347,11 +348,13 @@ export class Obligatory extends PureComponent<TObligatory> {
               >
                 <DatepickerWidget
                   name={FIELD_NAME.EXPIRE_DATE}
+                  selected={
+                    userData.expireDate
+                      ? moment(userData.expireDate).toDate()
+                      : null
+                  }
                   wrapperClassName={style.datepickerWrapper}
                   className={style.datepickerInput}
-                  selected={
-                    userData.expireDate ? new Date(userData.expireDate) : null
-                  }
                   placeholderText={staticData.expireDate}
                   onChange={(date: Date): void => {
                     this.handleChangeDate({
@@ -392,6 +395,11 @@ export class Obligatory extends PureComponent<TObligatory> {
               />
               <input
                 name={FIELD_NAME.NUMBER_OF_DEPENDENTS}
+                value={
+                  !!userData.numberOfDependents
+                    ? String(userData.numberOfDependents)
+                    : ''
+                }
                 className={classNames(style.input, {
                   [style.error]: invalidFields.includes(
                     FIELD_NAME.NUMBER_OF_DEPENDENTS
@@ -399,19 +407,18 @@ export class Obligatory extends PureComponent<TObligatory> {
                 })}
                 type={INPUT_TYPE.NUMBER}
                 placeholder={staticData.childrenAmount}
-                value={String(userData.numberOfDependents) || ''}
                 onChange={this.onChangeHandler}
                 maxLength={2}
                 onBlur={this.validateField}
               />
               <input
                 name={FIELD_NAME.EMAIL}
+                value={userData.email || ''}
                 className={classNames(style.input, {
                   [style.error]: invalidFields.includes(FIELD_NAME.EMAIL),
                 })}
                 type={INPUT_TYPE.EMAIL}
                 placeholder={staticData.email}
-                value={userData.email || ''}
                 onChange={this.onChangeHandler}
                 maxLength={100}
                 onBlur={this.validateField}
@@ -446,6 +453,7 @@ export class Obligatory extends PureComponent<TObligatory> {
               {userData.shouldShow_PHONE_BRAND_OTHER == 'true' && (
                 <input
                   name={FIELD_NAME.PHONE_BRAND_OTHER}
+                  value={userData.brandOther || ''}
                   className={classNames(style.input, {
                     [style.error]: invalidFields.includes(
                       FIELD_NAME.PHONE_BRAND_OTHER
@@ -453,7 +461,6 @@ export class Obligatory extends PureComponent<TObligatory> {
                   })}
                   type={INPUT_TYPE.TEXT}
                   placeholder={staticData.otherPhoneBrand}
-                  value={userData.brandOther || ''}
                   onChange={this.onChangeHandler}
                   maxLength={50}
                   onBlur={this.validateField}
@@ -475,6 +482,7 @@ export class Obligatory extends PureComponent<TObligatory> {
               {userData.shouldShow_PHONE_MODEL_OTHER == 'true' && (
                 <input
                   name={FIELD_NAME.PHONE_MODEL_OTHER}
+                  value={userData.modelOther || ''}
                   className={classNames(style.input, {
                     [style.error]: invalidFields.includes(
                       FIELD_NAME.PHONE_MODEL_OTHER
@@ -482,7 +490,6 @@ export class Obligatory extends PureComponent<TObligatory> {
                   })}
                   type={INPUT_TYPE.TEXT}
                   placeholder={staticData.otherPhoneModel}
-                  value={userData.modelOther || ''}
                   onChange={this.onChangeHandler}
                   maxLength={50}
                   onBlur={this.validateField}

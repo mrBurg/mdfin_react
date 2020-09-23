@@ -48,7 +48,6 @@ export class PageStore {
 
     let requestConfig = this.commonApi.getHeaderRequestConfig(url);
     const response = await this.commonApi.getDirectory(requestConfig);
-    //const response = await this.commonApi.getDirectory_old(url);  //старый вызов справочников
 
     if (response) {
       runInAction(() => {

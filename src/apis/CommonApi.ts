@@ -62,8 +62,10 @@ export class CommonApi {
       }
     } catch (err) {
       clearLocalStorage();
-
-      Router.push(URLS.SIGN_IN);
+      if (Router.route != URLS.SIGN_IN) {
+        console.info(`Redirect to ${URLS.SIGN_IN}`);
+        Router.push(URLS.SIGN_IN);
+      }
     }
   }
 

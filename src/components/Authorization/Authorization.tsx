@@ -74,12 +74,9 @@ export class Authorization extends PureComponent<
 
   private async submitForm() {
     const { userStore, otpStore, page } = this.props;
-
-    //console.log(this.formRef.current.name.value);
-
     const validateItems = await this.validateItems();
-
     const res = await this.validateForm(validateItems);
+
     if (!res) return;
 
     otpStore.updateUrisKey(page);
@@ -105,13 +102,10 @@ export class Authorization extends PureComponent<
     _.map(validateItems, (itemName: TField) => {
       validateItemsNames.push(itemName.name);
     });
-    //console.log('validateItemsNames: ', validateItemsNames);
 
     const validateResult: string[] = await validator(validateItems, userStore);
-    //console.log('validateResult:', validateResult);
 
     let invalidFields: string[] = this.state.invalidFields;
-    //console.log('invalidFields:', invalidFields);
 
     if (_.size(validateResult)) {
       this.setState(
@@ -176,14 +170,8 @@ export class Authorization extends PureComponent<
 
     const itsSignUp = page == URIS_SUFFIX.SIGN_UP;
 
-    //if (this.formRef.current) console.log(this.formRef.current.name);
-
     return (
-      <form
-        /* ref={this.formRef} */
-        className={style.authorization}
-        onSubmit={this.onSubmitHandler}
-      >
+      <form className={style.authorization} onSubmit={this.onSubmitHandler}>
         <h2 className={style.formTitle}>{itsSignUp ? formTitle : pageTitle}</h2>
         {itsSignUp && (
           <input

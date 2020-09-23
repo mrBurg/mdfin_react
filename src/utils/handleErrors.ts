@@ -6,7 +6,9 @@ export async function handleErrors(err: any, callback?: Function) {
 
     switch (status) {
       case STATUS.NOT_AUTHORIZED:
-        console.info(`Refresh Token: ${STATUS.NOT_AUTHORIZED}`);
+        console.info(
+          `Not authorized. Required to update token: ${STATUS.NOT_AUTHORIZED}`
+        );
 
         return;
     }
