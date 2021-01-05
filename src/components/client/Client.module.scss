@@ -26,8 +26,11 @@
   }
 
   .input,
+  .inputMask,
   .datepicker,
-  .subTitle {
+  .subTitle,
+  .selectWidget,
+  .reactSelectWidget {
     width: 48%;
     margin-top: px2em(15px);
 

@@ -1,28 +1,32 @@
 import Router from 'next/router';
-import { observable, runInAction, action, computed } from 'mobx';
+import { observable, runInAction, action } from 'mobx';
 import _ from 'lodash';
-
-import { LoanApi } from '../apis';
-import { URIS, URLS } from '../routes';
-import { TJSON } from '../interfaces';
+import { TJSON } from '@interfaces';
+import { URIS, URLS } from '@routes';
+import { LoanApi, fetchStaticData } from '@src/apis';
+import { FIELD_NAME, OTP_ACTION } from '@src/constants';
 import {
+  TAccountsFormStatic,
+  TAttachmentsFormStatic,
+  TProductSelectorFormStatic,
+  TProductParams,
   TLoanData,
-  TProductSelectorData,
   TCabinetApplication,
   TCabinetNotify,
-  TReasonId,
-  TCabinetDeals,
   TAccount,
+  TCabinetDeals,
   TUpdateAccountProps,
-  TCabinetPay,
+  TProductSelectorData,
   TNotificationIds,
-  TProductParams,
+  TCabinetPay,
+  TReasonId,
 } from './@types/loanStore';
-
-import { OTP_ACTION, FIELD_NAME } from '../constants';
 import { OtpStore } from './OtpStore';
 
 export class LoanStore {
+  @observable accountsFormStatic?: TAccountsFormStatic;
+  @observable attachmentsFormStatic?: TAttachmentsFormStatic;
+  @observable productSelectorFormStatic?: TProductSelectorFormStatic;
   /** Параметры продукта */
   @observable public currentProductParams: TProductParams = {
     id: 0,
@@ -45,35 +49,69 @@ export class LoanStore {
     term: 0,
   };
   @observable public cabinetApplication: TCabinetApplication = {};
-  @observable public cabinetNotify: Array<TCabinetNotify> = [];
+  @observable public cabinetNotify: TCabinetNotify[] = [];
   @observable public account: TAccount = {
     [FIELD_NAME.ACCOUNT_NUMBER]: '',
   };
-
-  public docsValid: boolean = false;
   @observable public cabinetDeals: TCabinetDeals = { dealInfos: [] };
+  @observable public isNewAccount = true;
+  @observable public invalidAccount = false;
+
+  private docsInvalid = true;
 
   constructor(private loanApi: LoanApi) {}
 
+  /**
+   * @description Обновить состояние счета
+   * @param isValid true - счёт не действителен, fasle - счёт действителен
+   */
+  @action
+  public updateAccountValidity(isValid: boolean): void {
+    this.invalidAccount = !isValid;
+  }
+
+  /**
+   * @description Обновить состояние счета
+   * @param isNew true - Новый, false - Существующий
+   */
+  @action
+  public updateAccountState(isNew: boolean): void {
+    if (!isNew) {
+      this.resetAccount();
+    }
+
+    this.isNewAccount = isNew;
+  }
+
   /** Калькулятор: изменить сумму */
   @action
-  public updateAmmount(value: number) {
+  public updateAmmount(value: number): void {
     this.loanData.amount = value;
   }
 
   //Калькулятор: изменить срок
   @action
-  public updateTerm(value: number) {
+  public updateTerm(value: number): void {
     this.loanData.term = value;
   }
 
   @action
-  public addOptionToAccountList({ account_id, accountNumber }: TAccount) {
+  public addOptionToAccountList({ account_id, accountNumber }: TAccount): void {
     if (this.cabinetApplication.accountUnit) {
-      this.cabinetApplication.accountUnit.accounts.push({
-        accountNumber,
-        account_id,
-      });
+      const accounts = this.cabinetApplication.accountUnit.accounts;
+
+      const optionHasAdded = accounts.some(
+        (account) => account.account_id == account_id
+      );
+
+      if (!optionHasAdded) {
+        accounts.push({
+          account_id,
+          accountNumber,
+        });
+      }
+
+      this.cabinetApplication.accountUnit.accounts = accounts;
     }
   }
 
@@ -85,7 +123,7 @@ export class LoanStore {
   }
 
   @action
-  public updateAccount({ name, value }: TUpdateAccountProps) {
+  public updateAccount({ name, value }: TUpdateAccountProps): void {
     this.account = {
       ...this.account,
       [name]: value,
@@ -93,12 +131,45 @@ export class LoanStore {
   }
 
   @action
-  public updatePaymentAmount(value: number) {
+  public updatePaymentAmount(value: number): void {
     this.cabinetDeals.dealInfos[0].paymentAmount = value;
   }
 
-  public async addAccount(account: TAccount) {
-    let requestConfig = this.loanApi.postHeaderRequestConfig(URIS.account, {
+  public async initAttachmentsForm(): Promise<void> {
+    const attachmentsFormStatic = await fetchStaticData({
+      block: 'attachments-form',
+      path: 'form',
+    });
+
+    runInAction(() => {
+      this.attachmentsFormStatic = attachmentsFormStatic;
+    });
+  }
+
+  public async initAccountForm(): Promise<void> {
+    const accountsFormStatic = await fetchStaticData({
+      block: 'accounts-form',
+      path: 'form',
+    });
+
+    runInAction(() => {
+      this.accountsFormStatic = accountsFormStatic;
+    });
+  }
+
+  public async initProductSelectorForm(): Promise<void> {
+    const productSelectorFormStatic = await fetchStaticData({
+      block: 'product-selector-form',
+      path: 'form',
+    });
+
+    runInAction(() => {
+      this.productSelectorFormStatic = productSelectorFormStatic;
+    });
+  }
+
+  public async addAccount(account: TAccount): Promise<any> {
+    const requestConfig = this.loanApi.postHeaderRequestConfig(URIS.account, {
       account: {
         ...account,
       },
@@ -106,8 +177,9 @@ export class LoanStore {
 
     return await this.loanApi.processData(requestConfig);
   }
-  public async cabinetChangeAccount(account: TAccount) {
-    let requestConfig = this.loanApi.postHeaderRequestConfig(
+
+  public async cabinetChangeAccount(account: TAccount): Promise<void> {
+    const requestConfig = this.loanApi.postHeaderRequestConfig(
       URIS.CABINET_CHANGE_ACCOUNT,
       {
         account: {
@@ -144,7 +216,7 @@ export class LoanStore {
   }
 
   public async calculate(loanData: TProductSelectorData): Promise<void> {
-    const requestConfig = this.loanApi.postRequestConfig(
+    const requestConfig = this.loanApi.postHeaderRequestConfig(
       URIS.CALCULATE,
       loanData
     );
@@ -172,7 +244,7 @@ export class LoanStore {
     const response = await this.loanApi.wizardStart(requestConfig);
 
     if (response && response.view) {
-      let { view } = response;
+      const { view } = response;
 
       return Router.push((URLS as TJSON)[view]);
     }
@@ -190,7 +262,9 @@ export class LoanStore {
   }
 
   @action
-  public updateStore_Application(cabinetApplication: TCabinetApplication) {
+  public updateStore_Application(
+    cabinetApplication: TCabinetApplication
+  ): void {
     this.cabinetApplication = {
       ...this.cabinetApplication,
       ...cabinetApplication,
@@ -209,22 +283,42 @@ export class LoanStore {
   }
 
   @action
-  public async updateStore_Deals(cabinetDeals: TCabinetDeals) {
+  public async updateStore_Deals(cabinetDeals: TCabinetDeals): Promise<void> {
     this.cabinetDeals = {
       ...this.cabinetDeals,
       ...cabinetDeals,
     };
   }
 
-  public async uploadAttachment(files: FileList, type: string) {
+  public async uploadAttachment(files: FileList, type: string): Promise<void> {
     const formData = new FormData();
 
     _.map(files, (item) => {
+      /*var reader = new FileReader();
+      reader.readAsArrayBuffer(item);
+      reader.onload = function (evt) {
+        if (evt.target.readyState == FileReader.DONE) {
+          console.info(evt.target, 'evt.target');
+        }
+
+        var arrayBuffer = reader.result;
+        console.info(arrayBuffer, 'arrayBuffer');
+        var bytes = new Uint8Array(arrayBuffer as ArrayBuffer);
+        console.info(bytes, 'bytes');
+        var blob = new Blob(bytes as BlobPart[], { type: item.type });
+
+        console.info(blob, 'blob');
+
+        var file = new File([blob], encodeURI(item.name), { type: item.type });
+        console.info(file);
+      };*/
+
       formData.append('file', item);
       formData.append('type_id', type);
+      formData.append('filename', encodeURI(item.name));
     });
 
-    let requestConfig = this.loanApi.postHeaderRequestConfig(
+    const requestConfig = this.loanApi.postHeaderRequestConfig(
       URIS.UPLOAD_ATTACHMENT,
       formData
     );
@@ -255,12 +349,14 @@ export class LoanStore {
   }
 
   @action
-  public updateStore_Notify(cabinetNotify?: Array<TCabinetNotify>) {
+  public updateStore_Notify(cabinetNotify?: TCabinetNotify[]): void {
     this.cabinetNotify = cabinetNotify!;
   }
 
   //Подтвердить показ нотификации клиенту
-  public async confirmDisplay(notificationIds: TNotificationIds) {
+  public async confirmDisplay(
+    notificationIds: TNotificationIds
+  ): Promise<void> {
     const requestConfig = this.loanApi.postHeaderRequestConfig(
       URIS.notify_Confirm_Display,
       notificationIds
@@ -270,7 +366,7 @@ export class LoanStore {
   }
 
   //погашение из ЛК (и сайта?)
-  public async cabinetPay(dealPay: TCabinetPay) {
+  public async cabinetPay(dealPay: TCabinetPay): Promise<void> {
     const requestConfig = this.loanApi.postHeaderRequestConfig(
       URIS.CABINET_PAY,
       dealPay
@@ -288,7 +384,7 @@ export class LoanStore {
   }
 
   // Подписываем заявку
-  public async cabinetSign(account: any, otpStore: OtpStore) {
+  public async cabinetSign(account: any, otpStore: OtpStore): Promise<void> {
     const requestConfig = this.loanApi.postHeaderRequestConfig(
       URIS.CABINET_SIGN,
       account
@@ -299,7 +395,7 @@ export class LoanStore {
     const { otpId } = otpData;
     console.log(otpId);
 
-    if (!!~otpId) {
+    if (~otpId) {
       //const { phoneNumber } = userData;
       const action = OTP_ACTION.SIGN;
 
@@ -308,7 +404,7 @@ export class LoanStore {
   }
 
   // Отказ Клиента от заявки
-  public async cabinetDecline(userDeclineReason: TReasonId) {
+  public async cabinetDecline(userDeclineReason: TReasonId): Promise<void> {
     const requestConfig = this.loanApi.postHeaderRequestConfig(
       URIS.CABINET_DECLINE,
       userDeclineReason
@@ -319,18 +415,34 @@ export class LoanStore {
     console.log(status);
   }
 
-  @computed
-  public get getDocsValid(): boolean {
+  @action
+  private checkDocs(): void {
     const { documentUnits } = this.cabinetApplication;
 
-    if (!documentUnits) return this.docsValid;
+    if (!documentUnits) {
+      this.docsInvalid = true;
+      return;
+    }
 
-    this.docsValid = true;
+    _.each(documentUnits, (item) => {
+      if (!item.valid) {
+        this.docsInvalid = true;
 
-    _.map(documentUnits, (item) => {
-      if (!item.valid) return (this.docsValid = false);
+        return item.valid;
+      }
+
+      this.docsInvalid = false;
     });
+  }
 
-    return this.docsValid;
+  public get getInvalidDocs(): boolean {
+    this.checkDocs();
+
+    /* return (
+      this.docsInvalid ||
+      (this.isNewAccount && Boolean(!this.account.accountNumber.length))
+    ); */
+
+    return this.docsInvalid;
   }
 }

@@ -1,6 +1,5 @@
-import { PageStore } from '../../../../stores/PageStore';
-import { UserStore } from '../../../../stores/UserStore';
-import { TUserJob } from '../../../../stores/@types/userStore';
+import { PageStore } from '@src/stores/PageStore';
+import { UserStore } from '@src/stores/UserStore';
 
 export type TJob = {
   staticData: any;
@@ -10,5 +9,5 @@ export type TJob = {
 
 export type TState = {
   isRender: boolean;
-  userDataJob: TUserJob;
+  invalidFields: string[];
 };

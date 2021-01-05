@@ -1,30 +1,72 @@
 import md5 from 'md5';
 import _ from 'lodash';
+import { TJSON } from '@interfaces';
+import { URIS } from '@routes';
+import {
+  PO_API_HOST,
+  PO_API_PORT,
+  PO_API,
+  EVENT_PREFIXES,
+} from '@src/constants';
+import { TGetSelectedData } from './@types';
+import { isDev, isTest } from './environment';
 
-import { TJSON } from '../interfaces';
-import { PO_API, PO_API_HOST, PO_API_PORT, EVENT_PREFIXES } from '../constants';
-import { URIS } from '../routes';
-import { isDev, isTest } from '.';
+/**
+ * @description Converts an object to a querystring
+ * @param json JSON data to convert
+ * @param encode Data encoding sign
+ * @param symbol Beginning of the generated line
+ * @type
+ * json: TJSON,
+ * encode?: boolean,
+ * symbol?: string
+ * @default
+ * encode false
+ * symbol '?'
+ */
+export const jsonToQueryString = (
+  json: TJSON,
+  ...restProps: (boolean | string)[]
+): string => {
+  let encode = false;
+  let symbol = '?';
 
-export const jsonToQueryString = (json: TJSON, encode?: boolean): string =>
-  (window.location.search ? '&' : '?') +
-  _.map(json, (value: string, key: string) => {
-    if (encode) {
-      key = encodeURIComponent(key);
-      value = encodeURIComponent(value);
+  for (const i of restProps) {
+    switch (typeof i) {
+      case 'boolean':
+        encode = i;
+        break;
+      case 'string':
+        symbol = i;
+        break;
     }
+  }
 
-    return `${key}=${value}`;
-  }).join('&');
+  return (
+    symbol +
+    _.map(json, (value: string, key: string) => {
+      if (!value) return false;
+
+      if (encode) {
+        key = encodeURIComponent(key);
+        value = encodeURIComponent(value);
+      }
+
+      return `${key}=${value}`;
+    })
+      .filter((value) => value)
+      .join('&')
+  );
+};
 
 export const makeStaticUri = (uri: URIS, port?: boolean): string => {
-  let staticUri = !port ? PO_API_HOST : `${PO_API_HOST}:${PO_API_PORT}`;
+  const staticUri = !port ? PO_API_HOST : `${PO_API_HOST}:${PO_API_PORT}`;
 
   return staticUri + PO_API + uri;
 };
 
 export const makeApiUri = (port?: boolean): string => {
-  let staticUri = !port ? PO_API_HOST : `${PO_API_HOST}:${PO_API_PORT}`;
+  const staticUri = !port ? PO_API_HOST : `${PO_API_HOST}:${PO_API_PORT}`;
 
   return staticUri + PO_API;
 };
@@ -32,9 +74,9 @@ export const makeApiUri = (port?: boolean): string => {
 export const prefixedEvent = (
   element: HTMLElement,
   animationType: string,
-  callback: Function
-) => {
-  _.map(EVENT_PREFIXES, (val: string, index: number, arr: Array<string>) => {
+  callback: (element: HTMLElement) => void
+): HTMLElement => {
+  _.map(EVENT_PREFIXES, (val: string, index: number, arr: string[]) => {
     if (!arr[index]) animationType = animationType.toLowerCase();
 
     element.addEventListener(val + animationType, () => {
@@ -51,16 +93,28 @@ export const getMD5 = (data: string): string => {
   return md5(data);
 };
 
-export function writeTag(string: string, tags: TJSON): string {
-  _.map(tags, (val, key) => {
-    const regExp = new RegExp(`\\\${${key}}`, 'gm');
-
-    string = string.replace(regExp, val);
-  });
-
-  return string;
+export function divideDigits(number: number): string {
+  return String(number).replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1 ');
 }
 
-export function divideDigits(number: number) {
-  return String(number).replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1 ');
+export function getSelectedData(): TGetSelectedData {
+  const selection = document.getSelection();
+  let selectedData = { content: '', text: '' };
+
+  if (selection && selection.anchorNode) {
+    const {
+      anchorNode: { textContent },
+      anchorOffset,
+      focusOffset,
+    } = selection;
+    if (textContent) {
+      selectedData = {
+        ...selectedData,
+        content: textContent,
+        text: textContent.slice(anchorOffset, focusOffset),
+      };
+    }
+  }
+
+  return selectedData;
 }

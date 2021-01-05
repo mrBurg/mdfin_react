@@ -1,17 +1,16 @@
-import React, { ReactElement, FC } from 'react';
+import React, { ReactElement } from 'react';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
 
 import style from './ClientTabs.module.scss';
-
-import { CLIENT_URLS } from '../../../routes';
+import { CLIENT_URLS } from '@routes';
 import { TClientTabsProps } from './@types';
 
-export const ClientTabs: FC<TClientTabsProps> = ({
+export const ClientTabs = ({
   className,
   children,
-}): ReactElement => {
+}: TClientTabsProps): ReactElement => {
   const router = useRouter();
 
   return (

@@ -1,5 +1,5 @@
-import { PageStore } from '../../../../stores/PageStore';
-import { UserStore } from '../../../../stores/UserStore';
+import { PageStore } from '@src/stores/PageStore';
+import { UserStore } from '@src/stores/UserStore';
 
 export type TAddress = {
   staticData: any;
@@ -9,5 +9,5 @@ export type TAddress = {
 
 export type TState = {
   isRender: boolean;
-  invalidFields: Array<string>;
+  invalidFields: string[];
 };

@@ -3,17 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.19.2",
+    "@fingerprintjs/fingerprintjs": "^3.0.4",
+    "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "cors": "^2.8.5",
+    "current-device": "^0.10.1",
     "express": "^4.17.1",
-    "fingerprintjs2": "^2.1.2",
     "lodash": "^4.17.19",
     "md5": "^2.2.1",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "moment": "^2.27.0",
-    "next": "^9.4.4",
+    "next": "^10.0.4",
     "nextjs-sitemap-generator": "^1.0.0",
     "node-gettext": "^3.0.0",
     "normalize.css": "^8.0.1",
@@ -21,9 +22,11 @@
     "react": "^16.13.1",
     "react-accessible-accordion": "^3.3.0",
     "react-datepicker": "^3.1.3",
+    "react-device-detect": "^1.14.0",
     "react-dom": "^16.13.1",
     "react-input-mask": "^2.0.4",
-    "react-scripts": "^3.4.3",
+    "react-scripts": "^4.0.1",
+    "react-select": "^3.1.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^1.1.1"
   },
@@ -37,10 +40,12 @@
     "vn:prebuild": "node ./scripts/prepareCompile.js -t & next build",
     "vn:dev": "node ./scripts/prepareCompile.js & node server/index.js",
     "vn:test": "node ./scripts/prepareCompile.js -t & next build & node server/index.js -t",
-    "vn:prod": "node ./scripts/prepareCompile.js -p & next build & node server/index.js -p"
+    "vn:prod": "node ./scripts/prepareCompile.js -p & next build & node server/index.js -p",
+    "lint": "eslint ./src/** ./pages/** -c .eslintrc.json --ext js,ts,jsx",
+    "lint-fix": "eslint ./src/** ./pages/** -c .eslintrc.json --fix --ext js,ts,jsx"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "./.eslintrc.json"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -60,6 +65,11 @@
     "@types/react-input-mask": "^2.0.5",
     "@types/react-select": "^3.0.16",
     "babel-plugin-inline-react-svg": "^1.1.1",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "eslint": "^7.16.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.21.5",
     "json-loader": "^0.5.7",
     "node-sass": "^4.14.1",
     "po-gettext-loader": "^1.0.0",

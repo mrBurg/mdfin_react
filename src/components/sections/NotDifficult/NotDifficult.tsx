@@ -1,26 +1,24 @@
-import { FC, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import classNames from 'classnames';
 
 import style from './NotDifficult.module.scss';
-
-import { LoanButton } from '../../LoanButton';
+import { WithDangerousHTML } from '@components/hocs';
+import { LoanButton } from '@components/LoanButton';
 import { TNotDifficultProps } from './@types';
-import { gt } from '../../../utils';
+import { gt } from '@utils';
 
-export const NotDifficult: FC<TNotDifficultProps> = ({
+export const NotDifficult = ({
   title,
   description,
-}): ReactElement => {
+}: TNotDifficultProps): ReactElement => {
   return (
     <section className={style.section}>
       <div className={classNames(style.item, style.image)} />
       <div className={classNames(style.item, style.content)}>
         <h2 className={style.title}>{title}</h2>
-        <div
-          className={style.description}
-          dangerouslySetInnerHTML={{ __html: description }}
-        />
-
+        <WithDangerousHTML className={style.description}>
+          {description}
+        </WithDangerousHTML>
         <LoanButton
           className={style.loanButton}
           label={gt.gettext('Register Loan')}

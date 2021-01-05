@@ -1,4 +1,4 @@
-import { RepaymentStore } from '../../../stores/RepaymentStore';
+import { RepaymentStore } from '@src/stores/RepaymentStore';
 
 export type TRepaymentProps = {
   className?: string;

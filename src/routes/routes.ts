@@ -80,6 +80,10 @@ export enum URIS {
 
   // attachment
   UPLOAD_ATTACHMENT = '/attachment/upload',
+
+  //tracking
+  EXTERNAL_TRACKING = '/external_tracking',
+  EXTERNAL_TRACKING_API = '/trackingapi',
 }
 
 /* путь к сервису справочника */
@@ -112,7 +116,7 @@ export enum DIRECTORIES {
   dirDeclinedByClientReason = 'declined_by_client_reason',
 }
 
-export const mainMenu: Array<TRouter> = [
+export const mainMenu: TRouter[] = [
   {
     href: URLS.CONTACTS,
     title: 'Contacts',
@@ -132,9 +136,7 @@ export const mainMenu: Array<TRouter> = [
   },
 ];
 
-export const allRoutes: Array<TRouter> = _.map(URLS, (val, key) => {
-  return {
-    href: val,
-    title: key,
-  };
-});
+export const allRoutes: TRouter[] = _.map(URLS, (val, key) => ({
+  href: val,
+  title: key,
+}));

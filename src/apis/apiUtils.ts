@@ -1,4 +1,4 @@
-import { RESPONSE_STATUS } from '../constants';
+import { RESPONSE_STATUS } from '@src/constants';
 
 /** Проверить статус ответа AJAX*/
 export const checkStatus = (status: string): boolean => {

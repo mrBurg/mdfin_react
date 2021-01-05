@@ -1,4 +1,4 @@
-import { TJSON } from '../../../interfaces';
+import { TJSON } from '@interfaces';
 
 export type TFooterProps = {
   copyright: string;

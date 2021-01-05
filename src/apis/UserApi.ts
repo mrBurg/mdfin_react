@@ -1,11 +1,20 @@
+import { URLS } from '@routes';
+import {
+  METHOD,
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  SESSION_ID_KEY,
+} from '@src/constants';
+import {
+  isDev,
+  handleErrors,
+  removeItemFromLocalStorage,
+  getMD5,
+} from '@utils';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import Router from 'next/router';
-
-import { isDev, clearLocalStorage, handleErrors } from '../utils';
-import { URLS } from '../routes';
-import { checkStatus } from './apiUtils';
-import { METHOD } from '../constants';
 import { CommonApi } from '.';
+import { checkStatus } from './apiUtils';
 
 export class UserApi extends CommonApi {
   public sendUserData = async (
@@ -13,7 +22,7 @@ export class UserApi extends CommonApi {
   ): Promise<any> => {
     try {
       const { data }: AxiosResponse = await axios(requestConfig);
-      const { status, error, errorDescription, ...otpData } = data;
+      const { status, ...otpData } = data;
 
       if (isDev) console.info(data);
 
@@ -33,7 +42,7 @@ export class UserApi extends CommonApi {
 
       if (response) {
         const {
-          data: { status, error, errorDescription, ...responseData },
+          data: { status, ...responseData },
         } = response;
 
         if (checkStatus(status) && method == METHOD.GET) return responseData;
@@ -49,7 +58,15 @@ export class UserApi extends CommonApi {
         data: { status },
       }: AxiosResponse = await axios(requestConfig);
 
-      clearLocalStorage();
+      // clearLocalStorage();
+      const userLoggedOutData = [
+        ACCESS_TOKEN_KEY,
+        REFRESH_TOKEN_KEY,
+        SESSION_ID_KEY,
+      ];
+
+      for (const i of userLoggedOutData) removeItemFromLocalStorage(getMD5(i));
+
       if (Router.route == URLS.HOME || Router.route == URLS.index) {
         Router.reload();
       } else {

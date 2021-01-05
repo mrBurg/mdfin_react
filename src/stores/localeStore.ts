@@ -1,12 +1,12 @@
 import { observable, action } from 'mobx';
 
-import { gt } from '../utils';
-import { defaultLocale } from '../config.json';
+import { defaultLocale } from '@src/config.json';
+import { gt } from '@utils';
 
 export class LocaleStore {
   @observable public locale: string = defaultLocale;
 
-  @action setCurrentLanguage(data: string) {
+  @action setCurrentLanguage(data: string): void {
     this.locale = data;
 
     gt.setLocale(this.locale);

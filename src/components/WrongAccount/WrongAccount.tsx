@@ -1,14 +1,13 @@
-import { ReactElement, PureComponent } from 'react';
+import React, { ReactElement, PureComponent } from 'react';
 import { observer } from 'mobx-react';
-import _ from 'lodash';
 
 import style from './WrongAccount.module.scss';
-
-import { Accounts } from '../Accounts';
-import { BUTTON_TYPE } from '../../constants';
-import { gt } from '../../utils';
-import { TOnClickHandler } from '../../interfaces';
+import { AccountsForm } from '@components/AccountsForm';
+import { WithDangerousHTML } from '@components/hocs';
+import { TOnClickHandler } from '@interfaces';
+import { BUTTON_TYPE } from '@src/constants';
 import { TWrongAccountProps } from './@types';
+import { gt, handleErrors } from '@utils';
 
 @observer
 export class WrongAccount extends PureComponent<TWrongAccountProps> {
@@ -21,9 +20,16 @@ export class WrongAccount extends PureComponent<TWrongAccountProps> {
   private onSubmitHandler: TOnClickHandler = async () => {
     const { userStore, loanStore } = this.props;
 
-    loanStore.cabinetChangeAccount(loanStore.account).then(async () => {
-      if (userStore) userStore.getClientNextStep();
-    });
+    loanStore
+      .cabinetChangeAccount(loanStore.account)
+      .then(async () => {
+        if (userStore) userStore.getClientNextStep();
+
+        return;
+      })
+      .catch((err) => {
+        handleErrors(err);
+      });
   };
 
   private renderAccounts(): ReactElement | null {
@@ -33,22 +39,11 @@ export class WrongAccount extends PureComponent<TWrongAccountProps> {
       },
     } = this.props;
 
-    if (accountUnit) {
-      const { accounts } = accountUnit;
+    if (!accountUnit) return null;
 
-      return (
-        <form className={style.bankAccount}>
-          <h2 className={style.title}>
-            {!!_.size(accounts)
-              ? 'Chọn Tài Khoản Ngân Hàng'
-              : 'Thêm Tài Khoản Ngân Hàng'}
-          </h2>
-          <Accounts className={style.accounts} {...accountUnit} />
-        </form>
-      );
-    }
-
-    return null;
+    return (
+      <AccountsForm title={true} className={style.accounts} {...accountUnit} />
+    );
   }
 
   render(): ReactElement {
@@ -56,13 +51,9 @@ export class WrongAccount extends PureComponent<TWrongAccountProps> {
 
     return (
       <>
-        <h2
-          className={style.title}
-          dangerouslySetInnerHTML={{
-            __html: loanStore.cabinetApplication?.notification || '',
-          }}
-        />
-
+        <WithDangerousHTML tag={'h2'} className={style.title}>
+          {loanStore.cabinetApplication?.notification!}
+        </WithDangerousHTML>
         {this.renderAccounts()}
         <button
           className={style.submitButton}

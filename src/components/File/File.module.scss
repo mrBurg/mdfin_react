@@ -12,7 +12,6 @@
   display: flex;
   flex-flow: column;
   color: lighten($black, 50%);
-  user-select: none;
   min-width: 25%;
 }
 
@@ -21,6 +20,7 @@
   background-color: $white;
   border-radius: 6px;
   border: none;
+  user-select: none;
   cursor: pointer;
 
   @include respond(sm) {

@@ -1,14 +1,14 @@
-import { ReactElement, PureComponent } from 'react';
+import React, { ReactElement, PureComponent } from 'react';
 import _ from 'lodash';
+import { observer } from 'mobx-react';
 
 import style from './Notify.module.scss';
 
-import { TState, TNotify, TNotifyItem } from './@types';
-import { observer } from 'mobx-react';
-import { Preloader } from '../Preloader';
-import { TCabinetNotify } from '../../stores/@types/loanStore';
-
-import { refreshViewTime } from './../../config.json';
+import { refreshViewTime } from '@src/config.json';
+import { Preloader } from '@components/Preloader';
+import { TNotify, TNotifyItem, TState } from './@types';
+import { TCabinetNotify } from '@stores-types/loanStore';
+import { handleErrors } from '@utils';
 
 @observer
 export class Notify extends PureComponent<TNotify> {
@@ -17,19 +17,22 @@ export class Notify extends PureComponent<TNotify> {
     cabinetNotify: [],
   };
 
-  componentDidMount() {
+  componentDidMount(): void {
     const { loanStore } = this.props;
 
     this.refreshView();
 
     if (loanStore) {
-      loanStore.getNotify().then(() => {
-        new Promise((resolve) => {
+      loanStore
+        .getNotify()
+        .then(() => {
           this.setState({
             isRender: true,
           });
-          resolve();
-        }).then(() => {
+
+          return;
+        })
+        .then(() => {
           //отправляем запрос, что показали нотификацию.
           const notificationIds = {
             notificationIds: this.getDisplayConfirmationItems(
@@ -41,19 +44,23 @@ export class Notify extends PureComponent<TNotify> {
           setInterval(async () => {
             this.refreshView();
           }, refreshViewTime);
+
+          return;
+        })
+        .catch((err) => {
+          handleErrors(err);
         });
-      });
     }
   }
 
   //выбрать id-шки нотификаций, которые нужно "деактивировать"
   private getDisplayConfirmationItems(
     cabinetNotify: TCabinetNotify[]
-  ): Array<number> {
+  ): number[] {
     const isArrayNotify =
       Array.isArray(cabinetNotify) && !!_.size(cabinetNotify);
 
-    let displayConfirmationItems: any[] = [];
+    const displayConfirmationItems: any[] = [];
 
     if (isArrayNotify) {
       _.map(cabinetNotify, (item: TNotifyItem) => {

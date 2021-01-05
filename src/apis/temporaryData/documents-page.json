@@ -1,40 +1,5 @@
 {
-  "documentTitle": "WEBVAY",
-  "title": "Thông Tin Tài Khoản và Chứng Từ",
-  "attachments": {
-    "isPresent": {
-      "title": "Thông Tin Tài Khoản và Chứng Từ",
-      "buttons": {
-        "idFront": "Tải lên CMND (Mặt Trước)",
-        "idBack": "Tải Lên CMND (Mặt Sau)",
-        "selfie": "Tải Lên Ảnh Chụp Selfie Cầm CMND Trên Tay",
-        "other": "Giấy Tờ Khác"
-      }
-    },
-    "notPresent": {
-      "title": "Chứng từ cần thiết và thông tin tài khoản",
-      "buttons": {
-        "idFront": "CMND/CCCD Mặt Trước",
-        "idBack": "CMND/CCCD Mặt Sau",
-        "selfie": "Ảnh chụp selfie cầm CMND/CCCD",
-        "other": "Giấy Tờ Khác"
-      }
-    }
-  },
-  "accounts": {
-    "isPresent": {
-      "title": "Thêm Tài Khoản Ngân Hàng"
-    },
-    "notPresent": {
-      "bank account": "Chọn Tài Khoản Ngân Hàng"
-    },
-    "buttons": {
-      "add": "Tài khoản ngân hàng mới",
-      "select": "Chọn Ngân Hàng",
-      "enter": "Số Tài Khoản Ngân Hàng",
-      "confirm": "Xác Nhận"
-    }
-  },
+  "confirm": "Confirm",
   "docs": {
     "idFront": "CMND hoặc CCCD (Mặt Trước)",
     "idBack": "CMND hoặc CCCD (Mặt Sau)",

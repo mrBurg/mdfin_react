@@ -1,69 +1,53 @@
-import { ReactElement, PureComponent } from 'react';
+import React, { ReactElement, PureComponent } from 'react';
 import { observer } from 'mobx-react';
-import _ from 'lodash';
 
 import style from './Documents.module.scss';
-
+import { AccountsForm } from '@components/AccountsForm';
+import { AttachmentsForm } from '@components/AttachmentsForm';
+import { WithTracking } from '@components/hocs';
+import { TOnClickHandler } from '@interfaces';
+import { BUTTON_TYPE } from '@src/constants';
+import { WidgetRoles } from '@src/roles';
+import { EMouseEvents } from '@src/trackingConstants';
+import { gt, handleErrors, isDev } from '@utils';
 import { ClientTabs } from '../ClientTabs';
-import { BUTTON_TYPE } from '../../../constants';
-import { gt } from '../../../utils';
-import { TOnClickHandler } from '../../../interfaces';
 import { TDocumentsProps } from './@types';
-import { Attachments } from './../../Attachments';
-import { TDocumentUnit } from '../../../stores/@types/loanStore';
-import { Accounts } from '../../Accounts';
 
 @observer
 export class Documents extends PureComponent<TDocumentsProps> {
   public componentDidMount(): void {
     const { loanStore, userStore } = this.props;
 
-    userStore.fetchWithAuth(() => {
+    userStore.fetchWithAuth(async () => {
+      if (!isDev) {
+        await this.refreshView();
+      }
+
       loanStore.getCabinetApplication();
     });
+  }
+
+  /** Берем следующий / проверяем текущий шаг визарда */
+  private async refreshView() {
+    const { userStore } = this.props;
+    if (userStore) userStore.getClientNextStep();
   }
 
   private onSubmitHandler: TOnClickHandler = async () => {
     const { userStore, loanStore } = this.props;
 
-    loanStore.addAccount(loanStore.account).then(async () => {
-      if (userStore) userStore.getClientNextStep();
-    });
+    loanStore
+      .addAccount(loanStore.account)
+      .then((data) => {
+        loanStore.updateAccountValidity(data);
+        userStore.getClientNextStep();
+
+        return;
+      })
+      .catch((err) => {
+        handleErrors(err);
+      });
   };
-
-  private renderDocs(): ReactElement | null {
-    const {
-      staticData,
-      loanStore: {
-        cabinetApplication: { documentUnits },
-      },
-    } = this.props;
-
-    if (documentUnits) {
-      return (
-        <form className={style.attachments}>
-          <h2 className={style.title}>{staticData.title}</h2>
-          <div className={style.buttons}>
-            {_.map(documentUnits, (item: TDocumentUnit, key) => {
-              let { documents, full, type, type_id } = item;
-
-              return (
-                <Attachments
-                  key={key}
-                  title={type}
-                  documents={documents}
-                  type={type_id}
-                  full={full}
-                />
-              );
-            })}
-          </div>
-        </form>
-      );
-    }
-
-    return null;
-  }
 
   private renderAccounts(): ReactElement | null {
     const {
@@ -72,41 +56,37 @@ export class Documents extends PureComponent<TDocumentsProps> {
       },
     } = this.props;
 
-    console.toJS(accountUnit);
+    if (!accountUnit) return null;
 
-    if (accountUnit) {
-      const { accounts } = accountUnit;
-
-      return (
-        <form className={style.bankAccount}>
-          <h2 className={style.title}>
-            {!!_.size(accounts)
-              ? 'Chọn Tài Khoản Ngân Hàng'
-              : 'Thêm Tài Khoản Ngân Hàng'}
-          </h2>
-          <Accounts className={style.accounts} {...accountUnit} />
-        </form>
-      );
-    }
-
-    return null;
+    return (
+      <AccountsForm title={true} className={style.accounts} {...accountUnit} />
+    );
   }
 
   render(): ReactElement {
-    const { loanStore } = this.props;
+    const {
+      loanStore: { getInvalidDocs },
+      staticData: { confirm },
+    } = this.props;
 
     return (
       <ClientTabs className={style.documents}>
-        {this.renderDocs()}
+        <AttachmentsForm />
         {this.renderAccounts()}
-        <button
-          className={style.nextStep}
-          type={BUTTON_TYPE.BUTTON}
-          onClick={this.onSubmitHandler}
-          disabled={!loanStore.getDocsValid}
+        <WithTracking
+          id={`Documents-${WidgetRoles.button}-${BUTTON_TYPE.SUBMIT}`}
+          events={[EMouseEvents.CLICK]}
         >
-          {gt.gettext('Confirm')}
-        </button>
+          <button
+            className={style.nextStep}
+            type={BUTTON_TYPE.SUBMIT}
+            onClick={this.onSubmitHandler}
+            disabled={getInvalidDocs}
+            role={WidgetRoles.button}
+          >
+            {gt.gettext(confirm)}
+          </button>
+        </WithTracking>
       </ClientTabs>
     );
   }

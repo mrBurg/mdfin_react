@@ -1,13 +1,15 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { GetStaticProps, GetStaticPropsContext } from 'next';
 
-import { fetchCopyright, fetchStaticData } from '../src/apis';
-import { TJSON, TCopyright, TComponenProps } from '../src/interfaces';
-import { NotificationText } from './../src/components/NotificationText';
+import { TStores } from '@stores';
+import { NotificationText } from '@components/NotificationText';
+import { fetchCopyright, fetchStaticData } from '@src/apis';
+import { TCopyright, TJSON } from '@interfaces';
+import { isDev } from '@utils';
 
-const SendmoneyPage = (props: TComponenProps): ReactElement => {
+const SendmoneyPage = (props: TStores): ReactElement => {
   return (
-    <div className='page-container'>
+    <div className="page-container">
       <NotificationText viewId={'sendmoney'} {...props} />
     </div>
   );
@@ -30,9 +32,10 @@ export const getStaticProps: GetStaticProps = async (
 
   const copyright: TCopyright = await fetchCopyright();
 
+  if (isDev) console.info('Context:', context);
+
   return {
     props: {
-      ...context,
       pageData: { copyright: copyright.less, ...pageData },
       template,
     },

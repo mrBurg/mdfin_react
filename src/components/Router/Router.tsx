@@ -1,14 +1,35 @@
-import { useRouter } from 'next/router';
-import { FC, ReactElement, useEffect, useState } from 'react';
+import React, { PureComponent, ReactElement } from 'react';
 
-import { TComponenProps } from '../../interfaces';
-import { BASE_URLS } from '../../routes';
-import { gt } from '../../utils';
+import { Preloader } from '@components/Preloader';
+import { TStores } from '@stores';
 
-export const Router: FC<TComponenProps> = (props): ReactElement => {
+export class Router extends PureComponent<TStores> {
+  public async componentDidMount(): Promise<void> {
+    const { userStore } = this.props;
+
+    if (userStore) {
+      await this.refreshView();
+    }
+  }
+
+  private async refreshView() {
+    const { userStore } = this.props;
+    if (userStore) {
+      userStore.getClientNextStep();
+    }
+  }
+
+  public render(): ReactElement {
+    return <Preloader />;
+  }
+}
+
+/* export const Router: FC<TStores> = (props) => {
   const { children } = props;
   const router = useRouter();
   const [count, setCount] = useState(3);
+
+  console.log('children: ', children);
 
   useEffect(() => {
     if (count > 1) {
@@ -28,4 +49,4 @@ export const Router: FC<TComponenProps> = (props): ReactElement => {
       {children}
     </>
   );
-};
+}; */

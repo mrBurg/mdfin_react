@@ -1,5 +1,5 @@
-import { TOnInputChangeHandler } from '../../../interfaces';
-import { LoanStore } from '../../../stores/LoanStore';
+import { TOnInputChangeHandler } from '@interfaces';
+import { LoanStore } from '@src/stores/LoanStore';
 
 type TFile = {
   title: string;
@@ -14,7 +14,8 @@ export type TUploadedFile = {
 } & TFile;
 
 export type TAddFile = {
-  type: number;
+  type: string;
+  type_id: number;
   onChangeHandler?: TOnInputChangeHandler;
   multiple?: boolean;
   loanStore?: LoanStore;

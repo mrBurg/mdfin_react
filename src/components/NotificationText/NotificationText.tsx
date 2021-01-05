@@ -1,12 +1,11 @@
-import { ReactElement, PureComponent } from 'react';
-import _ from 'lodash';
+import React, { ReactElement, PureComponent } from 'react';
 import { observer } from 'mobx-react';
 
 import style from './NotificationText.module.scss';
 
-import { TState, TNotificationText } from './@types';
-import { Preloader } from '../Preloader';
-import { refreshViewTime } from './../../config.json';
+import { refreshViewTime } from '@src/config.json';
+import { Preloader } from '@components/Preloader';
+import { TNotificationText, TState } from './@types';
 
 @observer
 export class NotificationText extends PureComponent<TNotificationText> {
@@ -16,7 +15,7 @@ export class NotificationText extends PureComponent<TNotificationText> {
     cabinetApplication: {},
   };
 
-  componentDidMount() {
+  componentDidMount(): void {
     const { userStore, loanStore, viewId } = this.props;
 
     userStore.fetchWithAuth(async () => {

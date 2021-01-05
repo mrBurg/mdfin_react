@@ -3,12 +3,12 @@ import { observer } from 'mobx-react';
 import _ from 'lodash';
 
 import style from './Deal.module.scss';
-
-import { Actions } from '../Actions';
-import { LoanInfo } from '../LoanInfo';
-import { BUTTON_TYPE } from '../../constants';
-import { TState, TDeal } from './@types';
-import { Preloader } from '../Preloader';
+import { Actions } from '@components/Actions';
+import { LoanInfo } from '@components/LoanInfo';
+import { TDataRow } from '@components/LoanInfo/@types';
+import { Preloader } from '@components/Preloader';
+import { BUTTON_TYPE } from '@src/constants';
+import { TDeal, TState } from './@types';
 
 @observer
 export class Deal extends PureComponent<TDeal> {
@@ -16,7 +16,7 @@ export class Deal extends PureComponent<TDeal> {
     isRender: false,
   };
 
-  componentDidMount() {
+  componentDidMount(): void {
     const { userStore, loanStore } = this.props;
 
     userStore.fetchWithAuth(async () => {
@@ -46,21 +46,22 @@ export class Deal extends PureComponent<TDeal> {
         documentUnits,
       } = dealInfo;
 
-      const paramsData = [
+      const paramsData: TDataRow[] = [
         { text: 'dateTo', value: closingDate },
         {
           text: 'lastPaymentDate',
           value: lastPaymentDate,
         },
         { text: 'lastPaymentAmount', value: lastPaymentAmount },
-        {
-          text: 'dealNo',
-          value: dealNo,
-          link: !!_.size(documentUnits![0].documents)
-            ? documentUnits![0].documents[0].url
-            : '#',
-        },
       ];
+
+      paramsData.push({
+        text: 'dealNo',
+        value: dealNo,
+        link: _.size(documentUnits![0].documents)
+          ? documentUnits![0].documents[0].url
+          : '#',
+      });
 
       return (
         <LoanInfo

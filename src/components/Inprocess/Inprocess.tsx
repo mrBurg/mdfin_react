@@ -1,18 +1,18 @@
-import { ReactElement, PureComponent } from 'react';
+import React, { ReactElement, PureComponent } from 'react';
 import classNames from 'classnames';
 import _ from 'lodash';
 import { observer } from 'mobx-react';
 
 import style from './Inprocess.module.scss';
 
+import { refreshViewTime } from '@src/config.json';
+import { Attachments } from '@components/Attachments';
 import { TInprocessProps } from './@types';
-import { Attachments } from '../Attachments';
-import { TDocumentUnit } from '../../stores/@types/loanStore';
-import { refreshViewTime } from './../../config.json';
+import { TDocumentUnit } from '@stores-types/loanStore';
 
 @observer
 export class Inprocess extends PureComponent<TInprocessProps> {
-  componentDidMount() {
+  componentDidMount(): void {
     const { loanStore } = this.props;
 
     loanStore.getCabinetApplication();
@@ -28,34 +28,33 @@ export class Inprocess extends PureComponent<TInprocessProps> {
     if (userStore) userStore.getClientNextStep();
   }
 
-  render(): ReactElement {
+  render(): ReactElement | null {
     const {
       className,
       loanStore: {
+        attachmentsFormStatic,
         cabinetApplication: { documentUnits, notification },
       },
     } = this.props;
 
-    return (
-      <>
-        <h2 className={style.title}>{notification}</h2>
+    if (attachmentsFormStatic && documentUnits) {
+      return (
+        <>
+          <h2 className={style.title}>{notification}</h2>
 
-        <div className={classNames(style.inprocess, className)}>
-          {_.map(documentUnits, (item: TDocumentUnit, key) => {
-            let { documents, full, type, type_id } = item;
-
-            return (
+          <div className={classNames(style.inprocess, className)}>
+            {_.map(documentUnits, (item: TDocumentUnit, key) => (
               <Attachments
                 key={key}
-                title={type}
-                documents={documents}
-                type={type_id}
-                full={full}
+                locales={attachmentsFormStatic}
+                {...item}
               />
-            );
-          })}
-        </div>
-      </>
-    );
+            ))}
+          </div>
+        </>
+      );
+    }
+
+    return null;
   }
 }

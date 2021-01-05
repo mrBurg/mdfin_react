@@ -1,6 +1,6 @@
-import { FC, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { NextComponentType } from 'next';
-import { Provider } from 'mobx-react';
+import { Provider, useStaticRendering } from 'mobx-react';
 import { configure } from 'mobx';
 
 // import 'semantic-ui-css/semantic.min.css';
@@ -9,11 +9,12 @@ import 'rc-slider/assets/index.css';
 
 import '../src/scss/index.scss';
 
-import { TStores, useStore } from '../src/stores';
-import { Layout } from '../src/components/Layout';
-import { TJSON } from '../src/interfaces';
-import { TLayoutProps } from '../src/components/Layout/@types';
-import { NextHead } from '../src/components/NextHead';
+import { isServer } from '@utils';
+import { TJSON } from '@interfaces';
+import { TStores, useStore } from '@stores';
+import { TLayoutProps } from '@components/Layout/@types';
+import { NextHead } from '@components/NextHead';
+import { Layout } from '@components/Layout';
 
 type TAppProps = {
   Component: NextComponentType;
@@ -22,7 +23,9 @@ type TAppProps = {
 
 configure({ enforceActions: 'always' });
 
-const App: FC<TAppProps> = (props): ReactElement => {
+const App = (props: TAppProps): ReactElement => {
+  useStaticRendering(isServer);
+
   const {
     Component,
     pageProps: { pageData, template },

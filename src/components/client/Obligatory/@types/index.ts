@@ -1,16 +1,16 @@
-import { PageStore } from '../../../../stores/PageStore';
-import { UserStore } from '../../../../stores/UserStore';
-import { TComponenProps } from '../../../../interfaces';
+import { PageStore } from '@src/stores/PageStore';
+import { UserStore } from '@src/stores/UserStore';
+import { TStores } from '@stores';
 
 export type TObligatory = {
   staticData: any;
   pageStore: PageStore;
   userStore: UserStore;
-} & TComponenProps;
+} & TStores;
 
 export type TState = {
   isRender: boolean;
-  invalidFields: Array<any>;
+  invalidFields: any[];
 };
 
 export type THandleChangeDate = {

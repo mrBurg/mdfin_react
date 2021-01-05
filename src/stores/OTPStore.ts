@@ -1,50 +1,53 @@
 import Router from 'next/router';
 import { observable, action, runInAction } from 'mobx';
-
-import { OtpApi } from '../apis';
-import { UserStore } from './UserStore';
-import { URLS, URIS } from '../routes';
+import { AxiosRequestConfig } from 'axios';
+import { TJSON } from '@interfaces';
+import { URIS, URLS } from '@routes';
+import { OtpApi, fetchStaticData } from '@src/apis';
+import { METHOD, ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@src/constants';
 import {
-  setToLocalStorage,
-  getMD5,
   isDev,
   isTest,
-  delay,
   makeApiUri,
-} from '../utils';
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY, METHOD } from '../constants';
-import { TJSON } from '../interfaces';
-import { showResend } from './../../src/config.json';
-import { TOtpProps } from './@types/otpStore';
-import { AxiosRequestConfig } from 'axios';
+  setToLocalStorage,
+  getMD5,
+  delay,
+} from '@utils';
+import { TOtpFormStatic, TOtpProps } from './@types/otpStore';
+import { UserStore } from './UserStore';
+import { showResend } from '@src/config.json';
 
 export class OtpStore {
-  @observable public otpReady: boolean = false;
-  @observable public testerData: string = '';
-  @observable public otpIsDisabled: boolean = false;
+  @observable public otpReady = false;
+  @observable public testerData = '';
+  @observable public otpIsDisabled = false;
   @observable public otpId: number | undefined = 0;
-  @observable public otpCode: string = '';
-  @observable public otpWrong: boolean = false;
-  @observable public showResend: boolean = false;
-  @observable public validForm: boolean = true;
-  public urisKey: string = '';
+  @observable public otpCode = '';
+  @observable public otpWrong = false;
+  @observable public showResend = false;
+  @observable public validForm = true;
+  @observable otpFormStatic?: TOtpFormStatic;
+  public urisKey = '';
+
+  @observable public otpAgreeCheckbox = false;
 
   constructor(private otpApi: OtpApi) {}
 
   //To delete
   @action
-  setOptReady(state: boolean) {
+  setOptReady(state: boolean): void {
     this.otpReady = state;
   }
   //end delete
 
   @action
-  setValidForm(state: boolean) {
+  setValidForm(state: boolean): void {
     this.validForm = state;
   }
 
+  /** Запуск таймера показа кнопки "Отправить ОТР снова" */
   @action
-  resend() {
+  resend(): void {
     delay(() => {
       runInAction(() => {
         this.showResend = true;
@@ -53,13 +56,17 @@ export class OtpStore {
   }
 
   @action
-  public async updateOtpState({ action, otpId, phoneNumber }: TOtpProps) {
+  public async updateOtpState({
+    action,
+    otpId,
+    phoneNumber,
+  }: TOtpProps): Promise<void> {
     this.otpReady = !!otpId;
     this.showResend = false;
     this.otpId = otpId;
 
     if (isDev || isTest) {
-      let requestConfig: AxiosRequestConfig = {
+      const requestConfig: AxiosRequestConfig = {
         baseURL: makeApiUri(),
         method: METHOD.POST,
         url: URIS.GET_OTP,
@@ -73,35 +80,47 @@ export class OtpStore {
       const { otpCode } = await this.otpApi.getOtp(requestConfig);
 
       runInAction(() => {
-        console.info(`OTP: ${otpCode}`);
+        if (otpCode) console.info(`OTP: ${otpCode}`);
         this.testerData = otpCode;
       });
     }
   }
 
   @action
-  updateOtpDisabled(state: boolean) {
+  public updateOtpDisabled(state: boolean): void {
     this.otpIsDisabled = state;
   }
 
   @action
-  updateOtpValue(otpCode: string) {
+  public updateOtpValue(otpCode: string): void {
     this.otpCode = otpCode;
   }
 
   @action
-  updateUrisKey(urisKey: string) {
+  public updateUrisKey(urisKey: string): void {
     this.urisKey = urisKey;
   }
 
+  /** Очищаем поле ввода ОТР от ошибки (крассная рамка + сообщение) */
   @action
-  resetOtpWrong() {
+  public resetOtpWrong(): void {
     this.otpWrong = false;
+  }
+
+  public async initOtpForm(): Promise<void> {
+    const otpFormStatic = await fetchStaticData({
+      block: 'otp-form',
+      path: 'form',
+    });
+
+    runInAction(() => {
+      this.otpFormStatic = otpFormStatic;
+    });
   }
 
   //После успешной валидации ОТП, сбрасываем все его параметры на дефолтные.
   @action
-  resetOtpParams() {
+  public resetOtpParams(): void {
     this.otpReady = false;
     this.testerData = '';
     this.otpIsDisabled = false;
@@ -109,13 +128,19 @@ export class OtpStore {
     this.otpCode = '';
     this.otpWrong = false;
     this.showResend = false;
+    this.otpAgreeCheckbox = false;
   }
 
-  public async validateOtp(userStore: UserStore) {
-    const { userData, fingerprint } = userStore;
-    const data = { fingerprint, otpCode: this.otpCode, ...userData };
+  /** Валидация ОТП, при верификации номера телефона (логин/регистрация) */
+  public async validateOtp(userStore: UserStore): Promise<void | boolean> {
+    const { userData } = userStore;
+    const data = {
+      fingerprint: this.otpApi.getFingerPrint,
+      otpCode: this.otpCode,
+      ...userData,
+    };
 
-    let requestConfig: AxiosRequestConfig = {
+    const requestConfig: AxiosRequestConfig = {
       baseURL: makeApiUri(),
       method: METHOD.POST,
       url: (URIS as TJSON)[`VALIDATE_OTP${this.urisKey}`],
@@ -150,11 +175,12 @@ export class OtpStore {
     });
   }
 
-  public async cabinetConfirm() {
+  /** Валидация ОТП, при подписании заявки */
+  public async cabinetConfirm(): Promise<void | boolean> {
     //return null;
     const { ...data } = { otpId: this.otpId, otpCode: this.otpCode };
 
-    let requestConfig = this.otpApi.postHeaderRequestConfig(
+    const requestConfig = this.otpApi.postHeaderRequestConfig(
       URIS.CABINET_CONFIRM,
       data
     );

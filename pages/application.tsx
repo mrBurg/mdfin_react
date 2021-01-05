@@ -1,15 +1,15 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { GetStaticProps, GetStaticPropsContext } from 'next';
 
-import { TCopyright, TComponenProps, TJSON } from '../src/interfaces';
-import { fetchCopyright, fetchStaticData } from '../src/apis';
-import { Application } from '../src/components/Application';
+import { TStores } from '@stores';
+import { Application } from '@components/Application';
+import { fetchCopyright, fetchStaticData } from '@src/apis';
+import { TCopyright, TJSON } from '@interfaces';
+import { isDev } from '@utils';
 
-const ApplicationPage = (props: TComponenProps): ReactElement => {
-  const {} = props;
-
+const ApplicationPage = (props: TStores): ReactElement => {
   return (
-    <div className='page-container'>
+    <div className="page-container">
       <Application {...props} />
     </div>
   );
@@ -26,15 +26,16 @@ export const getStaticProps: GetStaticProps = async (
   });
 
   const pageData: TJSON = await fetchStaticData({
-    block: 'application-page',
-    path: 'static',
+    block: 'loan-info-form',
+    path: 'form',
   });
 
   const copyright: TCopyright = await fetchCopyright();
 
+  if (isDev) console.info('Context:', context);
+
   return {
     props: {
-      ...context,
       pageData: { copyright: copyright.less, ...pageData },
       template,
     },

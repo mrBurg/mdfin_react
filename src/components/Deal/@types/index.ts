@@ -1,13 +1,10 @@
-//import { PageStore } from '../../../stores/PageStore';
-//import { TCabinetDeal } from '../../../stores/@types/loanStore';
-import { TComponenProps } from '../../../interfaces';
+import { TStores } from '@stores';
 
 export type TDeal = {
   //staticData?: any;
   //pageStore?: PageStore;
-} & TComponenProps;
+} & TStores;
 
 export type TState = {
   isRender: boolean;
-  //cabinetDeal?: TCabinetDeal;
 };

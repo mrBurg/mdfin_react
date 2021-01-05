@@ -1,6 +1,5 @@
 export type TData = {
   text?: string;
-  list?: Array<string>;
 };
 
 export type TDataList = {
@@ -8,5 +7,5 @@ export type TDataList = {
 } & TData;
 
 export type TRepaymentInfoProps = {
-  dataList: Array<TDataList>;
+  dataList: TDataList[];
 };

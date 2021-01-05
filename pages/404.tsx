@@ -1,10 +1,11 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { GetStaticPropsContext, GetStaticProps } from 'next';
 import Head from 'next/head';
 
-import { TCopyright, TJSON } from '../src/interfaces';
-import { fetchCopyright, fetchStaticData } from '../src/apis';
-import { siteName } from './../src/config.json';
+import { siteName } from '@src/config.json';
+import { fetchCopyright, fetchStaticData } from '@src/apis';
+import { TCopyright, TJSON } from '@interfaces';
+import { isDev } from '@utils';
 
 const NotFound = (): ReactElement => {
   return (
@@ -13,7 +14,7 @@ const NotFound = (): ReactElement => {
         <title>{`${siteName} | 404`}</title>
       </Head>
 
-      <div className='container' />
+      <div className="container" />
       <style jsx>{`
         .container {
           background: #e8e8e8 url('/theme/404.svg') center center/contain
@@ -44,9 +45,10 @@ export const getStaticProps: GetStaticProps = async (
 
   const copyright: TCopyright = await fetchCopyright();
 
+  if (isDev) console.info('Context:', context);
+
   return {
     props: {
-      ...context,
       pageData: { copyright: copyright.less, ...pageData },
       template,
     },

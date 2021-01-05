@@ -13,6 +13,7 @@ module.exports = {
     ACCESS_TOKEN_KEY: process.env.ACCESS_TOKEN_KEY,
     REFRESH_TOKEN_KEY: process.env.REFRESH_TOKEN_KEY,
     SESSION_ID_KEY: process.env.SESSION_ID_KEY,
+    EXTERNAL_SESSION_KEY: process.env.EXTERNAL_SESSION_KEY,
     FINGER_PRINT_KEY: process.env.FINGER_PRINT_KEY,
     LOCALE_KEY: process.env.LOCALE_KEY,
   },
@@ -35,7 +36,9 @@ module.exports = {
     config.plugins = [
       ...config.plugins,
       new SitemapPlugin({
-        baseUrl: `${PO_PROJECT_HOST}:${PO_PROJECT_PORT}`,
+        baseUrl: !PO_PROJECT_PORT
+          ? PO_PROJECT_HOST
+          : `${PO_PROJECT_HOST}:${PO_PROJECT_PORT}`,
         pagesDirectory: path.resolve(__dirname, 'pages'),
         targetDirectory: './',
       }),

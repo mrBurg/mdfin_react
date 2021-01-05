@@ -1,4 +1,4 @@
-import { LocaleStore } from '../../../../stores/LocaleStore';
+import { LocaleStore } from '@src/stores/LocaleStore';
 
 export type TLanguagesSwitcherProps = {
   localeStore?: LocaleStore;

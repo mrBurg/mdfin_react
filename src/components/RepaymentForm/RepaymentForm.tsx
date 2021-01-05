@@ -1,30 +1,35 @@
-import { ReactElement, PureComponent } from 'react';
+import React, { ReactElement, PureComponent } from 'react';
 import { observer } from 'mobx-react';
-import InputMask from 'react-input-mask';
-import classNames from 'classnames';
 
 import style from './RepaymentForm.module.scss';
 
-import { dealNoMask } from '../../config.json';
+import { dealNoMask } from '@src/config.json';
 
-import { BUTTON_TYPE, INPUT_TYPE } from '../../constants';
+import { TStores } from '@stores';
+import { WithTracking } from '@components/hocs';
+import { Repayment } from '@components/Repayment';
+import { ReactInputMaskWidget } from '@components/widgets/ReactInputMaskWidget';
+import { TOnSubmitHandler, TOnInputChangeHandler } from '@interfaces';
+import { INPUT_TYPE, FIELD_NAME, BUTTON_TYPE } from '@src/constants';
+import { AbstractRoles, WidgetRoles } from '@src/roles';
 import {
-  TComponenProps,
-  TOnSubmitHandler,
-  TOnInputChangeHandler,
-} from '../../interfaces';
-import { Repayment } from '../Repayment';
-import { isProd } from '../../utils';
+  EFocusEvents,
+  EKeyboardEvents,
+  EMouseEvents,
+} from '@src/trackingConstants';
+import { handleErrors } from '@utils';
 
 @observer
-export class RepaymentForm extends PureComponent<TComponenProps> {
+export class RepaymentForm extends PureComponent<TStores> {
   public componentDidMount(): void {
     const { repaymentStore } = this.props;
+
     repaymentStore.initPaymentForm();
   }
 
   componentWillUnmount(): void {
     const { repaymentStore } = this.props;
+
     if (repaymentStore) {
       repaymentStore.updatePaymentState(false);
       repaymentStore.initCabinetDeal();
@@ -37,13 +42,16 @@ export class RepaymentForm extends PureComponent<TComponenProps> {
     const { repaymentStore } = this.props;
 
     if (repaymentStore) {
-      repaymentStore.getCabinetDeal().then((hasDeal) => {
-        if (hasDeal) {
-          return repaymentStore.updatePaymentState(true);
-        } else {
-          return repaymentStore.setValidForm(false);
-        }
-      });
+      repaymentStore
+        .getCabinetDeal()
+        .then((hasDeal) => {
+          return hasDeal
+            ? repaymentStore.updatePaymentState(true)
+            : repaymentStore.setValidForm(false);
+        })
+        .catch((err) => {
+          handleErrors(err);
+        });
     }
   };
 
@@ -75,25 +83,38 @@ export class RepaymentForm extends PureComponent<TComponenProps> {
             >
               <h3 className={style.title}>{title}</h3>
               <div className={style.fieldset}>
-                <InputMask
-                  //name={FIELD_NAME.PHONE_NUMBER}
-                  className={classNames(style.input, {
-                    [style.error]: !validForm,
-                  })}
-                  type={INPUT_TYPE.TEL}
-                  mask={dealNoMask}
-                  value={cabinetDeal.dealInfo.dealNo}
-                  placeholder={dealNoMask.replace(/9/g, '*')}
-                  onChange={this.onChangeHandler}
-                />
-
-                <button
-                  className={style.button}
-                  type={BUTTON_TYPE.SUBMIT}
-                  disabled={isProd}
+                <WithTracking
+                  id={`RepaymentForm-${AbstractRoles.input}-${INPUT_TYPE.NUMBER}`}
+                  events={[
+                    EFocusEvents.FOCUS,
+                    EFocusEvents.BLUR,
+                    EKeyboardEvents.KEY_UP,
+                  ]}
                 >
-                  {buttonText}
-                </button>
+                  <ReactInputMaskWidget
+                    name={FIELD_NAME.PHONE_NUMBER}
+                    value={cabinetDeal.dealInfo.dealNo}
+                    className={style.input}
+                    invalid={!validForm}
+                    type={INPUT_TYPE.TEL}
+                    mask={dealNoMask}
+                    placeholder={dealNoMask.replace(/9/g, '*')}
+                    onChange={this.onChangeHandler}
+                    role={AbstractRoles.input}
+                  />
+                </WithTracking>
+                <WithTracking
+                  id={`RepaymentForm-${WidgetRoles.button}-${BUTTON_TYPE.SUBMIT}`}
+                  events={[EMouseEvents.CLICK]}
+                >
+                  <button
+                    className={style.button}
+                    type={BUTTON_TYPE.SUBMIT}
+                    role={WidgetRoles.button}
+                  >
+                    {buttonText}
+                  </button>
+                </WithTracking>
               </div>
             </form>
           )}

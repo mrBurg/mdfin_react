@@ -1,13 +1,15 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { GetStaticProps, GetStaticPropsContext } from 'next';
 
-import { fetchCopyright, fetchStaticData } from '../src/apis';
-import { TJSON, TCopyright, TComponenProps } from '../src/interfaces';
-import { WrongAccount } from '../src/components/WrongAccount';
+import { TStores } from '@stores';
+import { WrongAccount } from '@components/WrongAccount';
+import { TCopyright, TJSON } from '@interfaces';
+import { fetchCopyright, fetchStaticData } from '@src/apis';
+import { isDev } from '@utils';
 
-const WrongaccountPage = (props: TComponenProps): ReactElement => {
+const WrongaccountPage = (props: TStores): ReactElement => {
   return (
-    <div className='page-container'>
+    <div className="page-container">
       <WrongAccount {...props} />
     </div>
   );
@@ -30,9 +32,10 @@ export const getStaticProps: GetStaticProps = async (
 
   const copyright: TCopyright = await fetchCopyright();
 
+  if (isDev) console.info('Context:', context);
+
   return {
     props: {
-      ...context,
       pageData: { copyright: copyright.less, ...pageData },
       template,
     },

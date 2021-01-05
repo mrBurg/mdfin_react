@@ -28,9 +28,14 @@ msgstr "Repayment"
 msgid "Sign In"
 msgstr "Log In"
 
+#. USD
+#. Unicode U+0024
+#. HTML &#36; or &#x24;
+#. UTF-16 0x24
+#. URL %24
 #: 
 msgid "Currency"
-msgstr "USD"
+msgstr "$"
 
 #: 
 msgid "More"
@@ -73,18 +78,6 @@ msgid "dateTo"
 msgstr "Payment date"
 
 #: 
-msgid "lastPaymentDate"
-msgstr "Last payment date"
-
-#: 
-msgid "lastPaymentAmount"
-msgstr "Last Payment Amount"
-
-#: 
-msgid "dealNo"
-msgstr "Agreements"
-
-#: 
 msgid "appnum"
 msgstr "Agreements"
 
@@ -93,18 +86,6 @@ msgid "Day"
 msgid_plural "Days"
 msgstr[0] "day"
 msgstr[1] "days"
-
-#:
-msgid "toPay"
-msgstr "Pay"
-
-#:
-msgid "loanAgreement"
-msgstr "Loan Agreement"
-
-#:
-msgid "maskedName"
-msgstr "Name"
 
 #: 
 msgid "Second"
@@ -118,3 +99,32 @@ msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "You will be redirected in %d second"
 msgstr[1] "You will be redirected in %d seconds"
+
+#: 
+msgid "lastPaymentDate"
+msgstr "Last payment date"
+
+#: 
+msgid "lastPaymentAmount"
+msgstr "Last Payment Amount"
+
+#: 
+msgid "dealNo"
+msgstr "Agreements"
+
+#: 
+msgid "toPay"
+msgstr "Pay"
+
+#: 
+msgid "loanAgreement"
+msgstr "Loan Agreement"
+
+#: 
+msgid "maskedName"
+msgstr "Name"
+
+#: 
+msgid "totalAmountActions"
+msgstr "The total amount"
+

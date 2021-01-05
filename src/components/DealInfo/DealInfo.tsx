@@ -1,15 +1,14 @@
-import { ReactElement, Fragment, PureComponent } from 'react';
+import React, { ReactElement, Fragment, PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
 import classNames from 'classnames';
 import _ from 'lodash';
 
 import style from './DealInfo.module.scss';
-
-import { BUTTON_TYPE } from '../../constants';
-import { gt } from '../../utils';
-import { CellData } from '../hocs';
-import { STORE_IDS } from '../../stores';
+import { FieldDataConverter } from '@components/hocs';
+import { BUTTON_TYPE } from '@src/constants';
+import { STORE_IDS } from '@stores';
 import { TDealInfoProps } from './@types';
+import { gt } from '@utils';
 
 @inject(STORE_IDS.LOAN_STORE, STORE_IDS.REPAYMENT_STORE)
 @observer
@@ -36,7 +35,7 @@ export class DealInfo extends PureComponent<TDealInfoProps> {
     const { className, title, params } = this.props;
 
     return (
-      <div className={classNames(className, style.dealInfo)}>
+      <div className={classNames(style.dealInfo, className)}>
         <table className={style.datatable}>
           <thead>
             <tr>
@@ -58,7 +57,7 @@ export class DealInfo extends PureComponent<TDealInfoProps> {
                           {value}
                         </a>
                       ) : (
-                        <CellData type={text} value={value} />
+                        <FieldDataConverter type={text} value={value} />
                       )}
                     </td>
                   </tr>

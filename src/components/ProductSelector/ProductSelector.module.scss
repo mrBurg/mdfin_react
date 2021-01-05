@@ -56,14 +56,31 @@
     font-weight: 600;
   }
 
-  &Input {
+  &Input,
+  &InputWidget {
     width: 170px;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
     font-size: 1.2em;
-    font-weight: 600;
+    background-color: $white;
+    padding: px2em(10px);
+    border-radius: px2em(5px);
+  }
+
+  &Input {
     text-align: right;
+    font-weight: 600;
+    border: none;
+  }
+
+  &InputWidget {
+    .input {
+      text-align: right;
+      font-weight: 600;
+      border: none;
+    }
+
+    .symbol {
+      margin-left: 0.2em;
+    }
   }
 }
 

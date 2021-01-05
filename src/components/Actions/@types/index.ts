@@ -1,5 +1,5 @@
-import { LoanStore } from '../../../stores/LoanStore';
-import { RepaymentStore } from '../../../stores/RepaymentStore';
+import { LoanStore } from '@src/stores/LoanStore';
+import { RepaymentStore } from '@src/stores/RepaymentStore';
 
 export type TActionsProps = {
   className?: string;

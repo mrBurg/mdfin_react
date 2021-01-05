@@ -1,17 +1,20 @@
-import { FC, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import classNames from 'classnames';
 import _ from 'lodash';
 
 import style from './RepaymentInfo.module.scss';
+import { WithTracking, WithDangerousHTML } from '@components/hocs';
+import { NonStandardRoles } from '@src/roles';
+import { EMouseEvents } from '@src/trackingConstants';
 import { TRepaymentInfoProps, TDataList } from './@types';
 
-export const RepaymentInfo: FC<TRepaymentInfoProps> = ({
+export const RepaymentInfo = ({
   dataList,
-}): ReactElement => {
+}: TRepaymentInfoProps): ReactElement => {
   return (
     <div className={style.container}>
       {_.map(dataList, (item: TDataList, index: number) => {
-        const { title, text, list } = item;
+        const { title, text } = item;
 
         return (
           <section key={index} className={style.section}>
@@ -19,17 +22,14 @@ export const RepaymentInfo: FC<TRepaymentInfoProps> = ({
             <div className={style.sectionText}>
               {title && <h3 className={style.title}>{title}</h3>}
               {text && (
-                <p
-                  className={style.text}
-                  dangerouslySetInnerHTML={{ __html: text }}
-                />
-              )}
-              {list && (
-                <ul className={style.list}>
-                  {_.map(list, (item: string, index: number) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
+                <WithTracking
+                  id={`RepaymentInfo-${NonStandardRoles.textWithHTML}`}
+                  events={[EMouseEvents.CLICK]}
+                >
+                  <WithDangerousHTML className={style.text}>
+                    {text}
+                  </WithDangerousHTML>
+                </WithTracking>
               )}
             </div>
           </section>

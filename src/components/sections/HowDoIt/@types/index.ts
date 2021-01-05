@@ -4,5 +4,5 @@ export type TItem = {
 
 export type THowDoItProps = {
   title: string;
-  items: Array<TItem>;
+  items: TItem[];
 };

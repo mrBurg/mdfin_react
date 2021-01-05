@@ -1,27 +1,24 @@
-import { ReactElement, PureComponent } from 'react';
+import React, { ReactElement, PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
 import classNames from 'classnames';
 import moment from 'moment';
 
 import style from './ProductSelector.module.scss';
-
-import { LoanButton } from '../LoanButton';
-import { gt, divideDigits } from '../../utils';
-import { SliderWidget } from '../widgets/SliderWidget';
-import { sliderAmountProps, sliderTermProps } from './props.json';
-import { INPUT_TYPE } from '../../constants';
-import { STORE_IDS } from '../../stores';
+import { WithTracking } from '@components/hocs';
+import { LoanButton } from '@components/LoanButton';
+import { Preloader } from '@components/Preloader';
+import { SliderWidget } from '@components/widgets/SliderWidget';
+import { INPUT_TYPE } from '@src/constants';
+import { AbstractRoles } from '@src/roles';
+import { STORE_IDS } from '@stores';
+import { divideDigits, gt } from '@utils';
 import { TProductSelectorProps } from './@types';
-import { Preloader } from '../Preloader';
+import { sliderAmountProps, sliderTermProps } from './props.json';
 
 @inject(STORE_IDS.PAGE_STORE, STORE_IDS.LOAN_STORE, STORE_IDS.USER_STORE)
 @observer
 export class ProductSelector extends PureComponent<TProductSelectorProps> {
-  public readonly state: any = {
-    isRender: false,
-  };
-
-  componentDidMount() {
+  componentDidMount(): void {
     const { loanStore, userStore } = this.props;
 
     //надо переписать ключи продукта (которые в файле props.json) в sliderAmountProps из текущего продукта
@@ -30,9 +27,7 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
       userStore.fetchWithAuth(async () => {
         await loanStore.getProduct();
         await this.calculate();
-        this.setState({
-          isRender: true,
-        });
+        loanStore.initProductSelectorForm();
       }, false);
     }
   }
@@ -74,51 +69,86 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
   private renderNotification(): ReactElement | null {
     const { loanStore, userStore } = this.props;
 
-    let isRenderNotification = false;
     if (loanStore && userStore) {
-      isRenderNotification =
+      const { productSelectorFormStatic } = loanStore;
+
+      const isRenderNotification =
         !userStore.userLoggedIn &&
         (loanStore.loanData.amount >
           loanStore.currentProductParams.defaultAmount ||
           loanStore.loanData.term > loanStore.currentProductParams.defaultTerm);
+
+      if (isRenderNotification && productSelectorFormStatic) {
+        const { notification } = productSelectorFormStatic;
+
+        return (
+          <div className={style.notification}>
+            <span>{notification}</span>
+          </div>
+        );
+      }
     }
 
-    if (isRenderNotification) {
-      return (
-        <div className={style.notification}>
-          <span>
-            Nếu bạn là khách hàng hiện hữu, Vui lòng đăng nhập vào Tài Khoản Cá
-            Nhân
-          </span>
-        </div>
-      );
-    }
     return null;
   }
 
   public render(): ReactElement | null {
     const { loanStore, userStore, className } = this.props;
-    const { isRender } = this.state;
 
     if (loanStore && userStore) {
-      const { amount, term } = loanStore.loanData;
-      const { totalAmount, dateTo } = loanStore.loanData;
+      const { productSelectorFormStatic, loanData } = loanStore;
 
-      if (isRender && loanStore.loanData) {
+      if (productSelectorFormStatic && loanData) {
+        const { amount, term, totalAmount, dateTo } = loanData;
+        const {
+          loanAmountText,
+          totalAmountText,
+          loanTermText,
+          termsAndCondition,
+          signIn,
+          registerLoan,
+          paymentDateText,
+        } = productSelectorFormStatic;
+
         return (
           <div className={classNames(style.productSelector, className)}>
             <div className={classNames(style.item, style.calculator)}>
               <div className={style.sliderContainer}>
                 <div className={style.sliderPanel}>
                   <div className={style.sliderOutput}>
-                    <span>Số Tiền Cần Vay</span>
-                    <input
+                    <span>{loanAmountText}</span>
+                    {/* <InputWidget
                       name='amount'
-                      value={divideDigits(amount)}
-                      className={style.sliderInput}
-                      type={INPUT_TYPE.TEXT}
-                      readOnly={true}
-                    />
+                      value={amount}
+                      className={style.sliderInputWidget}
+                      inputClassName={style.input}
+                      symbolClassName={style.symbol}
+                      symbol={gt.gettext('Currency')}
+                      type={INPUT_TYPE.TEL}
+                      transformer={divideDigits}
+                      onChange={(event) => {
+                        // console.info(data);
+                        // console.info(event.target.value);
+                        console.info(event, 'event');
+                        console.info(this, 'this');
+                      }}
+                    /> */}
+
+                    <WithTracking
+                      id={`ProductSelector-${AbstractRoles.input}-${INPUT_TYPE.TEXT}`}
+                      events={[]}
+                    >
+                      <input
+                        name="amount"
+                        value={`${divideDigits(amount)} ${gt.gettext(
+                          'Currency'
+                        )}`}
+                        className={style.sliderInput}
+                        type={INPUT_TYPE.TEXT}
+                        role={AbstractRoles.input}
+                        readOnly
+                      />
+                    </WithTracking>
                   </div>
                   <SliderWidget
                     sliderValue={amount}
@@ -130,14 +160,20 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
 
                 <div className={style.sliderPanel}>
                   <div className={style.sliderOutput}>
-                    <span>Kỳ hạn khoản vay</span>
-                    <input
-                      name='term'
-                      value={term}
-                      className={style.sliderInput}
-                      type={INPUT_TYPE.TEXT}
-                      readOnly={true}
-                    />
+                    <span>{loanTermText}</span>
+                    <WithTracking
+                      id={`ProductSelector-${AbstractRoles.input}-${INPUT_TYPE.TEXT}`}
+                      events={[]}
+                    >
+                      <input
+                        name="term"
+                        value={`${term} ${gt.ngettext('Day', 'Days', term)}`}
+                        className={style.sliderInput}
+                        type={INPUT_TYPE.TEXT}
+                        role={AbstractRoles.input}
+                        readOnly
+                      />
+                    </WithTracking>
                   </div>
                   <SliderWidget
                     sliderValue={term}
@@ -149,23 +185,35 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
               </div>
             </div>
             <div className={classNames(style.item, style.loanData)}>
-              <h2 className={style.loanTitle}>Điều Khoản và Điều Kiện</h2>
+              <h2 className={style.loanTitle}>{termsAndCondition}</h2>
               <table className={style.loanInfo}>
                 <tbody>
                   <tr>
-                    <td>Số Tiền Cần Vay</td>
+                    <td>{loanAmountText}</td>
                     <td className={style.loanInfoValue}>
-                      {divideDigits(amount!)} {gt.gettext('Currency')}
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: `${divideDigits(amount!)} ${gt.gettext(
+                            'Currency'
+                          )}`,
+                        }}
+                      />
                     </td>
                   </tr>
                   <tr>
-                    <td>Tổng số tiền cần thanh toán</td>
+                    <td>{totalAmountText}</td>
                     <td className={style.loanInfoValue}>
-                      {divideDigits(totalAmount!)} {gt.gettext('Currency')}
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: `${divideDigits(totalAmount!)} ${gt.gettext(
+                            'Currency'
+                          )}`,
+                        }}
+                      />
                     </td>
                   </tr>
                   <tr>
-                    <td>Ngày đến hạn thanh toán</td>
+                    <td>{paymentDateText}</td>
                     <td className={style.loanInfoValue}>
                       {moment(dateTo).format('DD.MM.YYYY')}
                     </td>
@@ -183,8 +231,8 @@ export class ProductSelector extends PureComponent<TProductSelectorProps> {
                     loanStore.currentProductParams.defaultAmount ||
                     loanStore?.loanData.term! >
                       loanStore.currentProductParams.defaultTerm)
-                    ? gt.gettext('Sign In')
-                    : gt.gettext('Register Loan')
+                    ? gt.gettext(signIn)
+                    : gt.gettext(registerLoan)
                 }
               />
             </div>

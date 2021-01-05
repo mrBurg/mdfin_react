@@ -28,7 +28,7 @@ export type TProductParams = {
 };
 
 export type TProductsParams = {
-  products: Array<TProductParams>;
+  products: TProductParams[];
 };
 
 export type TDocument = {
@@ -44,7 +44,54 @@ export type TDocumentUnit = {
   index: number;
   valid: boolean;
   full: boolean;
-  documents: Array<TDocument>; //должно быть обязательным
+  documents: TDocument[];
+};
+
+export type TAccountsFormStatic = {
+  isPresent: {
+    title: string;
+  };
+  notPresent: {
+    title: string;
+  };
+  buttons: {
+    add: string;
+    select: string;
+    enter: string;
+    confirm: string;
+  };
+};
+
+export type TAttachmentsFormStatic = {
+  isPresent: {
+    title: string;
+    buttons: {
+      idFront: string;
+      idBack: string;
+      selfie: string;
+      other: string;
+    };
+  };
+  notPresent: {
+    title: string;
+    buttons: {
+      idFront: string;
+      idBack: string;
+      selfie: string;
+      other: string;
+    };
+  };
+};
+
+export type TProductSelectorFormStatic = {
+  notification: string;
+  loanAmountText: string;
+  totalAmountText: string;
+  loanTermText: string;
+  termsAndCondition: string;
+  signIn: string;
+  registerLoan: string;
+  paymentDateText: string;
 };
 
 export type TAccount = {
@@ -55,7 +102,7 @@ export type TAccount = {
 };
 
 export type TAccountUnit = {
-  accounts: Array<TAccount>;
+  accounts: TAccount[];
   editable: boolean;
   selectedAccount_id: number;
 };
@@ -72,7 +119,7 @@ export type TCreditParams = {
 export type TCabinetApplication = {
   application?: TCreditParams;
   accountUnit?: TAccountUnit;
-  documentUnits?: Array<TDocumentUnit>;
+  documentUnits?: TDocumentUnit[];
   notification?: string;
 };
 
@@ -84,13 +131,13 @@ export type TDealInfo = {
   lastPaymentDate?: string;
   lastPaymentAmount?: number;
   paymentAmount: number;
-  documentUnits?: Array<TDocumentUnit>;
+  documentUnits?: TDocumentUnit[];
   maskedName?: string;
 };
 
 // сделака из ЛК
 export type TCabinetDeals = {
-  dealInfos: Array<TDealInfo>;
+  dealInfos: TDealInfo[];
 };
 
 //сделка из сайта (страница repayment)
@@ -106,7 +153,7 @@ export type TCabinetNotify = {
 };
 
 export type TNotificationIds = {
-  notificationIds?: Array<number>;
+  notificationIds?: number[];
 };
 
 export type TUpdateAccountProps = {
@@ -121,7 +168,3 @@ export type TCabinetPay = {
   paymentAmount: number;
   inCabinet: boolean;
 };
-
-/* export type TUpdatePaymentAmountProps = {
-  value: number;
-}; */

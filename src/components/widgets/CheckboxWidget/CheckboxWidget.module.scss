@@ -3,3 +3,11 @@
 .checkbox {
   font-size: 1em;
 }
+
+.error {
+  label {
+    &:before {
+      border-color: $red !important;
+    }
+  }
+}

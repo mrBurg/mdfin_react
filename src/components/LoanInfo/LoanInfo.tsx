@@ -1,12 +1,14 @@
-import { FC, ReactElement, Fragment } from 'react';
+import React, { ReactElement, Fragment } from 'react';
 import classNames from 'classnames';
 import _ from 'lodash';
 
 import style from './LoanInfo.module.scss';
-
+import { WithTracking, FieldDataConverter } from '@components/hocs';
+import { LINK_TARGET } from '@src/constants';
+import { WidgetRoles } from '@src/roles';
+import { EMouseEvents } from '@src/trackingConstants';
 import { TLoanInfoProps } from './@types';
-import { gt } from '../../utils';
-import { CellData } from '../hocs';
+import { gt } from '@utils';
 
 function renderSeparator(): ReactElement {
   return (
@@ -18,13 +20,13 @@ function renderSeparator(): ReactElement {
   );
 }
 
-export const LoanInfo: FC<TLoanInfoProps> = ({
+export const LoanInfo = ({
   className,
   title,
   params,
-}): ReactElement => {
+}: TLoanInfoProps): ReactElement => {
   return (
-    <div className={classNames(className, style.info)}>
+    <div className={classNames(style.info, className)}>
       <table className={style.datatable}>
         <thead>
           <tr>
@@ -45,11 +47,21 @@ export const LoanInfo: FC<TLoanInfoProps> = ({
                   <td>{gt.gettext(text)}</td>
                   <td>
                     {link ? (
-                      <a href={link} className={style.link}>
-                        {value}
-                      </a>
+                      <WithTracking
+                        id={`LoanInfo-${WidgetRoles.link}`}
+                        events={[EMouseEvents.CLICK]}
+                      >
+                        <a
+                          role={WidgetRoles.link}
+                          href={link}
+                          className={style.link}
+                          target={LINK_TARGET.BLANK}
+                        >
+                          {value}
+                        </a>
+                      </WithTracking>
                     ) : (
-                      <CellData type={text} value={value} />
+                      <FieldDataConverter type={text} value={value} />
                     )}
                   </td>
                 </tr>

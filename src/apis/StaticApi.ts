@@ -1,18 +1,18 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { URIS } from '../routes';
-import { handleErrors, makeStaticUri } from '../utils';
-import { TFetchStaticDataProps } from '../interfaces';
+import { TFetchStaticDataProps } from '@interfaces';
+import { URIS } from '@routes';
+import { handleErrors, makeStaticUri } from '@utils';
 import { fetchTemporaryData } from './temporaryData';
 
 export const fetchStaticData = async (
   params: TFetchStaticDataProps
 ): Promise<any> => {
-  const temporaryData = fetchTemporaryData(params);
-
-  if (temporaryData) return temporaryData;
-
   try {
+    const temporaryData = fetchTemporaryData(params);
+
+    if (temporaryData) return temporaryData;
+
     const { data }: AxiosResponse = await axios.get(
       makeStaticUri(URIS.L10N_LIST),
       {
@@ -26,7 +26,7 @@ export const fetchStaticData = async (
   }
 };
 
-export const fetchCopyright = async () => {
+export const fetchCopyright = async (): Promise<any> => {
   return await fetchStaticData({
     block: 'copyright',
     path: 'static',

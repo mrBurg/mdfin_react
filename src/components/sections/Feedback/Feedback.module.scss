@@ -75,7 +75,8 @@
   }
 }
 
-.phone {
+.emails,
+.phones {
   a {
     text-decoration: none;
     color: $black;
@@ -87,7 +88,7 @@
 }
 
 $index: 0;
-@each $item in (email, phone, workHour) {
+@each $item in (emails, phones, workHour) {
   .#{$item} {
     &:before {
       background-position-x: $index * -16px;
@@ -95,4 +96,18 @@ $index: 0;
   }
 
   $index: $index + 1;
+}
+
+.doc {
+  width: 100%;
+
+  .link {
+    font-weight: bold;
+    text-decoration: none;
+    color: $black;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }

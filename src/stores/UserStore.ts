@@ -1,15 +1,21 @@
 import { observable, action, runInAction } from 'mobx';
-import Fingerprint2 from 'fingerprintjs2';
 import _ from 'lodash';
 import { AxiosRequestConfig } from 'axios';
 import Router from 'next/router';
 import moment from 'moment';
-
-import { UserApi } from '../apis';
-import { OtpStore } from './OtpStore';
-import { URIS, URLS } from '../routes';
-import { setToLocalStorage, getMD5, makeApiUri } from '../utils';
-import { FINGER_PRINT_KEY, METHOD } from '../constants';
+import { GetResult } from '@fingerprintjs/fingerprintjs';
+import { CurrentDeviceInterface } from 'current-device';
+import { TJSON } from '@interfaces';
+import { URLS, URIS } from '@routes';
+import { UserApi } from '@src/apis';
+import { FINGER_PRINT_KEY, METHOD, SESSION_ID_KEY } from '@src/constants';
+import {
+  setToLocalStorage,
+  getMD5,
+  makeApiUri,
+  handleErrors,
+  setCookie,
+} from '@utils';
 import {
   TUserData,
   TUserAddress,
@@ -17,17 +23,19 @@ import {
   TUserJob,
   TUserObligatory,
 } from './@types/userStore';
-import { TJSON } from '../interfaces';
+import { OtpStore } from './OtpStore';
 
 export class UserStore {
+  private callbackSequence: (() => void)[] = [];
+  private gettingToken = false;
   @observable public userData: TUserData = {};
   @observable public userDataAddress: TUserAddress = {};
   @observable public userDataContacts: TUserContacts[] = [];
   @observable public userDataJob: TUserJob = {};
-  @observable public userLoggedIn: boolean = false;
-  public fingerprint?: string;
-  private callbackSequence: Array<Function> = [];
-  private gettingToken: boolean = false;
+  @observable public userLoggedIn = false;
+  public fingerprint?: GetResult;
+  public device?: CurrentDeviceInterface = void 0;
+  public session_id?: string = void 0;
 
   constructor(private userApi: UserApi) {}
 
@@ -40,59 +48,64 @@ export class UserStore {
     this.callbackSequence = [];
   }
 
-  public async fetchWithAuth(
-    callback: Function,
-    tokenRequired: boolean = true
-  ): Promise<void> {
-    return new Promise(async (resolve) => {
-      const accessToken = this.userApi.getAccessToken;
+  public fetchWithAuth(callback: () => void, tokenRequired = true): void {
+    const accessToken = this.userApi.getAccessToken;
 
-      this.callbackSequence.push(callback);
+    this.callbackSequence.push(callback);
 
-      if (accessToken) {
-        if (!this.gettingToken) {
-          this.gettingToken = true;
+    if (accessToken) {
+      if (!this.gettingToken) {
+        this.gettingToken = true;
 
-          const date = moment.now() / 1000;
+        const date = moment.now() / 1000;
 
-          try {
-            const { exp, iat } = JSON.parse(atob(accessToken.split('.')[1]));
+        try {
+          const { exp, iat } = JSON.parse(atob(accessToken.split('.')[1]));
 
-            if (date <= iat || date >= exp) {
-              await this.userApi.refreshToken();
-              this.completeCalls();
-              resolve();
-            }
-
+          if (date <= iat || date >= exp) {
+            this.userApi
+              .refreshToken()
+              .then(() => {
+                this.completeCalls();
+                return;
+              })
+              .catch((err) => {
+                handleErrors(err);
+              });
+          } else {
             this.completeCalls();
-            resolve();
-          } catch (err) {
-            await this.userApi.refreshToken();
-            this.completeCalls();
-            resolve();
           }
+        } catch (err) {
+          this.userApi
+            .refreshToken()
+            .then(() => {
+              this.completeCalls();
+              return;
+            })
+            .catch((err) => {
+              handleErrors(err);
+            });
         }
-      } else {
-        if (tokenRequired && Router.route != URLS.HOME) {
-          console.info(`Redirect to ${URLS.HOME}`);
-          Router.push(URLS.HOME);
-        }
-
-        this.completeCalls();
-        resolve();
       }
-    });
+    } else {
+      if (tokenRequired && Router.route != URLS.HOME) {
+        console.info(`Redirect to ${URLS.HOME}`);
+        Router.push(URLS.HOME);
+      }
+
+      this.completeCalls();
+    }
   }
 
   @action
-  public updateUserState() {
+  public updateUserState(): void {
     this.userLoggedIn = Boolean(this.userApi.getAccessToken);
   }
 
-  public logOut = () => {
+  public logOut = (): void => {
     const response = this.userApi.postHeaderRequestConfig(URIS.LOGOUT, {
       refreshToken: this.userApi.getRefreshToken,
-      fingerprint: this.fingerprint,
+      fingerprint: this.userApi.getFingerPrint,
     });
 
     this.userApi.logOut(response);
@@ -103,10 +116,39 @@ export class UserStore {
 
   /** Обновление данных пользователя */
   @action
-  public updateStore_UserData(data: TJSON) {
+  public updateStore_UserData(data: TJSON): void {
     this.userData = {
       ...this.userData,
       ...data,
+    };
+  }
+
+  /** Перезаписать место работы */
+  @action
+  public overwriteStore_Job(dataJob: TJSON): void {
+    //console.log(dataJob);
+    this.userDataJob = {
+      ...dataJob,
+    };
+  }
+
+  /** Обновление места работы */
+  @action
+  public updateStore_Job(dataJob: TUserJob): void {
+    //console.log(dataJob);
+    this.userDataJob = {
+      ...this.userDataJob,
+      ...dataJob,
+    };
+  }
+  @action
+  public updateStore_JobContact(dataJob: TJSON): void {
+    this.userDataJob = {
+      ...this.userDataJob,
+      contact: {
+        ...this.userDataJob.contact,
+        ...dataJob,
+      },
     };
   }
 
@@ -114,8 +156,8 @@ export class UserStore {
   @action
   public updateStore_Address(
     dataAddress: TUserAddress,
-    dataContacts?: Array<TUserContacts>
-  ) {
+    dataContacts?: TUserContacts[]
+  ): void {
     this.userDataAddress = {
       ...this.userDataAddress,
       ...dataAddress,
@@ -125,7 +167,7 @@ export class UserStore {
 
   /** Обновление елемента адреса */
   @action
-  public updateStore_userDataAddress(data: TJSON, _keyName?: string) {
+  public updateStore_userDataAddress(data: TJSON): void {
     this.userDataAddress = {
       ...this.userDataAddress,
       ...data,
@@ -134,7 +176,7 @@ export class UserStore {
 
   /** Обновление елемента адреса (контакты)*/
   @action
-  public updateStore_userDataContacts(data: TJSON, _keyName?: string) {
+  public updateStore_userDataContacts(data: TJSON): void {
     const newArray = {
       ...this.userDataContacts[0],
       ...data,
@@ -143,17 +185,15 @@ export class UserStore {
     this.userDataContacts = [newArray];
   }
 
-  /** Обновление места работы */
+  /** Удаление елемента адреса (контакты)*/
   @action
-  public updateStore_Job(dataJob: TUserJob) {
-    this.userDataJob = {
-      ...this.userDataJob,
-      ...dataJob,
-    };
+  public removeStore_userDataContacts(keyName: string): void {
+    const list: { [key: string]: any } = this.userDataContacts[0];
+    delete list[keyName], list;
   }
 
   /** Получить из сервиса следующий шаг/страницу */
-  public async getClientNextStep(): Promise<void> {
+  public async getClientNextStep(): Promise<any> {
     const response = await this.userApi.getClientNextStep();
 
     if (response) {
@@ -163,44 +203,56 @@ export class UserStore {
     }
   }
 
-  private fingerprintInit(): void {
-    Fingerprint2.get(
-      {
-        excludes: {
-          webgl: true,
-          webglVendorAndRenderer: true,
-        },
-      },
-      (components) => {
-        const values = _.map(components, (component) => {
-          return component.value;
-        });
-
-        const fp = Fingerprint2.x64hash128(values.join(''), 31);
-
-        setToLocalStorage(getMD5(FINGER_PRINT_KEY), fp);
-        this.fingerprint = fp;
-      }
-    );
+  @action
+  public setSessionID(sessionID: string): void {
+    this.session_id = sessionID;
+    setCookie(SESSION_ID_KEY, this.session_id);
   }
 
-  /** Создать отпечаток браузера клиента */
   @action
-  public makeFingerprint() {
-    if (window.requestIdleCallback) {
-      window.requestIdleCallback(() => {
-        this.fingerprintInit();
-      });
-    } else {
-      setTimeout(() => {
-        this.fingerprintInit();
-      }, 500);
+  public setCurrentDevice(device: CurrentDeviceInterface): void {
+    this.device = device;
+  }
+
+  /**
+   * @description Create client browser fingerprint
+   * @param callback Callback function
+   */
+  @action
+  public сollectFingerPrint(
+    fpCallback: (fpResult: GetResult) => Promise<void>
+  ): void {
+    if (this.fingerprint) {
+      setToLocalStorage(getMD5(FINGER_PRINT_KEY), this.fingerprint.visitorId);
+
+      if (fpCallback) fpCallback(this.fingerprint);
+
+      return;
     }
+
+    import('@fingerprintjs/fingerprintjs')
+      .then(async (FingerprintJS) => {
+        const fp = await FingerprintJS.load();
+        const fpResult = await fp.get();
+
+        this.fingerprint = fpResult;
+        setToLocalStorage(getMD5(FINGER_PRINT_KEY), this.fingerprint.visitorId);
+
+        if (fpCallback) fpCallback(fpResult);
+
+        return;
+      })
+      .catch((error) => {
+        console.info(error);
+      });
   }
 
   /** Отправить данные для получения ОТП */
-  public async sendUserData(userData: TUserObligatory, otpStore: OtpStore) {
-    let requestConfig: AxiosRequestConfig = {
+  public async sendUserData(
+    userData: TUserObligatory,
+    otpStore: OtpStore
+  ): Promise<void> {
+    const requestConfig: AxiosRequestConfig = {
       baseURL: makeApiUri(),
       method: METHOD.POST,
       url: (URIS as TJSON)[`SEND_OTP${otpStore.urisKey || ''}`],
@@ -218,7 +270,7 @@ export class UserStore {
 
     const { otpId } = otpData;
 
-    if (!!~otpId) {
+    if (~otpId) {
       const { phoneNumber } = userData;
 
       otpStore.updateOtpState({ otpId, phoneNumber });
@@ -227,7 +279,7 @@ export class UserStore {
 
   /** Получить данные для Obligatory */
   public async getWizardData_Obligatory(): Promise<void | boolean> {
-    let requestConfig = this.userApi.getHeaderRequestConfig(
+    const requestConfig = this.userApi.getHeaderRequestConfig(
       URIS.obligatory,
       this.userData
     );
@@ -243,7 +295,7 @@ export class UserStore {
 
   /** Получить данные для Address */
   public async getWizardData_Address(): Promise<void | boolean> {
-    let requestConfig = this.userApi.getHeaderRequestConfig(
+    const requestConfig = this.userApi.getHeaderRequestConfig(
       URIS.address,
       this.userData
     );
@@ -259,7 +311,7 @@ export class UserStore {
 
   /** Получить данные для Job */
   public async getWizardData_Job(): Promise<void | boolean> {
-    let requestConfig = this.userApi.getHeaderRequestConfig(
+    const requestConfig = this.userApi.getHeaderRequestConfig(
       URIS.job,
       this.userData
     );

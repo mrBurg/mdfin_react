@@ -1,107 +1,136 @@
-.ui.dropdown {
-  &.selection {
-    display: flex;
+.select-widget {
+  // & &__clear-iIndicator {}
+  // & &__container {}
+  & &__control {
+    padding: 0.75em 1.5em 0.75em 2em;
+    border-radius: 0.5em;
     cursor: pointer;
-    position: relative;
-    border: 1px solid $gray;
-    padding: px2em(12px) px2em(25px);
-    border-radius: px2em(8px);
-    align-items: center;
 
-    &.active {
-      .search {
-        display: block;
+    &--menu-is-open,
+    &--is-focused {
+      border-color: $gray;
+      box-shadow: none;
+
+      &:hover {
+        border-color: $gray;
       }
     }
-    .search {
+
+    &--menu-is-open {
+      .select-widget__indicator {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  // & &__dropdown-indicator {}
+  /* & &__group {
+    &-heading {}
+  } */
+  & &__indicators {
+    // &-container{}
+    svg {
       display: none;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 85%;
-      height: 100%;
-      padding: 10px;
-      border: none;
-      background: $white;
-      border-radius: px2em(8px);
-      padding: px2em(12px) px2em(25px);
     }
+  }
+  & &__indicator {
+    width: 16px;
+    height: 16px;
+    background: url('/theme/icons/icons_16x16.svg') -48px -64px no-repeat;
 
-    .icon {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      background: url('/theme/icons/icons_16x16.svg') -48px -64px no-repeat;
-      flex-shrink: 0;
-    }
-
-    .divider.text {
-      flex-grow: 1;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-
-    .menu {
-      left: 0;
-      position: absolute;
+    &-separator {
       display: none;
-      top: 100%;
-      background: $white;
-      box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-      border: 1px solid rgba(34, 36, 38, 0.15);
-      border-radius: px2em(8px);
-      width: 100%;
-      z-index: 10;
-      overflow-x: hidden;
-      overflow-y: auto;
-      backface-visibility: hidden;
-      transition: opacity 0.1s ease;
-      max-height: 21.37142857rem;
+    }
+  }
+  // & &__input {}
+  /* & &__loading {
+    &-indicator {}
+    &-message {}
+  } */
+  & &__menu {
+    margin-top: 0;
 
-      @include respond(lg) {
-        max-height: 16.02857143rem;
-      }
+    // &-list {}
+    // &-portal {}
+  }
 
-      @include respond(md) {
-        max-height: 10.68571429rem;
-      }
+  /* & &__multi {
+    &-value {}
+    &-calue-label {}
+    &-calue-remove {}
+  } */
+  // & &__no-options-message {}
+  & &__option {
+    cursor: pointer;
 
-      @include respond(ms) {
-        max-height: 8.01428571rem;
-      }
+    &--is-disabled {
+      opacity: 0.7;
+    }
+    &--is-focused {
+      background-color: lighten($gray, 18%);
+    }
+    &--is-selected {
+      background-color: $gray;
+    }
+  }
+  & &__placeholder {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+  }
+  // & &__single-value {}
+  & &__value-container {
+    padding: 0;
 
-      &:after,
-      &:before {
-        display: none;
-      }
+    * {
+      margin: 0;
+      padding: 0;
+    }
+  }
 
-      &.visible {
-        display: block;
-        visibility: visible;
-      }
+  &--has-error {
+    .select-widget {
+      &__control {
+        border-color: lighten($red, 25%);
 
-      .item {
-        padding: px2em(10px);
-        text-align: center;
-        transition: background-color 0.2s;
-
-        &:not(.selected):hover {
-          background-color: lighten($gray, 18%);
-        }
-
-        &.selected {
-          background-color: $gray;
+        &:hover {
+          border-color: lighten($red, 25%);
         }
       }
     }
   }
 
-  &.scrolling {
-    .menu {
-      max-height: 300px;
-      overflow-x: hidden;
-      overflow-y: auto;
+  &.orange {
+    .select-widget {
+      &__control {
+        background-color: $orange;
+        border: 1px solid $orange;
+
+        &.select-widget__control {
+          &--menu-is-open {
+            border-color: $gray;
+            background-color: $white;
+          }
+        }
+      }
+      &__indicator {
+        background-position-y: -48px;
+      }
+      &__menu {
+        margin-top: 0;
+      }
+      &__option {
+        &--is-focused {
+          background-color: lighten($orange, 18%);
+        }
+        &--is-selected {
+          background-color: $orange;
+        }
+      }
+      &__placeholder,
+      &__single-value {
+        color: $white;
+      }
     }
   }
 }

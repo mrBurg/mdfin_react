@@ -1,21 +1,20 @@
-import { ReactElement, FC } from 'react';
-
-import style from './Welcome.module.scss';
-import { ProductSelector } from '../../ProductSelector';
+import { WithDangerousHTML } from '@components/hocs';
+import { ProductSelector } from '@components/ProductSelector';
+import React, { ReactElement } from 'react';
 import { TWelcomeProps } from './@types';
 
-export const Welcome: FC<TWelcomeProps> = ({
+import style from './Welcome.module.scss';
+
+export const Welcome = ({
   title,
   description,
-}): ReactElement => {
+}: TWelcomeProps): ReactElement => {
   return (
     <section className={style.section}>
       <h1 className={style.title}>{title}</h1>
-      <p
-        className={style.description}
-        dangerouslySetInnerHTML={{ __html: description }}
-      />
-
+      <WithDangerousHTML tag={'p'} className={style.description}>
+        {description}
+      </WithDangerousHTML>
       <ProductSelector className={style.productSelector} />
     </section>
   );

@@ -18,3 +18,21 @@ $red: #e1160b;
 $blue: #2a70c8;
 $orange: #ffcb13;
 $yellow: #fdfac8;
+
+:export {
+  black: $black;
+  white: $white;
+  gray: $gray;
+  red: $red;
+  blue: $blue;
+  orange: $orange;
+  yellow: $yellow;
+  originalFontSize: $font-size;
+  xxs: $xxs;
+  xs: $xs;
+  sm: $sm;
+  md: $md;
+  lg: $lg;
+  xl: $xl;
+  xxl: $xxl;
+}

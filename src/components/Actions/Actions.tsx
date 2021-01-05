@@ -1,14 +1,20 @@
-import { PureComponent, ReactElement } from 'react';
+import React, { PureComponent, ReactElement } from 'react';
 import classNames from 'classnames';
 import { observer, inject } from 'mobx-react';
 
 import style from './Actions.module.scss';
-
-import { BUTTON_TYPE, INPUT_TYPE, FIELD_NAME } from '../../constants';
-import { gt, divideDigits } from '../../utils';
-import { TOnInputChangeHandler, TOnClickHandler } from '../../interfaces';
+import { WithTracking } from '@components/hocs';
+import { TOnInputChangeHandler, TOnClickHandler } from '@interfaces';
+import { INPUT_TYPE, FIELD_NAME, BUTTON_TYPE } from '@src/constants';
+import { AbstractRoles, WidgetRoles } from '@src/roles';
+import {
+  EFocusEvents,
+  EKeyboardEvents,
+  EMouseEvents,
+} from '@src/trackingConstants';
+import { STORE_IDS } from '@stores';
+import { divideDigits, gt } from '@utils';
 import { TActionsProps } from './@types';
-import { STORE_IDS } from '../../stores';
 
 @inject(STORE_IDS.LOAN_STORE, STORE_IDS.REPAYMENT_STORE)
 @observer
@@ -56,42 +62,66 @@ export class Actions extends PureComponent<TActionsProps> {
     const { paymentAmount, extensionAmount, closingAmount } = this.props;
 
     return (
-      <div className={classNames(className, style.actions)}>
+      <div className={classNames(style.actions, className)}>
         <label className={style.amount}>
           <p className={style.amountText}>Thanh Toán</p>
-          <input
-            required
-            name={FIELD_NAME.PAYMENT_AMOUNT}
-            type={INPUT_TYPE.NUMBER}
-            className={style.input}
-            value={paymentAmount}
-            onChange={this.onChangeHandler}
-            placeholder={'Thanh Toán'}
-          />
+          <WithTracking
+            id={`Actions-${AbstractRoles.input}-${INPUT_TYPE.NUMBER}-${FIELD_NAME.PAYMENT_AMOUNT}`}
+            events={[
+              EFocusEvents.FOCUS,
+              EFocusEvents.BLUR,
+              EKeyboardEvents.KEY_UP,
+            ]}
+          >
+            <input
+              required
+              name={FIELD_NAME.PAYMENT_AMOUNT}
+              type={INPUT_TYPE.NUMBER}
+              className={style.input}
+              value={paymentAmount}
+              onChange={this.onChangeHandler}
+              placeholder={'Thanh Toán'}
+              role={AbstractRoles.input}
+            />
+          </WithTracking>
         </label>
-        <button
-          data-amount={extensionAmount}
-          type={BUTTON_TYPE.BUTTON}
-          className={style.button}
-          onClick={this.onClickHandler}
-          disabled={!extensionAmount}
+        <WithTracking
+          id={`Actions-${WidgetRoles.button}-${BUTTON_TYPE.BUTTON}`}
+          events={[EMouseEvents.CLICK]}
         >
-          <p className={style.buttonText}>Số Tiền Gia Hạn Thêm</p>
-          <p className={style.buttonAmount}>
-            {divideDigits(extensionAmount)} {gt.gettext('Currency')}
-          </p>
-        </button>
-        <button
-          data-amount={closingAmount}
-          type={BUTTON_TYPE.BUTTON}
-          className={style.button}
-          onClick={this.onClickHandler}
+          <button
+            data-amount={extensionAmount}
+            type={BUTTON_TYPE.BUTTON}
+            className={style.button}
+            onClick={this.onClickHandler}
+            disabled={!extensionAmount}
+            role={WidgetRoles.button}
+          >
+            <p className={style.buttonText}>Số Tiền Gia Hạn Thêm</p>
+            <p className={style.buttonAmount}>
+              {divideDigits(extensionAmount)} {gt.gettext('Currency')}
+            </p>
+          </button>
+        </WithTracking>
+        <WithTracking
+          id={`Actions-${WidgetRoles.button}-${BUTTON_TYPE.BUTTON}`}
+          events={[EMouseEvents.CLICK]}
         >
-          <p className={style.buttonText}>Tổng Số Tiền</p>
-          <p className={style.buttonAmount}>
-            {divideDigits(closingAmount)} {gt.gettext('Currency')}
-          </p>
-        </button>
+          <button
+            data-amount={closingAmount}
+            type={BUTTON_TYPE.BUTTON}
+            className={style.button}
+            onClick={this.onClickHandler}
+            role={WidgetRoles.button}
+          >
+            <p className={style.buttonText}>
+              {gt.gettext('totalAmountActions')}
+            </p>
+            <p className={style.buttonAmount}>
+              {divideDigits(closingAmount)} {gt.gettext('Currency')}
+            </p>
+          </button>
+        </WithTracking>
       </div>
     );
   }

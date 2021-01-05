@@ -1,8 +1,8 @@
-import { TJSON } from '../../../../interfaces';
+import { TJSON } from '@interfaces';
 
 export type TSliderWidgetProps = {
   sliderValue?: number;
   sliderProps: TJSON;
-  onValueSliderChange: Function;
-  onAfterChange: Function;
+  onValueSliderChange: (value: number, calculate: boolean) => void;
+  onAfterChange: (value: number, calculate: boolean) => void;
 };

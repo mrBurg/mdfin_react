@@ -1,4 +1,4 @@
-import { BASE_URLS, CLIENT_URLS } from '..';
+import { BASE_URLS, CLIENT_URLS } from '@routes';
 
 export type TRouter = {
   href: BASE_URLS | CLIENT_URLS;

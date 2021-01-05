@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import React, { FC, ReactElement } from 'react';
 
 import style from './preloader.module.scss';
 import Spinner from './spinner.svg';

@@ -2,6 +2,7 @@ declare module 'rc-slider' {
   const Slider: React.ComponentType<Partial<
     import('rc-slider/lib/Slider').SliderProps & {
       className?: string;
+      role?: string;
     }
   >>;
 

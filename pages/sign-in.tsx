@@ -1,14 +1,16 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { GetStaticProps, GetStaticPropsContext } from 'next';
 
-import { TJSON, TCopyright, TComponenProps } from '../src/interfaces';
-import { fetchCopyright, fetchStaticData } from '../src/apis';
-import { Authorization } from '../src/components/Authorization';
-import { URIS_SUFFIX } from '../src/constants';
+import { TStores } from '@stores';
+import { Authorization } from '@components/Authorization';
+import { URIS_SUFFIX } from '@src/constants';
+import { fetchCopyright, fetchStaticData } from '@src/apis';
+import { TCopyright, TJSON } from '@interfaces';
+import { isDev } from '@utils';
 
-const SignInPage = (props: TComponenProps): ReactElement => {
+const SignInPage = (props: TStores): ReactElement => {
   return (
-    <div className='page-container'>
+    <div className="page-container">
       <Authorization page={URIS_SUFFIX.SIGN_IN} {...props} />
     </div>
   );
@@ -31,9 +33,10 @@ export const getStaticProps: GetStaticProps = async (
 
   const copyright: TCopyright = await fetchCopyright();
 
+  if (isDev) console.info('Context:', context);
+
   return {
     props: {
-      ...context,
       pageData: { copyright: copyright.less, ...pageData },
       template,
     },

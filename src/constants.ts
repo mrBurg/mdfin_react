@@ -1,15 +1,24 @@
-export const ENVIRONMENT: string = process.env.ENVIRONMENT || '';
-export const PO_PROJECT_HOST: string = process.env.PO_PROJECT_HOST || '';
-export const PO_API: string = process.env.PO_API || '';
-export const PO_API_HOST: string = process.env.PO_API_HOST || '';
-export const PO_API_PORT: string = process.env.PO_API_PORT || '';
-export const ACCESS_TOKEN_KEY: string = process.env.ACCESS_TOKEN_KEY || '';
-export const REFRESH_TOKEN_KEY: string = process.env.REFRESH_TOKEN_KEY || '';
-export const SESSION_ID_KEY: string = process.env.SESSION_ID_KEY || '';
-export const FINGER_PRINT_KEY: string = process.env.FINGER_PRINT_KEY || '';
-export const LOCALE_KEY: string = process.env.LOCALE_KEY || '';
+import { TJSON } from '@interfaces';
+import moment from 'moment';
 
-export const EVENT_PREFIXES: Array<string> = ['webkit', 'moz', 'MS', 'o', ''];
+export const ENVIRONMENT = process.env.ENVIRONMENT || '';
+export const PO_PROJECT_HOST = process.env.PO_PROJECT_HOST || '';
+export const PO_API = process.env.PO_API || '';
+export const PO_API_HOST = process.env.PO_API_HOST || '';
+export const PO_API_PORT = process.env.PO_API_PORT || '';
+export const ACCESS_TOKEN_KEY = process.env.ACCESS_TOKEN_KEY || '';
+export const REFRESH_TOKEN_KEY = process.env.REFRESH_TOKEN_KEY || '';
+export const SESSION_ID_KEY = process.env.SESSION_ID_KEY || '';
+export const EXTERNAL_SESSION_KEY = process.env.EXTERNAL_SESSION_KEY || '';
+export const FINGER_PRINT_KEY = process.env.FINGER_PRINT_KEY || '';
+export const LOCALE_KEY = process.env.LOCALE_KEY || '';
+
+export const EVENT_PREFIXES = ['webkit', 'moz', 'MS', 'o', ''];
+
+export enum EEvents {
+  //Router Events
+  CHANGE_COMPLETE = 'routeChangeComplete',
+}
 
 export enum CONSTRUCTOR {
   ARRAY = 'Array',
@@ -56,6 +65,7 @@ export enum HEADERS {
   COOKIE = 'Cookie',
   SESSIONID = 'SESSIONID',
   CONTENT_TYPE = 'Content-Type',
+  REFERER = 'Referer',
 }
 
 export enum RESPONSE_STATUS {
@@ -70,6 +80,8 @@ export enum OTP_ACTION {
 }
 
 export enum FIELD_NAME {
+  OTP_AGREE_CHECKBOX = 'otpAgreeCheckbox',
+
   /* Obligatory */
   PHONE_NUMBER = 'phoneNumber',
   NAME = 'name',
@@ -121,8 +133,8 @@ export enum FIELD_NAME {
 
   /* Job contact */
   JOB_CONTACT_ID = 'id',
-  JOB_CONTACT_PHONE = 'phoneNumber',
-  JOB_CONTACT_NAME = 'name',
+  JOB_CONTACT_PHONE = 'jobContact_phoneNumber',
+  JOB_CONTACT_NAME = 'jobContact_name',
   JOB_CONTACT_TYPE_ID = 'type_id',
 
   ACCOUNT_ID = 'account_id',
@@ -135,4 +147,36 @@ export const GRAPHIC_FILES = ['.gif', '.jpg', '.jpeg', '.png', '.bmp', '.tiff'];
 
 export enum STATUS {
   NOT_AUTHORIZED = 401,
+  BAD_REQUEST = 400,
+}
+
+export enum DOC_TYPE {
+  idFront = 4,
+  idBack = 5,
+  selfie = 6,
+  other = 13,
+}
+
+export const dynamicTagslist: TJSON = {
+  year: `${moment().format('YYYY')}`,
+};
+
+export enum CALLBACK_TYPE {
+  phones = 'tel',
+  emails = 'mailto',
+  calls = 'callto',
+}
+
+export enum LINK_TARGET {
+  BLANK = '_blank',
+}
+
+export enum COMPONENT_TYPE {
+  STRING = 'string',
+  FUNCTION = 'function',
+  OBJECT = 'object',
+}
+
+export enum COOKIE {
+  SESSIONID = 'SESSIONID',
 }

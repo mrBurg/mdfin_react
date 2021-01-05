@@ -1,11 +1,18 @@
 {
-  "pageTitle": "Liên Hệ",
+  "pageTitle": "Contacts",
   "phones": {
     "title": "Điện Thoại:",
-    "list": ["+840 - 12 - 345 - 67 - 89"]
+    "main": 0,
+    "list": ["02873026663"]
   },
   "emails": {
     "title": "E-mail:",
+    "main": 0,
     "list": ["info@wеbvay.vn"]
+  },
+  "workHour": "24/7",
+  "termsAndConditions": {
+    "text": "Điều Khoản và Điều Kiện",
+    "link": "/docs/info/term_conditions_service.pdf"
   }
 }

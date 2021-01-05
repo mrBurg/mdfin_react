@@ -1,6 +1,6 @@
-import { PageStore } from '../../../stores/PageStore';
-import { LoanStore } from '../../../stores/LoanStore';
-import { UserStore } from '../../../stores/UserStore';
+import { LoanStore } from '@src/stores/LoanStore';
+import { PageStore } from '@src/stores/PageStore';
+import { UserStore } from '@src/stores/UserStore';
 
 export type TProductSelectorProps = {
   pageStore?: PageStore;

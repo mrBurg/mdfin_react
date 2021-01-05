@@ -10,6 +10,23 @@
     ], */
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     ["@babel/plugin-proposal-class-properties", { "loose": true }],
-    "inline-react-svg"
+    "inline-react-svg",
+    [
+      "module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "@components": "./src/components",
+          "@interfaces": "./src/interfaces",
+          "@libs": "./src/libs",
+          "@locales": "./src/locales",
+          "@routes": "./src/routes",
+          "@scss": "./src/scss",
+          "@stores": "./src/stores",
+          "@utils": "./src/utils",
+          "@src": "./src"
+        }
+      }
+    ]
   ]
 }

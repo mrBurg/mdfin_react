@@ -1,12 +1,10 @@
-export type TListProps = Array<string>;
-
-export type TItemProps = {
+export type TContactsItem = {
+  list: string[];
   title: string;
-  list: TListProps;
+  main: number;
 };
 
 export type TContactsProps = {
-  [key: string]: TItemProps;
+  phones: TContactsItem;
+  emails: TContactsItem;
 };
-
-export type TIndex = number | string;

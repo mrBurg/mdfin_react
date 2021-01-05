@@ -18,19 +18,24 @@ msgstr "Liên Hệ"
 
 #: 
 msgid "FAQ"
-msgstr "CÂU HỎI THƯỜNG GẶP"
+msgstr "Câu Hỏi Thường Gặp"
 
 #: 
 msgid "Repayment"
-msgstr "Thanh Toán Khoản Vay"
+msgstr "THANG TOÁN KHOẢN VAY"
 
 #: 
 msgid "Sign In"
 msgstr "Đăng Nhập"
 
+#. VND (dong sign)
+#. Unicode U+20AB
+#. HTML &#8363; or &#x20ab;
+#. UTF-16 	0x20AB
+#. URL %E2%82%AB
 #: 
 msgid "Currency"
-msgstr "VND"
+msgstr "₫"
 
 #: 
 msgid "More"
@@ -73,6 +78,26 @@ msgid "dateTo"
 msgstr "Ngày đến hạn thanh toán"
 
 #: 
+msgid "appnum"
+msgstr "Những Thỏa Thuận"
+
+#: 
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] "ngày"
+
+#: 
+msgid "Second"
+msgid_plural "Seconds"
+msgstr[0] "giây"
+
+#: 
+msgctxt "Will be redirected"
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "Bạn sẽ được chuyển hướng sau %d giây"
+
+#: 
 msgid "lastPaymentDate"
 msgstr "Ngày thanh toán gần nhất"
 
@@ -85,33 +110,17 @@ msgid "dealNo"
 msgstr "Những Thỏa Thuận"
 
 #: 
-msgid "appnum"
-msgstr "Những Thỏa Thuận"
-
-#: 
-msgid "Day"
-msgid_plural "Days"
-msgstr[0] "ngày"
-
-#:
 msgid "toPay"
 msgstr "Thanh Toán"
 
-#:
+#: 
 msgid "loanAgreement"
 msgstr "Hợp đồng Vay"
 
-#:
+#: 
 msgid "maskedName"
 msgstr "Khách hàng"
 
 #: 
-msgid "Second"
-msgid_plural "Seconds"
-msgstr[0] "giây"
-
-#: 
-msgctxt "Will be redirected"
-msgid "%d second"
-msgid_plural "%d seconds"
-msgstr[0] "Bạn sẽ được chuyển hướng sau %d giây"
+msgid "totalAmountActions"
+msgstr "Tổng Số Tiền"

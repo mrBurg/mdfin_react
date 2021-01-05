@@ -1,4 +1,4 @@
-import {
+import React, {
   MouseEvent,
   ReactElement,
   PureComponent,
@@ -11,19 +11,33 @@ import axios from 'axios';
 import _ from 'lodash';
 
 import style from './DeveloperMenu.module.scss';
-
-import { handleErrors, makeStaticUri } from '../../../utils';
-import { allRoutes, URIS } from '../../../routes';
+import { allRoutes, URIS } from '@routes';
+import { TRouter } from '@src/routes/@types';
+import { STORE_IDS } from '@stores';
+import { makeStaticUri, handleErrors } from '@utils';
 import { LanguagesSwitcher } from '..';
-import { STORE_IDS } from '../../../stores';
-import { TDeveloperMenuProps } from './@types';
-import { TRouter } from '../../../routes/@types';
+import { TDeveloperMenuProps, TDeveloperMenuState } from './@types';
 
 @inject(STORE_IDS.USER_STORE)
 export class DeveloperMenu extends PureComponent<TDeveloperMenuProps> {
-  public readonly state = {
-    floatRight: true,
+  public readonly state: TDeveloperMenuState = {
+    allRoutes: [],
+    float: true,
   };
+
+  public componentDidMount(): void {
+    allRoutes.sort((prev, next) => {
+      return Number(prev.title > next.title);
+    });
+
+    this.setState((state: TDeveloperMenuState) => {
+      return {
+        ...state,
+        allRoutes,
+      };
+    });
+  }
+
   private menuRef: RefObject<HTMLDivElement> = createRef();
 
   private async updateStatic(
@@ -54,17 +68,17 @@ export class DeveloperMenu extends PureComponent<TDeveloperMenuProps> {
         onContextMenu={(event: MouseEvent<HTMLDivElement>) => {
           event.preventDefault();
 
-          this.setState((state: any) => {
+          this.setState((state: TDeveloperMenuState) => {
             return {
               ...state,
-              floatRight: !state.floatRight,
+              float: !state.float,
             };
           });
 
           if (this.menuRef.current) {
-            const { floatRight } = this.state;
+            const { float } = this.state;
 
-            this.menuRef.current.style.right = floatRight ? '0' : 'auto';
+            this.menuRef.current.style.right = float ? '0' : 'auto';
           }
         }}
       >
@@ -76,7 +90,9 @@ export class DeveloperMenu extends PureComponent<TDeveloperMenuProps> {
             return (
               <li key={index} className={style.item}>
                 <Link href={href}>
-                  <a className={style.link}>{title}</a>
+                  <a className={style.link} href={href}>
+                    {title}
+                  </a>
                 </Link>
               </li>
             );

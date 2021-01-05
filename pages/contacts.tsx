@@ -1,23 +1,26 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { GetStaticProps, GetStaticPropsContext } from 'next';
 
-import { gt } from '../src/utils';
-import { fetchCopyright, fetchStaticData } from '../src/apis';
-import { TJSON, TCopyright, TComponenProps } from '../src/interfaces';
-import { Contacts } from '../src/components/sections';
+import { TStores } from '@stores';
+import { TContactsProps } from '@components/sections/Contacts/@types';
+import { Contacts } from '@components/sections';
+import { fetchCopyright, fetchStaticData } from '@src/apis';
+import { TCopyright, TJSON } from '@interfaces';
+import { gt, isDev } from '@utils';
 
-const ContactsPage = (props: TComponenProps): ReactElement => {
+const ContactsPage = (props: TStores): ReactElement => {
   const {
     pageStore: {
-      pageData: { pageTitle, phones, emails },
+      pageData: { pageTitle, ...contacts },
     },
   } = props;
 
+  const contactsData = contacts as TContactsProps;
+
   return (
     <>
-      <h2 className='page-title'>{gt.gettext(pageTitle)}</h2>
-
-      <Contacts phones={phones} emails={emails} />
+      <h2 className="page-title">{gt.gettext(pageTitle)}</h2>
+      <Contacts {...contactsData} />
     </>
   );
 };
@@ -39,9 +42,10 @@ export const getStaticProps: GetStaticProps = async (
 
   const copyright: TCopyright = await fetchCopyright();
 
+  if (isDev) console.info('Context:', context);
+
   return {
     props: {
-      ...context,
       pageData: { copyright: copyright.normal, ...pageData },
       template,
     },

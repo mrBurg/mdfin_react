@@ -1,20 +1,30 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { GetStaticProps, GetStaticPropsContext } from 'next';
 
+import { TStores } from '@stores';
 import {
-  Welcome,
-  HowItWorks,
+  CalculationExample,
   HowDoIt,
+  HowItWorks,
   NotDifficult,
-} from '../src/components/sections';
-import { TJSON, TCopyright, TComponenProps } from '../src/interfaces';
-import { fetchCopyright, fetchStaticData } from '../src/apis';
-import { Feedback } from '../src/components/sections/Feedback';
+  Welcome,
+} from '@components/sections';
+import { Feedback } from '@components/sections/Feedback';
+import { fetchCopyright, fetchStaticData } from '@src/apis';
+import { TCopyright, TJSON } from '@interfaces';
+import { isDev } from '@utils';
 
-const IndexPage = (props: TComponenProps): ReactElement => {
+const IndexPage = (props: TStores): ReactElement => {
   const {
     pageStore: {
-      pageData: { welcome, howItWorks, howDoIt, notDifficult },
+      pageData: {
+        welcome,
+        howItWorks,
+        howDoIt,
+        notDifficult,
+        contactsData,
+        calculationExample,
+      },
     },
   } = props;
 
@@ -24,7 +34,8 @@ const IndexPage = (props: TComponenProps): ReactElement => {
       <HowItWorks {...howItWorks} />
       <HowDoIt {...howDoIt} />
       <NotDifficult {...notDifficult} />
-      <Feedback />
+      <Feedback {...contactsData} />
+      <CalculationExample {...calculationExample} />
     </>
   );
 };
@@ -39,17 +50,31 @@ export const getStaticProps: GetStaticProps = async (
     path: 'template',
   });
 
-  const pageData: TJSON = await fetchStaticData({
+  const mainData: TJSON = await fetchStaticData({
     block: 'main-page',
+    path: 'static',
+  });
+
+  const contactsData: TJSON = await fetchStaticData({
+    block: 'contacts-page',
     path: 'static',
   });
 
   const copyright: TCopyright = await fetchCopyright();
 
+  const pageData = {
+    ...mainData,
+    contactsData,
+  };
+
+  if (isDev) console.info('Context:', context);
+
   return {
     props: {
-      ...context,
-      pageData: { copyright: copyright.normal, ...pageData },
+      pageData: {
+        copyright: copyright.normal,
+        ...pageData,
+      },
       template,
     },
   };

@@ -1,9 +1,9 @@
-import { LoanStore } from '../../../stores/LoanStore';
-import { TCabinetNotify } from '../../../stores/@types/loanStore';
-import { UserStore } from '../../../stores/UserStore';
+import { LoanStore } from '@src/stores/LoanStore';
+import { UserStore } from '@src/stores/UserStore';
+import { TCabinetNotify } from '@stores-types/loanStore';
 
 export type TNotify = {
-  //notifications: Array<string> | string;
+  //notifications: string[] | string;
   className?: string;
   loanStore: LoanStore;
   userStore: UserStore;
@@ -11,7 +11,7 @@ export type TNotify = {
 
 export type TState = {
   isRender: boolean;
-  cabinetNotify?: Array<TCabinetNotify>;
+  cabinetNotify?: TCabinetNotify[];
 };
 
 export type TNotifyItem = {

@@ -1,11 +1,13 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { GetStaticProps, GetStaticPropsContext } from 'next';
 
-import { AccordionWidget } from '../src/components/widgets/AccordionWidget';
-import { TJSON, TCopyright, TComponenProps } from '../src/interfaces';
-import { fetchCopyright, fetchStaticData } from '../src/apis';
+import { TStores } from '@stores';
+import { AccordionWidget } from '@components/widgets/AccordionWidget';
+import { fetchCopyright, fetchStaticData } from '@src/apis';
+import { TCopyright, TJSON } from '@interfaces';
+import { isDev } from '@utils';
 
-const FaqPage = (props: TComponenProps): ReactElement => {
+const FaqPage = (props: TStores): ReactElement => {
   const {
     pageStore: {
       pageData: { faqList },
@@ -13,7 +15,7 @@ const FaqPage = (props: TComponenProps): ReactElement => {
   } = props;
 
   return (
-    <div className='page-container'>
+    <div className="page-container">
       <AccordionWidget data={faqList} exclusive={false} fluid />
     </div>
   );
@@ -36,9 +38,10 @@ export const getStaticProps: GetStaticProps = async (
 
   const copyright: TCopyright = await fetchCopyright();
 
+  if (isDev) console.info('Context:', context);
+
   return {
     props: {
-      ...context,
       pageData: { copyright: copyright.normal, ...pageData },
       template,
     },

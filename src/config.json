@@ -3,11 +3,19 @@
   "locales": ["vi-VN", "en-EN"],
   "defaultLocale": "vi-VN",
   "defaultLocaleDomain": "common",
-  "phoneMask": "+840 - 99 - 999 - 99 - 99",
+
+  "alphabet_vns": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZzĂaàáạảãăăằắặẳẵââầấậẩẫĐđeèéẹẻẽÊêêềếệểễiìíịỉĩÔoòóọỏõôôồốộổỗơờớợởỡƯưuùúụủũưừứựửữyỳýỵỷỹ",
+  "diacriticLetters": "ĂăÂâĐđÊêÔôƠơƯư",
+
+  "phoneMask": "+84 - 99 - 999 - 99 - 99",
+  "otherPhoneMask": "+84 - 99 - 999 - 99 - 999",
   "dateMask": "99/99/9999",
   "otpMask": "9999",
   "dealNoMask": "9999-9999",
   "maskChar": "_",
+  "dateFormat": "dd/MM/yyyy",
+  "accountNumberFormat": "^.{6,22}$",
+  "emailFormat": "^(([^<>()[\\]\\.,;:\\s@\"]+(.[^<>()[\\]\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$",
   "showResend": 30000,
   "allowedFileTypes": [
     ".gif",
@@ -20,5 +28,9 @@
     ".doc"
   ],
   "refreshViewTime": 60000,
-  "gaTrackingId": "UA-178424699-1"
+  "gaTrackingId": "UA-178424699-1",
+  "baokim": {
+    "prod": "baokim5b6a127edef32a0422bf4d8e069384f0",
+    "test": "baokim3eba7310da026e302d3186292e207d78"
+  }
 }

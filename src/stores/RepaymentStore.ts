@@ -1,14 +1,12 @@
+import { URIS } from '@routes';
+import { CommonApi, fetchStaticData } from '@src/apis';
 import { observable, action, runInAction } from 'mobx';
-
-import { CommonApi } from '../apis';
-import { fetchStaticData } from '../apis/StaticApi';
+import { TCabinetDeal, TDealInfo } from './@types/loanStore';
 import { TFormStatic } from './@types/repaymentStore';
-import { TDealInfo, TCabinetDeal } from './@types/loanStore';
-import { URIS } from '../routes';
 
 export class RepaymentStore {
   @observable formStatic?: TFormStatic;
-  @observable repayment: boolean = false;
+  @observable repayment = false;
   @observable cabinetDeal: TCabinetDeal = {
     dealInfo: {
       dealNo: '',
@@ -18,7 +16,7 @@ export class RepaymentStore {
       paymentAmount: 0,
     },
   };
-  @observable validForm: boolean = true;
+  @observable validForm = true;
 
   constructor(private commonApi: CommonApi) {}
 
@@ -47,7 +45,7 @@ export class RepaymentStore {
   }
 
   @action
-  setValidForm(state: boolean) {
+  setValidForm(state: boolean): void {
     this.validForm = state;
   }
 
@@ -57,12 +55,12 @@ export class RepaymentStore {
   };
 
   @action
-  public updatePaymentAmount(value: number) {
+  public updatePaymentAmount(value: number): void {
     this.cabinetDeal.dealInfo.paymentAmount = value;
   }
 
   @action
-  public updateDealNo(value: string) {
+  public updateDealNo(value: string): void {
     this.cabinetDeal.dealInfo.dealNo = value;
   }
 
@@ -80,7 +78,7 @@ export class RepaymentStore {
   }
 
   @action
-  public async updateStore_Deal(cabinetDeal: TDealInfo) {
+  public async updateStore_Deal(cabinetDeal: TDealInfo): Promise<void> {
     this.cabinetDeal = {
       ...this.cabinetDeal,
       ...cabinetDeal,

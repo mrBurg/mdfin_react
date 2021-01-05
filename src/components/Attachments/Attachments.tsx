@@ -1,15 +1,18 @@
-import { FC } from 'react';
+import React, { ReactElement } from 'react';
 import classNames from 'classnames';
 import _ from 'lodash';
 
 import style from './Attachments.module.scss';
-
+import { AddFile, UploadedFile } from '@components/File';
+import { TJSON } from '@interfaces';
+import { DOC_TYPE } from '@src/constants';
 import { TAttachments } from './@types';
-import { UploadedFile, AddFile } from '../File';
-import { TDocument } from '../../stores/@types/loanStore';
+import { TDocument } from '@stores-types/loanStore';
 
-export const Attachments: FC<TAttachments> = (props) => {
-  const { documents, full, valid, ...fileProps } = props;
+export const Attachments = (props: TAttachments): ReactElement => {
+  const { documents, full, locales, ...fileProps } = props;
+  const getTitle = (data: string): string =>
+    ((locales as TJSON)[data].buttons as TJSON)[DOC_TYPE[props.type_id]];
 
   return (
     <div
@@ -17,13 +20,19 @@ export const Attachments: FC<TAttachments> = (props) => {
         [style.notEmpty]: !!_.size(documents),
       })}
     >
-      {!full && <AddFile className={style.button} {...fileProps} />}
+      {!full && (
+        <AddFile
+          className={style.button}
+          title={getTitle('notPresent')}
+          {...fileProps}
+        />
+      )}
       {_.map(documents, (item: TDocument, key) => {
         return (
           <UploadedFile
             key={key}
             className={style.file}
-            title={fileProps.title}
+            title={getTitle('isPresent')}
             {...item}
           />
         );

@@ -4,3 +4,4 @@ export { HowDoIt } from './HowDoIt';
 export { NotDifficult } from './NotDifficult';
 export { Contacts } from './Contacts';
 export { RepaymentInfo } from './RepaymentInfo';
+export { CalculationExample } from './CalculationExample';

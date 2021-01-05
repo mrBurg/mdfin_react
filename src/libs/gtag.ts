@@ -1,4 +1,4 @@
-import { gaTrackingId } from './../config.json';
+import { gaTrackingId } from '@src/config.json';
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview: TGaPageview = (url) => {

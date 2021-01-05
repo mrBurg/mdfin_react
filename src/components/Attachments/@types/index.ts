@@ -1,9 +1,10 @@
-import { TDocument } from '../../../stores/@types/loanStore';
+import { TAttachmentsFormStatic, TDocument } from '@stores-types/loanStore';
 
 export type TAttachments = {
-  documents: Array<TDocument>;
-  type: number;
-  title: string;
+  documents: TDocument[];
+  type: string;
+  locales: TAttachmentsFormStatic;
+  type_id: number;
   full?: boolean;
   multiple?: boolean;
   valid?: boolean;

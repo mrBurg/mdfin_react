@@ -1,17 +1,29 @@
 import React, { PureComponent, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import _ from 'lodash';
+import classNames from 'classnames';
 
 import style from './Application.module.scss';
-
-import { SelectWidget } from '../widgets/SelectWidget';
-import { LoanInfo } from '../LoanInfo';
-import { Otp } from '../Otp';
-import { URIS_SUFFIX, FIELD_NAME } from '../../constants';
-import { TState, TApplication, TDataRow } from './@types';
-import { DIRECTORIES } from '../../routes';
-import { Preloader } from '../Preloader';
-import { Accounts } from '../Accounts';
+import { AccountsForm } from '@components/AccountsForm';
+import { WithTracking, WithTag, WithDangerousHTML } from '@components/hocs';
+import { LoanInfo } from '@components/LoanInfo';
+import { TDataRow } from '@components/LoanInfo/@types';
+import { Otp } from '@components/Otp';
+import { Preloader } from '@components/Preloader';
+import { ReactSelectWidget } from '@components/widgets/ReactSelectWidget';
+import { TSelectData } from '@components/widgets/ReactSelectWidget/@types';
+import { TJSON } from '@interfaces';
+import { DIRECTORIES } from '@routes';
+import {
+  URIS_SUFFIX,
+  BUTTON_TYPE,
+  FIELD_NAME,
+  dynamicTagslist,
+} from '@src/constants';
+import { WidgetRoles } from '@src/roles';
+import { EMouseEvents } from '@src/trackingConstants';
+import { TApplication, TState } from './@types';
+import { handleErrors } from '@utils';
 
 @observer
 export class Application extends PureComponent<TApplication> {
@@ -21,7 +33,7 @@ export class Application extends PureComponent<TApplication> {
     userDeclineReason: {},
   };
 
-  componentDidMount() {
+  componentDidMount(): void {
     const { userStore, pageStore, loanStore } = this.props;
 
     userStore.fetchWithAuth(async () => {
@@ -42,15 +54,22 @@ export class Application extends PureComponent<TApplication> {
       },
     } = this.props;
 
-    if (accountUnit)
-      return <Accounts className={style.accounts} {...accountUnit} />;
+    if (!accountUnit) return null;
 
-    return null;
+    return <AccountsForm className={style.accounts} {...accountUnit} />;
   }
 
   // блок ОТП
   private renderOtp(): ReactElement {
-    const { otpStore } = this.props;
+    const {
+      otpStore,
+      loanStore: {
+        cabinetApplication: { accountUnit },
+      },
+      pageStore: {
+        pageData: { signCertificate },
+      },
+    } = this.props;
 
     if (otpStore.otpReady)
       return (
@@ -60,14 +79,24 @@ export class Application extends PureComponent<TApplication> {
             otpStore.cabinetConfirm();
           }}
           page={URIS_SUFFIX.APPLICATION}
-          {...this.props}
         />
       );
 
     return (
-      <button className={style.otpButton} onClick={this.cabinetSign}>
-        Tôi Ký Xác Nhận
-      </button>
+      <WithTracking
+        id={`Application-${WidgetRoles.button}-${BUTTON_TYPE.SUBMIT}`}
+        events={[EMouseEvents.CLICK]}
+      >
+        <button
+          role={WidgetRoles.button}
+          className={style.otpButton}
+          type={BUTTON_TYPE.SUBMIT}
+          onClick={this.cabinetSign}
+          disabled={!accountUnit?.selectedAccount_id}
+        >
+          {signCertificate}
+        </button>
+      </WithTracking>
     );
   }
 
@@ -90,9 +119,9 @@ export class Application extends PureComponent<TApplication> {
 
     if (isRefuse)
       return (
-        <SelectWidget
+        <ReactSelectWidget
           name={FIELD_NAME.REASON_ID}
-          className={style.refuseSelect}
+          className={classNames('orange', style.refuseSelect)}
           placeholder={reasonsRefuseTitle}
           options={dirDeclinedByClientReason}
           onChange={this.handleChangeSelectDecline}
@@ -100,29 +129,46 @@ export class Application extends PureComponent<TApplication> {
       );
 
     return (
-      <a className={style.refuse} onClick={this.setRefuse}>
-        {refuse}
-      </a>
+      <WithTracking
+        id={`Application-${WidgetRoles.link}-refuse`}
+        events={[EMouseEvents.CLICK]}
+      >
+        <button
+          role={WidgetRoles.button}
+          className={style.refuse}
+          onClick={this.setRefuse}
+        >
+          {refuse}
+        </button>
+      </WithTracking>
     );
   }
 
-  private handleChangeSelectDecline = (_event: any, data: any) => {
-    new Promise((resolve) => {
-      resolve(
-        this.setState(
-          (state: TState): TState => {
-            return {
-              ...state,
-              userDeclineReason: {
-                reason_id: data.value,
-              },
-            };
-          }
-        )
-      );
-    }).then(() => {
-      this.cabinetDecline();
-    });
+  private handleChangeSelectDecline = (data: TSelectData) => {
+    if (data.value) {
+      new Promise((resolve) => {
+        resolve(
+          this.setState(
+            (state: TState): TState => {
+              return {
+                ...state,
+                userDeclineReason: {
+                  reason_id: Number(data.value),
+                },
+              };
+            }
+          )
+        );
+      })
+        .then(() => {
+          this.cabinetDecline();
+
+          return;
+        })
+        .catch((err) => {
+          handleErrors(err);
+        });
+    }
   };
 
   private async cabinetDecline() {
@@ -154,16 +200,26 @@ export class Application extends PureComponent<TApplication> {
       pageStore: { pageData },
     } = this.props;
 
+    const sort = [
+      'amount',
+      'term',
+      'extensionAmount',
+      'totalAmount',
+      'dateTo',
+      'dealNo',
+      'appnum',
+    ];
+
     if (application && pageData) {
       const { creditParams, appnum } = application;
       const { loanInfoTitle, loanInfoFields } = pageData;
 
-      const paramsData: Array<TDataRow> = _.map(creditParams, (item, key) => {
+      const paramsData: TDataRow[] = _.map(sort, (item) => {
         return {
-          text: loanInfoFields[key],
-          value: item,
+          text: loanInfoFields[item],
+          value: (creditParams as TJSON)[item],
         };
-      }).filter((item) => item.text);
+      });
 
       paramsData.push({
         text: loanInfoFields.appnum,
@@ -193,23 +249,16 @@ export class Application extends PureComponent<TApplication> {
     if (isRender && cabinetApplication) {
       return (
         <div className={style.application}>
-          <h2
-            className={style.title}
-            dangerouslySetInnerHTML={{
-              __html: cabinetApplication.notification || '',
-            }}
-          />
+          <WithTag tag={'h2'} className={style.title} tags={dynamicTagslist}>
+            {cabinetApplication.notification!}
+          </WithTag>
 
           <div className={style.content}>
             <div className={style.actions}>
               {this.renderAccounts()}
-              <div className={style.links}>
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: pageData.acceptTermsNotification,
-                  }}
-                />
-              </div>
+              <WithDangerousHTML className={style.links}>
+                {pageData.acceptTermsNotification}
+              </WithDangerousHTML>
               {this.renderOtp()}
               {this.renderRefuse()}
             </div>

@@ -1,16 +1,16 @@
-import { ReactElement, PureComponent } from 'react';
+import React, { ReactElement, PureComponent } from 'react';
 import { GetStaticProps, GetStaticPropsContext } from 'next';
 import { observer } from 'mobx-react';
-import _ from 'lodash';
 
-import { gt } from '../src/utils';
-import { TJSON, TCopyright, TComponenProps } from '../src/interfaces';
-import { fetchCopyright, fetchStaticData } from '../src/apis';
-import { RepaymentInfo } from '../src/components/sections';
-import { RepaymentForm } from '../src/components/RepaymentForm';
+import { TStores } from '@stores';
+import { RepaymentForm } from '@components/RepaymentForm';
+import { RepaymentInfo } from '@components/sections';
+import { fetchCopyright, fetchStaticData } from '@src/apis';
+import { TCopyright, TJSON } from '@interfaces';
+import { gt, isDev } from '@utils';
 
 @observer
-export default class PaymentPage extends PureComponent<TComponenProps> {
+export default class PaymentPage extends PureComponent<TStores> {
   public render(): ReactElement {
     const {
       pageStore: {
@@ -20,8 +20,8 @@ export default class PaymentPage extends PureComponent<TComponenProps> {
     } = this.props;
 
     return (
-      <div className='page-container'>
-        {!repayment && <h2 className='page-title'>{gt.gettext(pageTitle)}</h2>}
+      <div className="page-container">
+        {!repayment && <h2 className="page-title">{gt.gettext(pageTitle)}</h2>}
         <RepaymentForm {...this.props} />
 
         {!repayment && <RepaymentInfo dataList={repaymentInfo} />}
@@ -45,9 +45,10 @@ export const getStaticProps: GetStaticProps = async (
 
   const copyright: TCopyright = await fetchCopyright();
 
+  if (isDev) console.info('Context:', context);
+
   return {
     props: {
-      ...context,
       pageData: { copyright: copyright.normal, ...pageData },
       template,
     },

@@ -7,9 +7,9 @@ export type TQuestion = {
 
 export type TFaqItem = {
   title: string;
-  questions: Array<TQuestion>;
+  questions: TQuestion[];
 };
 
 export type TFaqListItemsProps = {
-  data: Array<TFaqItem>;
+  data: TFaqItem[];
 } & StrictAccordionProps;

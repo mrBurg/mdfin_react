@@ -1,5 +1,5 @@
-import { LoanStore } from '../../../stores/LoanStore';
-import { UserStore } from '../../../stores/UserStore';
+import { LoanStore } from '@src/stores/LoanStore';
+import { UserStore } from '@src/stores/UserStore';
 
 export type TLoanButtonProps = {
   className?: string;

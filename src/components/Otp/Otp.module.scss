@@ -17,6 +17,14 @@
   align-items: flex-start;
 }
 
+.agree_text {
+  text-align: justify;
+
+  .link {
+    color: $blue;
+  }
+}
+
 .resend {
   padding: 0 px2em(30px);
 

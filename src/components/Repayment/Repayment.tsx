@@ -1,15 +1,14 @@
-import { ReactElement, PureComponent } from 'react';
+import React, { ReactElement, PureComponent } from 'react';
 import { observer, inject } from 'mobx-react';
 import classNames from 'classnames';
 
 import style from './Repayment.module.scss';
-
-import { TOnSubmitHandler } from '../../interfaces';
-import { STORE_IDS } from '../../stores';
-import { Actions } from '../Actions';
+import { Actions } from '@components/Actions';
+import { DealInfo } from '@components/DealInfo';
+import { Preloader } from '@components/Preloader';
+import { TOnSubmitHandler } from '@interfaces';
+import { STORE_IDS } from '@stores';
 import { TRepaymentProps, TState } from './@types';
-import { DealInfo } from '../DealInfo';
-import { Preloader } from '../Preloader';
 
 @inject(STORE_IDS.REPAYMENT_STORE)
 @observer
@@ -80,7 +79,7 @@ export class Repayment extends PureComponent<TRepaymentProps> {
       return (
         <form
           onSubmit={this.onSubmitHandler}
-          className={classNames(className, style.repayment)}
+          className={classNames(style.repayment, className)}
         >
           {this.renderDealInfo()}
 

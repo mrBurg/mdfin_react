@@ -19,7 +19,20 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@interfaces": ["./src/interfaces"],
+      "@libs/*": ["./src/libs/*"],
+      "@locales/*": ["./src/locales/*"],
+      "@routes": ["./src/routes"],
+      "@scss": ["./src/scss"],
+      "@stores": ["./src/stores"],
+      "@stores-types/*": ["./src/stores/@types/*"],
+      "@utils": ["./src/utils"],
+      "@src/*": ["./src/*"]
+    }
   },
   "exclude": ["node_modules"],
   "include": ["**/*.ts", "**/*.tsx", "server/**/*.js"]

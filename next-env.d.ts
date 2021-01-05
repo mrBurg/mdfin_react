@@ -2,7 +2,7 @@
 /// <reference types="next/types/global" />
 
 declare interface Window {
-  requestIdleCallback: Function;
+  requestIdleCallback: () => void;
 }
 
 declare interface Console {

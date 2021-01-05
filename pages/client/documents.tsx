@@ -1,17 +1,19 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { GetStaticProps, GetStaticPropsContext } from 'next';
 
-import { TComponenProps, TCopyright, TJSON } from '../../src/interfaces';
-import { fetchCopyright, fetchStaticData } from '../../src/apis';
-import { Documents } from '../../src/components/client';
+import { TStores } from '@stores';
+import { Documents } from '@components/client';
+import { fetchCopyright, fetchStaticData } from '@src/apis';
+import { TCopyright, TJSON } from '@interfaces';
+import { isDev } from '@utils';
 
-const DocumentsPage = (props: TComponenProps): ReactElement => {
+const DocumentsPage = (props: TStores): ReactElement => {
   const {
     pageStore: { pageData },
   } = props;
 
   return (
-    <div className='page-container'>
+    <div className="page-container">
       <Documents staticData={pageData} {...props} />
     </div>
   );
@@ -34,9 +36,10 @@ export const getStaticProps: GetStaticProps = async (
 
   const copyright: TCopyright = await fetchCopyright();
 
+  if (isDev) console.info('Context:', context);
+
   return {
     props: {
-      ...context,
       pageData: { copyright: copyright.less, ...pageData },
       template,
     },

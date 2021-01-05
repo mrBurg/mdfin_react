@@ -1,4 +1,5 @@
 import { toJS } from 'mobx';
+import { TCreateMarkup } from './@types';
 
 export * from './localStorage';
 export * from './environment';
@@ -7,16 +8,22 @@ export * from './cookies';
 export * from './gettext';
 export * from './handleErrors';
 export * from './validators';
+export * from './browser';
+export * from './geolocation';
 
 console.toJS = (data: any): void => {
   console.info(toJS(data));
 };
 
-export const delay: Function = (() => {
-  let counter: number = 0;
+export function createMarkup(__html: string): TCreateMarkup {
+  return { __html };
+}
 
-  return (callback: Function, ms: number = 0) => {
+export const delay = (() => {
+  let counter = 0;
+
+  return (callback: () => void, ms = 0) => {
     clearTimeout(counter);
-    counter = setTimeout(callback, ms);
+    counter = window.setTimeout(callback, ms);
   };
 })();

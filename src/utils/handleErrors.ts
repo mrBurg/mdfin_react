@@ -1,6 +1,10 @@
-import { STATUS } from '../constants';
+import { STATUS } from '@src/constants';
+import { THandleErrors } from './@types';
 
-export async function handleErrors(err: any, callback?: Function) {
+export async function handleErrors(
+  err: any,
+  callback?: () => void
+): THandleErrors {
   if (err.response) {
     const { status } = err.response;
 
@@ -10,7 +14,10 @@ export async function handleErrors(err: any, callback?: Function) {
           `Not authorized. Required to update token: ${STATUS.NOT_AUTHORIZED}`
         );
 
-        return;
+        return { view: 'SIGN_IN' };
+      case STATUS.BAD_REQUEST:
+        console.info(`Invalid account info: ${STATUS.BAD_REQUEST}`);
+        return false;
     }
   }
 

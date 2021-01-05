@@ -20,7 +20,7 @@
   } */
 
   &Text {
-    margin-left: px2em(75px);
+    margin-left: px2em(47px);
     transition: margin-left 0.2s;
 
     @include respond(sm) {
@@ -51,13 +51,42 @@ $position-x: -56px;
 
 .title {
   margin-bottom: px2em(15px);
+  font-size: px2em($font-size);
 }
 
-.text,
-.list {
-  color: lighten($black, 50%);
-}
+.text {
+  color: lighten($black, 10%);
+  font-size: px2em(14px);
 
-.list {
-  list-style: none;
+  h4 {
+    margin: px2em(15px) 0;
+  }
+
+  [class~='accent'] {
+    color: $red;
+  }
+
+  a {
+    color: $blue;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  ol,
+  ul {
+    margin: 1em;
+    padding-left: 1em;
+  }
+
+  ul {
+    list-style-position: inside;
+
+    ul {
+      list-style-position: outside;
+      list-style-type: '-';
+    }
+  }
 }

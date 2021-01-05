@@ -1,52 +1,50 @@
-import moment from 'moment';
-
-import { TJSON } from '../interfaces';
-import { CommonApi } from '../apis';
-import { URIS } from '../routes';
+import { TJSON } from '@interfaces';
+import { URIS } from '@routes';
+import { CommonApi } from '@src/apis';
 import { observable, runInAction } from 'mobx';
-import { TDirectory } from './@types/pageStore';
+import { TDirectoryItem } from './@types/pageStore';
 
 export class PageStore {
   constructor(private commonApi: CommonApi) {}
 
-  public documentTitle: string = '';
+  public documentTitle = '';
   public pageData: TJSON = {};
-  public copyright: string = '';
-  public footerTags: TJSON = {
-    year: `${moment().format('YYYY')}`,
-  };
+  public copyright = '';
 
   /* Справочники */
-  @observable public dirGender: TDirectory = [];
-  @observable public dirMaritalStatus: TDirectory = [];
-  @observable public dirLoanPurpose: TDirectory = [];
-  @observable public dirMobilePhoneBrand: TDirectory = [];
-  @observable public dirMobilePhoneModel: TDirectory = [];
+  @observable public dirGender: TDirectoryItem[] = [];
+  @observable public dirMaritalStatus: TDirectoryItem[] = [];
+  @observable public dirLoanPurpose: TDirectoryItem[] = [];
+  @observable public dirMobilePhoneBrand: TDirectoryItem[] = [];
+  @observable public dirMobilePhoneModel: TDirectoryItem[] = [];
 
-  @observable public dirCityProvince: TDirectory = [];
-  @observable public dirDistrict: TDirectory = [];
-  @observable public dirWardCommune: TDirectory = [];
-  @observable public dirThirdPartyRelation: TDirectory = [];
+  @observable public dirCityProvince: TDirectoryItem[] = [];
+  @observable public dirDistrict: TDirectoryItem[] = [];
+  @observable public dirWardCommune: TDirectoryItem[] = [];
+  @observable public dirThirdPartyRelation: TDirectoryItem[] = [];
 
-  @observable public dirSocialStatus: TDirectory = [];
-  @observable public dirEducation: TDirectory = [];
-  @observable public dirIndustry: TDirectory = [];
-  @observable public dirIndustryDetailed: TDirectory = [];
-  @observable public dirJobPosType: TDirectory = [];
-  @observable public dirJobRelationType: TDirectory = [];
+  @observable public dirSocialStatus: TDirectoryItem[] = [];
+  @observable public dirEducation: TDirectoryItem[] = [];
+  @observable public dirIndustry: TDirectoryItem[] = [];
+  @observable public dirIndustryDetailed: TDirectoryItem[] = [];
+  @observable public dirJobPosType: TDirectoryItem[] = [];
+  @observable public dirJobRelationType: TDirectoryItem[] = [];
 
-  @observable public dirBank: TDirectory = [];
+  @observable public dirBank: TDirectoryItem[] = [];
 
-  @observable public dirDeclinedByClientReason: TDirectory = [];
+  @observable public dirDeclinedByClientReason: TDirectoryItem[] = [];
 
   /* Взять Справочник. Сервис: /directory/{directoryName} */
-  public async getDirectory(directoryUrl: string, parent_id?: string) {
+  public async getDirectory(
+    directoryUrl: string,
+    parent_id?: string
+  ): Promise<void> {
     let url = URIS.DIRECTORY + directoryUrl;
     if (parent_id) {
       url = URIS.DIRECTORY + directoryUrl + '?parent_id=' + parent_id;
     }
 
-    let requestConfig = this.commonApi.getHeaderRequestConfig(url);
+    const requestConfig = this.commonApi.getHeaderRequestConfig(url);
     const response = await this.commonApi.getDirectory(requestConfig);
 
     if (response) {

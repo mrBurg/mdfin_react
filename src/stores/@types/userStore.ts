@@ -3,8 +3,6 @@ export type TField = {
   value: any; //string | Date;
 };
 
-export type TValidateProps = Array<TField>;
-
 export type TUserObligatory = {
   phoneNumber?: string;
 

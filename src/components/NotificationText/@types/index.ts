@@ -1,5 +1,5 @@
-import { TStores } from '../../../stores';
-import { TCabinetApplication } from '../../../stores/@types/loanStore';
+import { TStores } from '@stores';
+import { TCabinetApplication } from '@stores-types/loanStore';
 
 export type TNotificationText = {
   className?: string;

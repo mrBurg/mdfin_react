@@ -1,15 +1,30 @@
-import { FC, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { Checkbox } from 'semantic-ui-react';
 import classNames from 'classnames';
 
 import style from './CheckboxWidget.module.scss';
+import { WithTracking } from '@components/hocs';
+import { WidgetRoles } from '@src/roles';
+import { EFormEvents } from '@src/trackingConstants';
 import { TCheckboxWidgetProps } from './@types';
 
-export const CheckboxWidget: FC<TCheckboxWidgetProps> = ({
-  className,
-  label,
-}): ReactElement => {
+export const CheckboxWidget = (props: TCheckboxWidgetProps): ReactElement => {
+  const { className, label, name, isValid, ...checkboxPorps } = props;
+
   return (
-    <Checkbox className={classNames(style.checkbox, className)} label={label} />
+    <WithTracking
+      id={`CheckboxWidget-${WidgetRoles.checkbox}`}
+      events={[EFormEvents.CHANGE]}
+    >
+      <Checkbox
+        className={classNames(style.checkbox, className, {
+          [style.error]: isValid,
+        })}
+        label={label}
+        name={name}
+        role={WidgetRoles.checkbox}
+        {...checkboxPorps}
+      />
+    </WithTracking>
   );
 };

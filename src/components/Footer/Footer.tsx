@@ -1,24 +1,15 @@
-import React, { FC, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import classNames from 'classnames';
 
 import style from './Footer.module.scss';
-
-import { writeTag } from '../../utils';
+import { WithTag } from '@components/hocs';
+import { dynamicTagslist } from '@src/constants';
 import { TFooterProps } from './@types';
 
-export const Footer: FC<TFooterProps> = ({
-  copyright,
-  tags,
-  less,
-}): ReactElement => {
-  if (tags) copyright = writeTag(copyright, tags);
-
-  return (
-    <footer className={classNames(style.footer, { [style.less]: less })}>
-      <div
-        className={style.container}
-        dangerouslySetInnerHTML={{ __html: copyright }}
-      />
-    </footer>
-  );
-};
+export const Footer = ({ copyright, less }: TFooterProps): ReactElement => (
+  <footer className={classNames(style.footer, { [style.less]: less })}>
+    <WithTag className={style.container} tags={dynamicTagslist}>
+      {copyright}
+    </WithTag>
+  </footer>
+);

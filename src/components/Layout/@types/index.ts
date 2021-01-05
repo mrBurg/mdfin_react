@@ -1,7 +1,8 @@
+import { TJSON } from '@interfaces';
+import { TStores } from '@stores';
 import { NextComponentType } from 'next';
-import { TJSON, TComponenProps } from '../../../interfaces';
 
 export type TLayoutProps = {
   Component: NextComponentType;
   template?: TJSON;
-} & TComponenProps;
+} & TStores;

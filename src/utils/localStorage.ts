@@ -1,3 +1,5 @@
+import { TGetFromStorage } from './@types';
+
 export async function setToLocalStorage(
   key: string,
   values: string
@@ -5,7 +7,7 @@ export async function setToLocalStorage(
   window.localStorage.setItem(key, values);
 }
 
-export function getFromLocalStorage(key: string): string | null {
+export function getFromLocalStorage(key: string): TGetFromStorage {
   return window.localStorage.getItem(key);
 }
 
@@ -24,7 +26,7 @@ export async function setToSessionStorage(
   window.sessionStorage.setItem(key, values);
 }
 
-export function getFromSessionStorage(key: string): string | null {
+export function getFromSessionStorage(key: string): TGetFromStorage {
   return window.sessionStorage.getItem(key);
 }
 
