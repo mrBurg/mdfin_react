@@ -1,0 +1,12 @@
+{
+  "termsAndConditions": "Bằng cách chọn hộp này, tôi xác nhận rằng tôi đã đọc và chấp nhận <term_conditions_service />",
+  "wrongOtp": "Mật mã bạn nhập không chính xác, vui long thử lại",
+  "sendOtp": "Gửi Mã OTP",
+  "links": {
+    "term_conditions_service": {
+      "text": "Điều Khoản và Điều Kiện",
+      "link": "/docs/info/term_conditions_service.pdf",
+      "target": "_blank"
+    }
+  }
+}

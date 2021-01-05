@@ -1,0 +1,10 @@
+{
+  "notification": "Nếu bạn là khách hàng hiện hữu, Vui lòng đăng nhập vào Tài Khoản Cá Nhân",
+  "loanAmountText": "Số Tiền Cần Vay",
+  "totalAmountText": "Tổng số tiền cần thanh toán",
+  "loanTermText": "Kỳ hạn khoản vay",
+  "termsAndCondition": "Điều Khoản và Điều Kiện",
+  "signIn": "Sign In",
+  "registerLoan": "Register Loan",
+  "paymentDateText": "Ngày đến hạn thanh toán"
+}

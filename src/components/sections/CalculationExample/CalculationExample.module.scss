@@ -1,0 +1,26 @@
+@import '../../../scss/service';
+
+.calculationExample {
+  //@extend %big-shadow;
+  display: flex;
+  padding: 0 1.25em; //padding: px2em(30px);
+  max-width: $lg;
+  width: 100%;
+  //background-color: $white;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin-top: px2em(25px);
+}
+
+.container {
+  max-width: $md;
+  display: flex;
+  width: 100%;
+  font-size: px2em(12px);
+  text-align: justify;
+
+  @include respond(xs) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}

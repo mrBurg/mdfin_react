@@ -1,0 +1,18 @@
+{
+  "loanInfoTitle": "Thông Tin về Khoản Vay",
+  "loanInfoFields": {
+    "amount": "amount",
+    "term": "term",
+    "extensionAmount": "extensionAmount",
+    "totalAmount": "totalAmount",
+    "dateTo": "dateTo",
+    "lastPaymentDate": "lastPaymentDate",
+    "lastPaymentAmount": "lastPaymentAmount",
+    "dealNo": "dealNo",
+    "appnum": "appnum"
+  },
+  "acceptTermsNotification": "Tôi Chấp Nhận Các Điều Kiện và Điều Khoản của Khoản Vay và Ký<br />Hợp Đồng Vay",
+  "reasonsRefuseTitle": "Lý Do Từ Chối",
+  "refuse": "Tôi Từ Chối",
+  "signCertificate": "Tôi Ký Xác Nhận"
+}

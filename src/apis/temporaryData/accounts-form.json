@@ -1,0 +1,14 @@
+{
+  "isPresent": {
+    "title": "Thêm Tài Khoản Ngân Hàng"
+  },
+  "notPresent": {
+    "title": "Chọn Ngân Hàng"
+  },
+  "buttons": {
+    "add": "Tài khoản ngân hàng mới",
+    "select": "Chọn Ngân Hàng",
+    "enter": "Số Tài Khoản Ngân Hàng",
+    "confirm": "Xác Nhận"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "isPresent": {
+    "title": "Thông Tin Tài Khoản và Chứng Từ",
+    "buttons": {
+      "idFront": "CMND/CCCD Mặt Trước",
+      "idBack": "CMND/CCCD Mặt Sau",
+      "selfie": "Ảnh chụp selfie cầm CMND/CCCD",
+      "other": "Giấy Tờ Khác"
+    }
+  },
+  "notPresent": {
+    "title": "Chứng từ cần thiết và thông tin tài khoản",
+    "buttons": {
+      "idFront": "Tải lên CMND (Mặt Trước)",
+      "idBack": "Tải Lên CMND (Mặt Sau)",
+      "selfie": "Tải Lên Ảnh Chụp Selfie Cầm CMND Trên Tay",
+      "other": "Giấy Tờ Khác"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+@import '../../../scss/service';
+
+.inputWidget {
+  display: flex;
+  align-items: center;
+
+  input {
+    overflow: hidden;
+  }
+}

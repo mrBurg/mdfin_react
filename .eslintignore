@@ -1,0 +1,15 @@
+/baokim/*
+/build/*
+/certificates/*
+/env/*
+/plugins/*
+/public/*
+/scripts/*
+/server/*
+
+**/*.json
+**/*.scss
+**/*.po
+**/*.svg
+
+next.config.js

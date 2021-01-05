@@ -1,0 +1,60 @@
+@import '../../scss/service';
+
+.accounts {
+  font-size: px2em($font-size);
+
+  @include respond(md) {
+    font-size: 0.9em;
+  }
+
+  @include respond(sm) {
+    font-size: 0.8em;
+  }
+
+  &Form {
+    width: 100%;
+  }
+}
+
+.title {
+  text-align: center;
+  margin-bottom: px2em(30px, 24px);
+}
+
+.select {
+  max-width: px2em(355px);
+  margin-bottom: px2em(30px);
+  margin: auto;
+  margin-bottom: px2em(30px);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+
+  @include respond(sm) {
+    flex-direction: column;
+  }
+}
+
+.bankSelect,
+.input {
+  min-width: px2em(250px);
+  max-width: px2em(355px);
+
+  @include respond(sm) {
+    width: 100%;
+  }
+}
+
+.bankSelect {
+  @include respond(sm) {
+    margin-bottom: px2em(30px);
+  }
+}
+
+.input {
+  @extend %input;
+}

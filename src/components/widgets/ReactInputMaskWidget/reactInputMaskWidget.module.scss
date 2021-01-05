@@ -1,0 +1,11 @@
+@import '../../../scss/service';
+
+.input {
+  padding: px2em(12px) px2em(35px);
+  border: 1px solid $gray;
+  border-radius: px2em(8px);
+
+  &.error {
+    border-color: lighten($red, 25%);
+  }
+}
